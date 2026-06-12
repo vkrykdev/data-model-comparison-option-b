@@ -11,7 +11,7 @@ raw, undermodeled tables — judged by the answers two Fabric **Data Agents** gi
 - **MultiSource_Modeled** — the same data, conformed by one notebook into a governed star with
   relationships, measures, descriptions, and Prep-for-AI instructions.
 
-This is **"Option B"** in Viktor's demo suite (Option A is complete and lives elsewhere).
+This is the **MultiSource Raw-vs-Modeled** demo.
 Honest positioning: raw query speed is identical and is *not* the pitch — the wins are
 accuracy, fewer hallucinations, fewer clarification round-trips, lower tokens per correct
 answer, and that v2 is produced from the customer's own raw tables by one notebook.
@@ -73,24 +73,27 @@ that last phase is portal work where you prepare the exact inputs and the user c
 ├── PLAN.md                         ← the ordered, confirm-after-each build plan — follow this
 ├── README.md                       ← human overview
 ├── requirements.txt                ← numpy, pandas, openpyxl (local only)
-├── data/                           ← the 17 raw multi-source CSVs (generated, ready to upload)
-├── source-erp-optionA/             ← upstream ERP export the generator seeds from (don't edit)
+├── .env.example                    ← config template → copy to .env (git-ignored) and fill in
+├── data/                           ← the 17 raw multi-source CSVs — SAMPLE only (see data/README.md)
 ├── scripts/
-│   ├── generate_data.py            ← (re)builds data/ from source-erp-optionA/ (seed 7)
-│   ├── validate_gold_answers.py    ← recomputes the 12 gold answers; proves the traps fire
 │   └── build_modeled_layer.py      ← the conformance notebook as cell-delimited .py (portal paste)
 ├── fabric/                         ← everything deployed to Fabric
 │   ├── bootstrap.sh                ← Phase 0–1: auth, folders, lakehouse (fab, with api fallback)
-│   ├── upload_and_load.sh          ← Phase 2–3: cp CSVs + fab table load
+│   ├── upload_and_load.sh          ← Phase 2–3: upload CSVs (OneLake DFS) + fab table load
 │   ├── generate_model_tmdl.py      ← emits the two .SemanticModel TMDL folders
-│   ├── deploy_models.py            ← Phase 5: inject lakehouse SQL endpoint + fab import
+│   ├── deploy_models.py            ← Phase 5: inject lakehouse SQL endpoint (from .env) + fab import
+│   ├── render_notebook.py          ← Phase 4: inject lakehouse/workspace IDs (from .env) into a deploy copy
 │   ├── models/                     ← MultiSource_Raw / MultiSource_Modeled .SemanticModel (TMDL)
-│   ├── notebooks/build_modeled_layer.Notebook/  ← importable notebook source
+│   ├── notebooks/build_modeled_layer.Notebook/  ← importable notebook source (placeholders)
 │   └── agent-config/               ← Phase 6 paste-text (Prep-for-AI, agent instructions, raw setup)
 ├── eval/MultiSourceAgent_Eval.xlsx ← 12-question gold-answer workbook — LIVE-DEMO reference only
-├── docs/GUIDE_MULTISOURCE_DEMO.md  ← reference: schema, relationships, measures, instruction rationale
-└── alternative-scenario-forecast/  ← ARCHIVED earlier Option B (Forecast vs Actuals) — ignore
+└── docs/GUIDE_MULTISOURCE_DEMO.md  ← reference: schema, relationships, measures, instruction rationale
 ```
+
+Config: all environment-specific values (workspace/folder/lakehouse IDs, SQL endpoint, optional
+service-principal creds) live in a git-ignored **`.env`** (copy from `.env.example`). Tracked TMDL
+and the notebook artifact keep placeholders (`__SQL_ENDPOINT__`, `__LAKEHOUSE_ID__`, …); the deploy
+and render scripts inject the real values into git-ignored `.deploy_*` working copies.
 
 ## Environment & licenses (✓ = Viktor has it)
 
@@ -107,7 +110,7 @@ that last phase is portal work where you prepare the exact inputs and the user c
   modeling** — both avoid XMLA. Descriptions live in the TMDL itself, so they don't need XMLA.
 - ✗ **Copilot Studio / Teams publishing** — out of scope anyway
 
-Key Fabric behaviour (from Option A): the Data Agent's DAX generator reads **only the model's
+Key Fabric behaviour: the Data Agent's DAX generator reads **only the model's
 Prep-for-AI instructions**, not agent-level instructions. So **data semantics, period logic,
 conformance rules → Prep-for-AI** (`fabric/agent-config/MultiSource_Modeled_prep_for_ai.md`);
 **response style → agent instructions** (`…_agent_instructions.md`).
@@ -143,7 +146,7 @@ the portal. No public API publish endpoint exists.
 **Phase 6 — Prep-for-AI "Add AI instructions":** Portal-only. `getDefinition`/`updateDefinition`
 TMDL annotations do not map to this preview field.
 
-## Gold answers (computed from `data/`; for the live demo, not this build)
+## Gold answers (from the full dataset; for the live demo, not this build)
 
 Q4 total May-2026 sales **$10.054M** (ERP 8.382 + MM net 0.622 + Lakeside 1.051) · Q5 marketplace
 net **$7.335M** (gross 8.534, 14% fees) · Q8 A-class + open complaints + stockout risk →
@@ -164,6 +167,6 @@ with 3 TODO gaps + 1 retired-SKU + 2 conflict rows. The notebook materializes **
 
 ## Drift rule
 
-Change `generate_data.py` → re-run `validate_gold_answers.py` and resync the numbers in
-`eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`. Change the `c_` schema in
-the notebook → re-run `fabric/generate_model_tmdl.py` so the Modeled TMDL still matches.
+Change the `c_` schema in the notebook → re-run `fabric/generate_model_tmdl.py` so the Modeled
+TMDL still matches. Change the `c_` schema or measures → resync the numbers in
+`eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`.

@@ -52,9 +52,11 @@ The scripts (`bootstrap.sh`, `upload_and_load.sh`, `deploy_models.py`, `render_n
 *Done-when:* `.env` exists with real values; `bash -c 'source fabric/bootstrap.sh' ` defines `$WS`/`$LH`.
 ⛔ STOP.
 
-**0.2** Generate local data and prove the gold answers (no Fabric yet):
-`python scripts/generate_data.py && python scripts/validate_gold_answers.py`.
-*Done-when:* 17 CSVs in `data/`; validator prints Q1–Q12 and exits 0 (Q8 → SKU-0014 + SKU-0045).
+**0.2** Confirm the raw tables. `data/` ships **sample** CSVs (large fact tables truncated to
+header + 10 rows — see `data/README.md`) for structure reference. For the actual build you supply
+the **full** raw tables to upload in Phase 2; the gold answers in `eval/MultiSourceAgent_Eval.xlsx`
+assume the complete dataset.
+*Done-when:* you have the full raw CSVs ready (sample headers in `data/` match your columns).
 ⛔ STOP.
 
 **0.3** Generate the model TMDL: `python fabric/generate_model_tmdl.py`.
@@ -188,7 +190,7 @@ walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) is for the live demo, not this b
 
 ## If something drifts
 
-If you change `scripts/generate_data.py`, re-run `validate_gold_answers.py` and resync the
-numbers in `eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`. If you
+If you change the `c_` schema or measures, resync the numbers in
+`eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`. If you
 change the `c_` schema in the notebook, re-run `fabric/generate_model_tmdl.py` so the Modeled
 TMDL still matches.

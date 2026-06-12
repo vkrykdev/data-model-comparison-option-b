@@ -19,10 +19,13 @@ created in the portal at the end.
 
 ```bash
 pip install -r requirements.txt
-python scripts/generate_data.py          # writes the 17 raw CSVs into data/
-python scripts/validate_gold_answers.py  # prints the 12 gold answers; proves the traps fire
 python fabric/generate_model_tmdl.py     # emits the two .SemanticModel TMDL folders
 ```
+
+> `data/` ships **sample** raw tables (large fact tables truncated to header + 10 rows) for
+> structure illustration — see [`data/README.md`](data/README.md). The full synthetic dataset
+> is not committed; supply complete raw tables to the lakehouse for the actual build (PLAN.md
+> Phase 2–3).
 
 ## Configuration (required before any Fabric step)
 
@@ -62,13 +65,11 @@ Tracked files (TMDL, the notebook artifact) carry placeholders like `__SQL_ENDPO
 |---|---|
 | `PLAN.md` | the ordered, confirm-after-each build plan |
 | `CLAUDE.md` | full context + rules for the build agent |
-| `data/` | the 17 raw multi-source tables (generated) |
-| `source-erp-optionA/` | upstream ERP export the generator seeds from (don't edit) |
-| `scripts/` | data generator, gold-answer validator, the notebook as `.py` |
-| `fabric/` | bootstrap + upload/load + TMDL generator + deploy script + model/notebook/agent definitions |
+| `data/` | the 17 raw multi-source tables — **sample** (see `data/README.md`) |
+| `scripts/` | `build_modeled_layer.py` — the conformance notebook as cell-delimited `.py` |
+| `fabric/` | bootstrap + upload/load + TMDL generator + deploy/render scripts + model/notebook/agent definitions |
 | `eval/MultiSourceAgent_Eval.xlsx` | 12-question gold-answer workbook — **live-demo reference only** |
 | `docs/GUIDE_MULTISOURCE_DEMO.md` | reference: schema, relationships, measures, AI-layer rationale, Phase 5b fallback |
-| `alternative-scenario-forecast/` | archived earlier Option B (Forecast vs Actuals) — not active |
 
 ## Environment
 
