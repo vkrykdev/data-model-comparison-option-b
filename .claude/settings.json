@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(fab api *)",
+      "Bash(fab ls *)",
+      "Bash(fab cp *)",
+      "Bash(azcopy --version)",
+      "Bash(az --version)",
+      "Bash(az account *)",
+      "Bash(fab table *)",
+      "Bash(fab cd *)",
+      "Bash(fab pwd *)",
+      "Bash(fab import *)",
+      "Bash(fab job *)",
+      "Bash(python fabric/render_notebook.py)"
+    ]
+  }
+}

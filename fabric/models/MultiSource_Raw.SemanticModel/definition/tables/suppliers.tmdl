@@ -1,0 +1,51 @@
+table suppliers
+	lineageTag: 7832869a-141c-470f-98b6-1442c6c8521e
+
+	column supplier_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: supplier_key
+		lineageTag: 5fa1f6d0-5512-4da6-ac0b-31cf28fac1c9
+
+	column supplier_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supplier_id
+		lineageTag: 98053098-75c0-4432-8066-0b2e5f060696
+
+	column supplier_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supplier_name
+		lineageTag: 090d3f62-769c-4074-b9c4-fec8a8cac3d6
+
+	column supplier_country
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supplier_country
+		lineageTag: 3158615b-2997-46bb-b23f-c015d93e89d2
+
+	column lead_time_mean_days
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: lead_time_mean_days
+		lineageTag: d6e98a93-bdd4-4694-a61d-6bb5d8e2ca1e
+
+	column lead_time_std_days
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: lead_time_std_days
+		lineageTag: 7e2271c5-4104-4aaf-a325-94a73965cac4
+
+	column reliability_score
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: reliability_score
+		lineageTag: 42c6e515-71ce-451b-a5c1-1a27040285d3
+
+	partition suppliers = entity
+		mode: directLake
+		source
+			entityName: suppliers
+			expressionSource: DatabaseQuery
+

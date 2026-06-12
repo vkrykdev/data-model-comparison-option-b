@@ -1,0 +1,33 @@
+table LS_PRODUCT_LIST
+	lineageTag: 827a4f35-208a-4fe1-bdf3-2a6bd5da7c7d
+
+	column LSP_CODE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: LSP_CODE
+		lineageTag: c0d8c657-3ddd-4a0d-a280-4d439654349b
+
+	column PROD_DESC
+		dataType: string
+		summarizeBy: none
+		sourceColumn: PROD_DESC
+		lineageTag: 23a074c2-1c4c-4eab-a8bc-d5e67210d257
+
+	column CATEGORY
+		dataType: string
+		summarizeBy: none
+		sourceColumn: CATEGORY
+		lineageTag: 45e1a440-19c1-4399-96fe-f771f5bca672
+
+	column UNIT_PRICE
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: UNIT_PRICE
+		lineageTag: cf684744-123f-4719-9387-638a7226d105
+
+	partition LS_PRODUCT_LIST = entity
+		mode: directLake
+		source
+			entityName: LS_PRODUCT_LIST
+			expressionSource: DatabaseQuery
+

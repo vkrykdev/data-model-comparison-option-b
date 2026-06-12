@@ -1,0 +1,45 @@
+table mm_orders
+	lineageTag: 9204cd3d-d60c-4e51-b2ab-28a8e63b0cee
+
+	column mmOrderId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: mmOrderId
+		lineageTag: a7d5922c-496d-4505-b916-c8b3c1aa9db1
+
+	column orderDate
+		dataType: string
+		summarizeBy: none
+		sourceColumn: orderDate
+		lineageTag: 377d6450-11ea-4916-ab20-160fd5dcceec
+
+	column listingId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: listingId
+		lineageTag: 14788686-b672-40d8-9171-fa43a09aa63e
+
+	column qty
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: qty
+		lineageTag: 12f01a4a-873f-4ff1-b26a-3b5f28545fe1
+
+	column grossAmount
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: grossAmount
+		lineageTag: ac839c52-4446-4425-8439-222a0f598aca
+
+	column buyerState
+		dataType: string
+		summarizeBy: none
+		sourceColumn: buyerState
+		lineageTag: 6ea243c1-1b12-4ce9-975b-913d50ec3ec7
+
+	partition mm_orders = entity
+		mode: directLake
+		source
+			entityName: mm_orders
+			expressionSource: DatabaseQuery
+

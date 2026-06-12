@@ -1,0 +1,51 @@
+relationship 37865923-ce35-4aed-8a44-712cd00f3dbd
+	fromColumn: c_fact_sales_unified.date_key
+	toColumn: c_dim_date.date_key
+
+relationship 46646da1-3e42-46ee-b19c-d600f6dd2325
+	fromColumn: c_fact_sales_unified.sku
+	toColumn: c_dim_product.sku
+
+relationship c6965dd0-17f9-4552-979f-f0efe1122787
+	fromColumn: c_fact_inventory.date_key
+	toColumn: c_dim_date.date_key
+
+relationship ff5dce20-5a57-405e-88dc-c65f91fbdce3
+	fromColumn: c_fact_inventory.sku
+	toColumn: c_dim_product.sku
+
+relationship 0c108b0e-b2a7-4f13-874e-8a21813a20ab
+	fromColumn: c_fact_service.date_key
+	toColumn: c_dim_date.date_key
+
+relationship 3d54aeed-39ed-40ed-af12-8b3b86bec425
+	fromColumn: c_fact_service.sku
+	toColumn: c_dim_product.sku
+
+relationship a3c35d81-065f-4152-9f23-8af683c643c0
+	fromColumn: c_fact_service_parts.date_key
+	toColumn: c_dim_date.date_key
+
+relationship cf634279-26b5-492d-b414-f663b8613db4
+	fromColumn: c_fact_service_parts.sku
+	toColumn: c_dim_product.sku
+
+relationship 4b4b87a6-6311-43c1-b7c7-a331c1afe92e
+	fromColumn: c_fact_helpdesk.date_key
+	toColumn: c_dim_date.date_key
+
+relationship 08718160-9569-4de9-b127-306d0b8de806
+	fromColumn: c_fact_helpdesk.sku
+	toColumn: c_dim_product.sku
+
+relationship b9d4f7cd-06e9-4ece-b67d-0c068eb9f585
+	fromColumn: c_fact_sales_unified.location_id
+	toColumn: c_dim_location.location_id
+
+relationship 6b02be69-0fc5-4ae1-b8f5-cd34ac1d85e3
+	fromColumn: c_fact_inventory.location_id
+	toColumn: c_dim_location.location_id
+
+relationship 5b5f40d2-2bf7-4cc7-94b7-c1814143dfd1
+	fromColumn: c_fact_sales_unified.channel
+	toColumn: c_dim_channel.channel

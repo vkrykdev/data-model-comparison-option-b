@@ -1,0 +1,6 @@
+ReasonKey,ReasonName,IsQualityRelated
+1,Defective,True
+2,Damaged in transit,False
+3,Wrong item shipped,False
+4,Customer remorse,False
+5,Warranty claim,True

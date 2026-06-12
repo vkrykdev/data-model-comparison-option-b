@@ -1,0 +1,45 @@
+table sku_xref_master
+	lineageTag: b86deabb-21d3-492c-be17-f8dfcf12215d
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: cab790c8-3069-47b7-b787-4d4c801b8863
+
+	column itm_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: itm_code
+		lineageTag: 0df27f5e-028a-46b0-92b1-305366296cc1
+
+	column lsp_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: lsp_code
+		lineageTag: 39a35241-8c9e-4727-ab8a-8c56f4b48bba
+
+	column mm_listing_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: mm_listing_id
+		lineageTag: 1163461d-98c8-4d64-8813-fa8152d518f8
+
+	column last_verified
+		dataType: string
+		summarizeBy: none
+		sourceColumn: last_verified
+		lineageTag: 5ccce240-f205-41d9-a2aa-372c8df43f4a
+
+	column notes
+		dataType: string
+		summarizeBy: none
+		sourceColumn: notes
+		lineageTag: 0fb92d40-6352-4e4b-9a47-54c7ad985ec6
+
+	partition sku_xref_master = entity
+		mode: directLake
+		source
+			entityName: sku_xref_master
+			expressionSource: DatabaseQuery
+

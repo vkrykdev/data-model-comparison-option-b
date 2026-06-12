@@ -1,0 +1,46 @@
+/// DCs (ERP), Lakeside retail stores, and the marketplace pseudo-location.
+table c_dim_location
+	lineageTag: aea8fe8a-2f72-4e98-a9cd-64289b0996f3
+
+	column location_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_id
+		lineageTag: 39f1bb44-0062-4bbb-a746-dfb5dc8193f8
+
+	column location_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_name
+		lineageTag: 44006ca7-31ec-4b07-8a44-13df34322487
+
+	column region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+		lineageTag: b874b1d5-30a7-4a8c-8ef4-7422d9447ef0
+
+	column location_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_type
+		lineageTag: 121f8977-6a4e-4217-89e0-ed07c8519330
+
+	column country
+		dataType: string
+		summarizeBy: none
+		sourceColumn: country
+		lineageTag: 666e1da9-6ff4-41a9-9d82-262dc9208b13
+
+	column source
+		dataType: string
+		summarizeBy: none
+		sourceColumn: source
+		lineageTag: 6b128b0c-e077-4749-a6d3-e306fa1dc364
+
+	partition c_dim_location = entity
+		mode: directLake
+		source
+			entityName: c_dim_location
+			expressionSource: DatabaseQuery
+

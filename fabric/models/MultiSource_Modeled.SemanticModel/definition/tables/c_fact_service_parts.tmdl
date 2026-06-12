@@ -1,0 +1,35 @@
+/// Service parts consumption; ITM- codes resolved to SKUs.
+table c_fact_service_parts
+	lineageTag: 2bb1c6c9-2e19-42cf-bd30-b77c1955e6cf
+
+	column usage_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: usage_id
+		lineageTag: 87bed2af-bb3b-4449-ae32-d14d0f5631e7
+
+	column date_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: date_key
+		lineageTag: 9d277c5a-d0cd-4dc5-ba25-4ab17b812ee4
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: 2b0e5b19-aaea-4e17-83ae-52f6724ee90a
+
+	column qty_used
+		isHidden
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: qty_used
+		lineageTag: d295971a-afb3-4b1b-911a-46fc247092c5
+
+	partition c_fact_service_parts = entity
+		mode: directLake
+		source
+			entityName: c_fact_service_parts
+			expressionSource: DatabaseQuery
+

@@ -1,0 +1,15 @@
+relationship 73577066-bace-424d-9c93-cb64007b8784
+	fromColumn: sales_order_lines.sku
+	toColumn: products.sku
+
+relationship afeaf715-3693-4cee-a9f4-4cb72eee35e7
+	fromColumn: inventory_daily.sku
+	toColumn: products.sku
+
+relationship fb8d1ec9-7d8d-441a-b0a4-2a249ccdb8c5
+	fromColumn: sales_order_lines.location_id
+	toColumn: locations.location_id
+
+relationship c3b20ac6-7df3-4164-a293-dcaf104b0e1f
+	fromColumn: inventory_daily.location_id
+	toColumn: locations.location_id

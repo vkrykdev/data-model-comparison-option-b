@@ -1,0 +1,60 @@
+/// On-hand snapshots. ERP locations are DAILY; Lakeside stores are WEEKLY (grain column). Stockout metrics use grain='daily' only.
+table c_fact_inventory
+	lineageTag: 08849acd-a68c-43df-9312-a79dc80e7218
+
+	column date_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: date_key
+		lineageTag: 29258c90-3550-49ef-b21b-053f048177f7
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: 4f93e2b2-4ddc-428f-aa31-04869dd2a01d
+
+	column location_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_id
+		lineageTag: 1b1cbbbb-eaad-4438-8625-8127a5c6a7ca
+
+	column on_hand_qty
+		isHidden
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: on_hand_qty
+		lineageTag: 1994515d-aefe-4907-baeb-b94bd0737a53
+
+	column safety_stock
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: safety_stock
+		lineageTag: 5bdecd9c-e86f-4392-9ce7-a6d40188f5fb
+
+	column is_stockout
+		isHidden
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: is_stockout
+		lineageTag: 934e2270-ac8a-4a87-90c3-f5c47cef5650
+
+	column grain
+		dataType: string
+		summarizeBy: none
+		sourceColumn: grain
+		lineageTag: 76d22eb7-c2dc-4b41-8a85-c71af1c87486
+
+	column source
+		dataType: string
+		summarizeBy: none
+		sourceColumn: source
+		lineageTag: 3c2ba9ca-3e5c-4290-bb0d-f7125f79c749
+
+	partition c_fact_inventory = entity
+		mode: directLake
+		source
+			entityName: c_fact_inventory
+			expressionSource: DatabaseQuery
+

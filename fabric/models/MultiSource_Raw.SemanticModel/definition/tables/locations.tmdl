@@ -1,0 +1,51 @@
+table locations
+	lineageTag: 3bf8758e-028b-4527-84b8-e10ca343c9f4
+
+	column location_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: location_key
+		lineageTag: 3d173793-2f28-4b26-85cd-b2f1132d7796
+
+	column location_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_id
+		lineageTag: b03f4d11-95a7-4cde-ba6c-657351f3a356
+
+	column location_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_name
+		lineageTag: 82043d85-53dd-4972-8e99-7d653ba4afa8
+
+	column region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+		lineageTag: fd6b4465-2541-4ba3-b4ee-b5dc4d3bb72d
+
+	column location_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_type
+		lineageTag: 23e69b64-d1a8-49fa-80dd-2875bb2ce7ca
+
+	column country
+		dataType: string
+		summarizeBy: none
+		sourceColumn: country
+		lineageTag: 7fd6134b-6c5c-48c2-b853-664856165dbc
+
+	column is_consignment
+		dataType: string
+		summarizeBy: none
+		sourceColumn: is_consignment
+		lineageTag: b37e3775-1c25-4cc4-8c00-422d36dc511a
+
+	partition locations = entity
+		mode: directLake
+		source
+			entityName: locations
+			expressionSource: DatabaseQuery
+

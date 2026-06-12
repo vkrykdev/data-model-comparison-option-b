@@ -1,0 +1,57 @@
+table ServiceWorkOrders
+	lineageTag: 2ab90660-982d-4db8-a562-070aad676d97
+
+	column WorkOrderID
+		dataType: string
+		summarizeBy: none
+		sourceColumn: WorkOrderID
+		lineageTag: 35c872b4-245a-4efa-84cf-f7e6d1bf9cf0
+
+	column OpenedDate
+		dataType: string
+		summarizeBy: none
+		sourceColumn: OpenedDate
+		lineageTag: c4ee83d7-bd1b-4969-b31f-3fa380e09aa0
+
+	column ClosedDate
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ClosedDate
+		lineageTag: 0c103df1-4c88-4008-87cf-c1555d5c2dcc
+
+	column ItemCode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ItemCode
+		lineageTag: f4f47bc5-b155-4c9f-a247-3678079b7e6a
+
+	column TechnicianID
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnicianID
+		lineageTag: c5e65061-3e44-49f1-8029-6f7031bd26e1
+
+	column WorkType
+		dataType: string
+		summarizeBy: none
+		sourceColumn: WorkType
+		lineageTag: deec3609-245f-4495-a456-c911e7a2d318
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+		lineageTag: c0650dcc-e686-49e0-8154-7b25c514fd11
+
+	column LaborHours
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: LaborHours
+		lineageTag: 1cd1411b-4ec9-4e18-b5d3-62653693da61
+
+	partition ServiceWorkOrders = entity
+		mode: directLake
+		source
+			entityName: ServiceWorkOrders
+			expressionSource: DatabaseQuery
+

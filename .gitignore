@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+~$*.xlsx
+
+# Local environment config & secrets — never commit (use .env.example as the template)
+.env
+.env.*
+!.env.example
+
+# Generated deploy working copies (hold injected, environment-specific IDs / SQL endpoint).
+# Tracked sources keep placeholders; render/deploy scripts inject real values from .env.
+fabric/models/.deploy_*/
+fabric/notebooks/.deploy_*/

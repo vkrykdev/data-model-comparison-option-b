@@ -1,0 +1,9 @@
+MarketKey,MarketId,MarketName,Region,Country,CurrencyCode
+1,M01,NA-East,North America,United States,USD
+2,M02,NA-West,North America,United States,USD
+3,M03,LATAM,Latin America,Brazil,BRL
+4,M04,EMEA-North,EMEA,Germany,EUR
+5,M05,EMEA-South,EMEA,Spain,EUR
+6,M06,UK-I,EMEA,United Kingdom,GBP
+7,M07,APAC-East,APAC,Japan,JPY
+8,M08,APAC-South,APAC,Australia,AUD

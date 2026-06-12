@@ -1,0 +1,39 @@
+table ServicePartsUsage
+	lineageTag: 9d68e1c9-68b6-4cf2-bc2e-5d6739c935cc
+
+	column UsageID
+		dataType: string
+		summarizeBy: none
+		sourceColumn: UsageID
+		lineageTag: 90fc6f16-1096-42cc-94b0-41f9ff5609b1
+
+	column WorkOrderID
+		dataType: string
+		summarizeBy: none
+		sourceColumn: WorkOrderID
+		lineageTag: bf82b94a-08e1-47e0-986f-d23b60e72672
+
+	column ItemCode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ItemCode
+		lineageTag: 5fee67b3-3dd8-4c21-829f-203f7f82fd1a
+
+	column QtyUsed
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: QtyUsed
+		lineageTag: fa83074f-8282-45ee-8eaf-ae9218f87abe
+
+	column UsageDate
+		dataType: string
+		summarizeBy: none
+		sourceColumn: UsageDate
+		lineageTag: 2ad59997-b74c-478c-ace0-aae2e3625aee
+
+	partition ServicePartsUsage = entity
+		mode: directLake
+		source
+			entityName: ServicePartsUsage
+			expressionSource: DatabaseQuery
+

@@ -1,0 +1,45 @@
+table LS_STORES
+	lineageTag: 9f89f12f-83f2-48d5-b468-a5d7a7ed0b28
+
+	column STORE_CODE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: STORE_CODE
+		lineageTag: 5e31205e-6630-40ff-809d-caccb3dd26c8
+
+	column STORE_NAME
+		dataType: string
+		summarizeBy: none
+		sourceColumn: STORE_NAME
+		lineageTag: e7218a99-51a7-4f76-a461-dca56a0d15aa
+
+	column CITY
+		dataType: string
+		summarizeBy: none
+		sourceColumn: CITY
+		lineageTag: 57512212-ad46-484b-ac81-b38bbbb4e350
+
+	column STATE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: STATE
+		lineageTag: 581a2ac6-287e-42aa-87c4-89a7d5afb813
+
+	column REGION
+		dataType: string
+		summarizeBy: none
+		sourceColumn: REGION
+		lineageTag: 3f6ea8ce-3927-44aa-86fc-a23854f9d6ed
+
+	column SQFT
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: SQFT
+		lineageTag: 926c60e3-735c-459e-b295-93370e44764e
+
+	partition LS_STORES = entity
+		mode: directLake
+		source
+			entityName: LS_STORES
+			expressionSource: DatabaseQuery
+

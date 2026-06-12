@@ -1,0 +1,16 @@
+/// Online / Retail / Wholesale / Marketplace / Lakeside.
+table c_dim_channel
+	lineageTag: 023ddbd7-b06b-42b2-8267-f60badb138a0
+
+	column channel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: channel
+		lineageTag: cac6704a-d00d-4d6a-be4d-12dd68444f2c
+
+	partition c_dim_channel = entity
+		mode: directLake
+		source
+			entityName: c_dim_channel
+			expressionSource: DatabaseQuery
+

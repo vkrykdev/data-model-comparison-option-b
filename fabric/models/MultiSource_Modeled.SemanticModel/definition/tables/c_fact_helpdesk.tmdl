@@ -1,0 +1,52 @@
+/// Helpdesk tickets resolved to SKUs by product name (~88% resolved; rest sku='UNRESOLVED'). is_complaint = 'Product complaint' category; is_open = still open.
+table c_fact_helpdesk
+	lineageTag: ae5adcd6-92e5-4126-ac87-b337a7602f01
+
+	column ticket_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ticket_id
+		lineageTag: add37fee-b8e0-44d3-bfef-a8519e800cc7
+
+	column date_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: date_key
+		lineageTag: 14f0f6f6-3ab8-4295-9935-6569b96d5a51
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: b987349b-69e6-4cac-ae67-2f4f320423fb
+
+	column category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: category
+		lineageTag: 38b7a3cc-f7fb-468b-8fad-7447ca037068
+
+	column is_complaint
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_complaint
+		lineageTag: ef019a3d-53e2-401f-b315-d62c7bbb0394
+
+	column is_open
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_open
+		lineageTag: 472d65da-78ec-4c78-9896-9273923bf96a
+
+	column priority
+		dataType: string
+		summarizeBy: none
+		sourceColumn: priority
+		lineageTag: 1d86e7ed-9176-4850-a2fa-78d5e8ab2484
+
+	partition c_fact_helpdesk = entity
+		mode: directLake
+		source
+			entityName: c_fact_helpdesk
+			expressionSource: DatabaseQuery
+

@@ -1,0 +1,88 @@
+/// Marked date table. is_post_acquisition = on/after 2026-02-01 (Lakeside acquisition).
+table c_dim_date
+	lineageTag: df5a74d6-e8ef-425f-a366-d41b0554cd94
+
+	column date_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: date_key
+		lineageTag: 1de9aaa9-3465-4615-8cf2-93f05197c7f3
+
+	column date
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: date
+		lineageTag: bbf3005f-1db1-42fb-badf-433f82716640
+
+	column year
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: year
+		lineageTag: 805537cc-1b37-4e4a-a798-5ca2cdce4a59
+
+	column quarter
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: quarter
+		lineageTag: 3e816ca9-1d6a-4f51-8c14-b071b68df2b8
+
+	column month
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: month
+		lineageTag: 88fbc1ae-45c9-449d-9679-467c2526151c
+
+	column month_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: month_name
+		lineageTag: f9367ba2-94a4-454f-a9f1-e9ff2965da90
+
+	column month_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: month_key
+		lineageTag: 554c0f9e-a1f2-4d75-b2e2-b5c3b85cad35
+
+	column day
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: day
+		lineageTag: 7971abce-c4bb-407a-a795-5017ee856f3c
+
+	column day_of_week
+		dataType: string
+		summarizeBy: none
+		sourceColumn: day_of_week
+		lineageTag: e2b3e6bc-43b0-4234-b0fe-8901996694dc
+
+	column is_weekend
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_weekend
+		lineageTag: 97aec238-2223-4b23-b721-af75540512bd
+
+	column fiscal_year
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: fiscal_year
+		lineageTag: 4bfb2e47-78b2-47a2-b1fa-01c5fd60f09e
+
+	column fiscal_quarter
+		dataType: string
+		summarizeBy: none
+		sourceColumn: fiscal_quarter
+		lineageTag: af69dbb0-d3c2-4332-a59a-05510c309856
+
+	column is_post_acquisition
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_post_acquisition
+		lineageTag: 7cea86ae-912a-43c3-b272-edb28688d125
+
+	partition c_dim_date = entity
+		mode: directLake
+		source
+			entityName: c_dim_date
+			expressionSource: DatabaseQuery
+

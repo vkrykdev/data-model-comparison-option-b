@@ -1,0 +1,33 @@
+table LS_STOCK_COUNT
+	lineageTag: 6b64a5a8-9e6d-4497-9d52-416096029810
+
+	column COUNT_DATE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: COUNT_DATE
+		lineageTag: b707ba75-8f00-4e87-8689-6623e4b588c2
+
+	column STORE_CODE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: STORE_CODE
+		lineageTag: 29104499-7076-48ea-8ef6-47fd08fc6d03
+
+	column LSP_CODE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: LSP_CODE
+		lineageTag: 6c24fe76-5e29-4f53-91f5-a096daae750e
+
+	column QTY_ON_HAND
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: QTY_ON_HAND
+		lineageTag: 8f2027a1-7599-49fd-83f5-f2e3626d0a05
+
+	partition LS_STOCK_COUNT = entity
+		mode: directLake
+		source
+			entityName: LS_STOCK_COUNT
+			expressionSource: DatabaseQuery
+

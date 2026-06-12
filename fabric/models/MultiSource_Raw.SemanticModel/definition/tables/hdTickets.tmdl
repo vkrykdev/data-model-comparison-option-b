@@ -1,0 +1,57 @@
+table hdTickets
+	lineageTag: 8d5e2167-dca9-499b-bb6d-0503af065434
+
+	column ticketId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ticketId
+		lineageTag: ba2d5dac-16f4-49f9-840c-4b1dbea41d9c
+
+	column createdAt
+		dataType: string
+		summarizeBy: none
+		sourceColumn: createdAt
+		lineageTag: 09a00b81-9667-4028-bf3e-4592efee9858
+
+	column closedAt
+		dataType: string
+		summarizeBy: none
+		sourceColumn: closedAt
+		lineageTag: dd80e5b4-58ca-4d98-9830-dea82a320e66
+
+	column productRef
+		dataType: string
+		summarizeBy: none
+		sourceColumn: productRef
+		lineageTag: 47c4dc03-f0d7-4c70-bf71-b5682ad04693
+
+	column categoryId
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: categoryId
+		lineageTag: bacd20b2-194b-44df-9c48-a46749f02120
+
+	column priority
+		dataType: string
+		summarizeBy: none
+		sourceColumn: priority
+		lineageTag: b85bae99-1575-4a28-adf5-1ef99aa98a18
+
+	column status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: status
+		lineageTag: b4f0c813-35be-4e72-a1d4-77c6fdbb1140
+
+	column channel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: channel
+		lineageTag: 99ca4c82-cacf-4626-8832-360d06d0251b
+
+	partition hdTickets = entity
+		mode: directLake
+		source
+			entityName: hdTickets
+			expressionSource: DatabaseQuery
+

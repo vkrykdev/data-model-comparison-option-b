@@ -1,0 +1,51 @@
+table LS_SALES_EXPORT
+	lineageTag: aa25e00a-c9a3-40fd-9be5-8e8daea14309
+
+	column SALE_ID
+		dataType: string
+		summarizeBy: none
+		sourceColumn: SALE_ID
+		lineageTag: d58f163b-7f0f-4c2e-9432-bd3b7f12c327
+
+	column SALE_DATE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: SALE_DATE
+		lineageTag: 4e7ee743-a3e3-4785-88b9-5872d220b20f
+
+	column STORE_CODE
+		dataType: string
+		summarizeBy: none
+		sourceColumn: STORE_CODE
+		lineageTag: 3c99d4f7-2ace-4742-8a10-715909add14b
+
+	column PROD_DESC
+		dataType: string
+		summarizeBy: none
+		sourceColumn: PROD_DESC
+		lineageTag: 301a0dde-212e-4b37-b9a9-87942912cad4
+
+	column QTY
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: QTY
+		lineageTag: 895f2048-a363-4d60-8e0f-c3f028fea34e
+
+	column UNIT_PRICE
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: UNIT_PRICE
+		lineageTag: cd71ba15-d0fd-4b87-a9a2-c8657b6d5c09
+
+	column TOTAL_AMT
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: TOTAL_AMT
+		lineageTag: cbf257ae-3f73-4f13-ae66-71ccb0af9182
+
+	partition LS_SALES_EXPORT = entity
+		mode: directLake
+		source
+			entityName: LS_SALES_EXPORT
+			expressionSource: DatabaseQuery
+

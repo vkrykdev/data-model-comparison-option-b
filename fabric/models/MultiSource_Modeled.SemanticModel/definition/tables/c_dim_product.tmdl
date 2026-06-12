@@ -1,0 +1,88 @@
+/// One row per product: 100 corporate SKUs (with itm/lsp/listing codes), LSX-* Lakeside-local items, plus UNMAPPED/UNRESOLVED quality members.
+table c_dim_product
+	lineageTag: 95729ab1-67f5-4a65-bf01-0f9625a33104
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: 8a9a8007-750f-446a-b128-be25a4852dc6
+
+	column product_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: product_name
+		lineageTag: 46f683d9-1fa8-474e-b439-a2ca805b8cf6
+
+	column category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: category
+		lineageTag: 783154b7-91c8-461a-8f1c-faffa04ea58b
+
+	column subcategory
+		dataType: string
+		summarizeBy: none
+		sourceColumn: subcategory
+		lineageTag: 604f6986-e321-4b8b-9796-b7564c85037d
+
+	column brand
+		dataType: string
+		summarizeBy: none
+		sourceColumn: brand
+		lineageTag: 1854b942-ac03-4c0a-950f-c47761956089
+
+	column abc_class
+		dataType: string
+		summarizeBy: none
+		sourceColumn: abc_class
+		lineageTag: 4ca59f5e-35ee-4ef9-8651-3e3d7040b29b
+
+	column standard_unit_cost
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: standard_unit_cost
+		lineageTag: 39cf84e4-eb07-4fbc-83e4-3c277b0cd2bb
+
+	column list_price
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: list_price
+		lineageTag: b6f55cc6-674b-471b-ad96-5030c791a646
+
+	column supplier_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supplier_name
+		lineageTag: e4c24c5e-94c5-42b0-93c0-9f73fdb3b398
+
+	column itm_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: itm_code
+		lineageTag: dd195b91-b320-465b-a5b8-940ee77217fc
+
+	column lsp_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: lsp_code
+		lineageTag: d7f8f6a0-f89c-4494-8884-e244a9040932
+
+	column mm_listing_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: mm_listing_id
+		lineageTag: 837a5bdb-5e69-4b5f-87d3-3c32ce221647
+
+	column is_lakeside_only
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_lakeside_only
+		lineageTag: 0b2a746f-39af-493c-b9ab-46fe8cd4dc51
+
+	partition c_dim_product = entity
+		mode: directLake
+		source
+			entityName: c_dim_product
+			expressionSource: DatabaseQuery
+

@@ -1,0 +1,4 @@
+ChannelKey,ChannelId,ChannelName,StandardDiscountPct
+1,CH1,Retail,0.05
+2,CH2,eCommerce,0.1
+3,CH3,Distributor,0.25

@@ -1,0 +1,46 @@
+/// Service work orders; ITM- codes resolved to SKUs via the governed xref.
+table c_fact_service
+	lineageTag: 5acb6782-4f83-478d-9dfb-e0cccf0ed5dc
+
+	column work_order_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: work_order_id
+		lineageTag: a8923958-31d6-44c5-a2ed-ff2fc1db5a01
+
+	column date_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: date_key
+		lineageTag: 1e4e8e21-5f1b-4491-a226-8887c4dfd571
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: 54507ca3-ac9e-42f0-80e6-1ddc588cc33f
+
+	column work_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: work_type
+		lineageTag: de2c1ea3-0096-4a47-a0ce-aa4d4db277e4
+
+	column status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: status
+		lineageTag: 62e6e701-f13f-46dd-9faa-9fcd5beec61d
+
+	column labor_hours
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: labor_hours
+		lineageTag: cfdb1c57-a88a-493c-a255-59aec381eb5a
+
+	partition c_fact_service = entity
+		mode: directLake
+		source
+			entityName: c_fact_service
+			expressionSource: DatabaseQuery
+

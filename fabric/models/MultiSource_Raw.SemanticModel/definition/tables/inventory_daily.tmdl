@@ -1,0 +1,69 @@
+table inventory_daily
+	lineageTag: 4dceb21d-7f52-47c5-baca-f28840c960da
+
+	column date_key
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: date_key
+		lineageTag: adfc057a-d201-433e-a550-02b1f15226cb
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+		lineageTag: f41d5fd4-2cbf-4aff-b800-4ebcea0884fa
+
+	column location_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_id
+		lineageTag: 4fd075d1-0047-4d76-902f-84954615997f
+
+	column on_hand_qty
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: on_hand_qty
+		lineageTag: a76d5bef-7f9d-443d-b711-6e74a42167b1
+
+	column on_order_qty
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: on_order_qty
+		lineageTag: 76140952-475d-4f75-ac96-8dfc395981df
+
+	column in_transit_qty
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: in_transit_qty
+		lineageTag: 42ff1dad-395f-44fb-8959-8df2b23176a4
+
+	column reorder_point
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: reorder_point
+		lineageTag: f5f0935e-525c-4b80-ba75-bcb9205d1fe7
+
+	column safety_stock
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: safety_stock
+		lineageTag: a82868fe-f154-4bee-b52c-3e5aa523106d
+
+	column unit_cost
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: unit_cost
+		lineageTag: 7a4511e6-6730-4756-b36b-ca97848c9555
+
+	column is_stockout
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: is_stockout
+		lineageTag: e3f90a7b-2a1d-4807-bc1d-d8205b74a8ab
+
+	partition inventory_daily = entity
+		mode: directLake
+		source
+			entityName: inventory_daily
+			expressionSource: DatabaseQuery
+

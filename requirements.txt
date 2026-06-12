@@ -1,0 +1,5 @@
+# Local tooling for the data generator, validator, and eval workbook.
+# (notebook_v2_transform.py is PySpark and runs only inside Microsoft Fabric.)
+numpy>=1.26
+pandas>=2.0
+openpyxl>=3.1

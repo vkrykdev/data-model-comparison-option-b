@@ -1,0 +1,39 @@
+table mm_listings
+	lineageTag: 3d2b107d-ad2b-4075-8383-e21a0eb248a8
+
+	column listingId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: listingId
+		lineageTag: b86695cb-1274-4c0f-bef7-2503ab60c267
+
+	column sellerSku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sellerSku
+		lineageTag: 688c5ce5-f871-417a-b366-58811c965626
+
+	column title
+		dataType: string
+		summarizeBy: none
+		sourceColumn: title
+		lineageTag: 4db5b876-f4d7-412b-be03-751b220cb115
+
+	column listPrice
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: listPrice
+		lineageTag: a74f3f14-7bb8-478b-9d56-afa064a1c0ee
+
+	column status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: status
+		lineageTag: 4b4dd6ca-d0f4-4712-b4bd-51cccd29659a
+
+	partition mm_listings = entity
+		mode: directLake
+		source
+			entityName: mm_listings
+			expressionSource: DatabaseQuery
+
