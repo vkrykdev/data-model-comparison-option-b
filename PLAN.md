@@ -21,12 +21,12 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
 - **CLI / REST API (you run):** Phases 1–5 — folders (REST API), lakehouse (REST API), upload
   CSVs (OneLake DFS API — `fab cp` does NOT work), table load (`fab table load`), notebook
   (Fabric Items API + `fab import`), both semantic models (`fab import` via REST move).
-- **Portal (you prepare, the user clicks):** Phase 6 — both data agents (item creation works
+- **Portal (you prepare, the user clicks):** Phase 6 — the three data agents (item creation works
   via API but datasource attachment requires a portal Save/Publish), and Prep-for-AI "Add AI
   instructions" (portal-only — no REST or TMDL API path exists for this preview field).
   You hand the user the exact text from `fabric/agent-config/`.
-- **Scope ends when both agents exist with instructions applied.** No report, no verified
-  answers, no Teams, no answering the 12 eval questions (that's the live demo).
+- **Scope ends when the three agents exist** (Raw bare, Raw_Plus instructed, Modeled). No report,
+  no verified answers, no Teams, no answering the 12 eval questions (that's the live demo).
 
 ## Fixed facts
 
@@ -34,7 +34,8 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
   **Option B**. Everything lives in *Option B*. Capacity **fabricassesmentcoe** (workspace is
   already on it — no capacity assignment).
 - Lakehouse **lh_supply_demo** · models **MultiSource_Raw**, **MultiSource_Modeled** ·
-  notebook **build_modeled_layer** · agents **SupplyAgent_Raw**, **SupplyAgent_Modeled**.
+  notebook **build_modeled_layer** · agents **SupplyAgent_Raw**, **SupplyAgent_Raw_Plus**,
+  **SupplyAgent_Modeled**.
 
 ---
 
@@ -157,7 +158,7 @@ descriptions from `docs/GUIDE_MULTISOURCE_DEMO.md` §"Modeled model".
 underlying data, so totals must agree.
 ⛔ STOP.
 
-## Phase 6 — Create both data agents (portal; you prepare the inputs)
+## Phase 6 — Create the three data agents (portal; you prepare the inputs)
 
 **6.1** Create **SupplyAgent_Raw** in Option B → add data source **MultiSource_Raw** → **no
 instructions**. Follow `fabric/agent-config/SupplyAgent_Raw_setup.md`.
@@ -183,8 +184,19 @@ Same portal publish step as 6.1.
 *Done-when:* the agent exists, points at MultiSource_Modeled, has the style instructions.
 ⛔ STOP.
 
-**✅ DONE.** Both agents exist with instructions. Development scope complete. The 12-question
-walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) is for the live demo, not this build.
+**6.4** Create **SupplyAgent_Raw_Plus** in Option B → add data source **lh_supply_demo (SQL
+analytics endpoint)** (the raw tables, T-SQL) → paste the single instruction block from
+`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md` (≤15,000 chars; split at the
+`==== DATA SOURCE ====` divider if the portal offers separate agent vs data-source fields).
+Same portal publish step as 6.1. This is the **instructions-only** experiment: raw data, no model
+optimization. Do **not** point it at the MultiSource_Raw semantic model — agent instructions
+can't steer DAX there, so the example SQL won't apply.
+*Done-when:* the agent exists, points at the lakehouse SQL endpoint, has the full instructions.
+⛔ STOP.
+
+**✅ DONE.** All three agents exist (Raw bare, Raw_Plus instructed, Modeled). Development scope
+complete. The 12-question walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) scores all three for the
+live demo, not this build.
 
 ---
 

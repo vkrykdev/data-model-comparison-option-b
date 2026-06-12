@@ -1,19 +1,25 @@
 # Fabric Data Agent demo — Raw vs Well-Modeled (Option B)
 
-Two Fabric **Data Agents** over the *same* lakehouse data prove that modeling + an AI layer beats
+Three Fabric **Data Agents** over the *same* lakehouse data show that modeling + an AI layer beats
 raw tables. **MultiSource_Raw** = 17 raw source tables as-landed; **MultiSource_Modeled** = the
 same data conformed by one notebook into a governed star with measures, descriptions, and
 Prep-for-AI. The wins are accuracy, fewer hallucinations, fewer clarification round-trips, and
 lower tokens per correct answer — not raw speed.
 
-Built **from an empty Fabric workspace**, mostly via `fabric-cli`, with the two data agents
+The agents:
+- **SupplyAgent_Raw** — raw model, no instructions (bare baseline).
+- **SupplyAgent_Raw_Plus** — raw data + heavy agent-side instructions (table docs, conformance
+  recipe, example SQL); the *instructions-only, no model optimization* experiment.
+- **SupplyAgent_Modeled** — the governed star + Prep-for-AI.
+
+Built **from an empty Fabric workspace**, mostly via `fabric-cli`, with the three data agents
 created in the portal at the end.
 
 ## For the build agent (Claude Code)
 
 1. Read **`CLAUDE.md`** — context, the CLI-vs-portal capability split, and the hard rules.
 2. Follow **`PLAN.md`** — ordered steps, one at a time, **confirming after each** (`⛔ STOP`
-   gates). Scope ends when both data agents exist with instructions.
+   gates). Scope ends when the three data agents exist.
 
 ## Local quickstart (no Fabric needed)
 

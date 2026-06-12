@@ -3,8 +3,8 @@
 ## What this is
 
 A **Microsoft Fabric demo** proving that a properly modeled, AI-described semantic model beats
-raw, undermodeled tables — judged by the answers two Fabric **Data Agents** give over the
-*same data*. Two semantic models, one lakehouse:
+raw, undermodeled tables — judged by the answers three Fabric **Data Agents** (bare-raw,
+instructed-raw, and modeled) give over the *same data*. Two semantic models, one lakehouse:
 
 - **MultiSource_Raw** — 17 raw tables exactly as five source systems exported them (mixed
   naming, almost no relationships, no measures, no descriptions).
@@ -51,7 +51,8 @@ that last phase is portal work where you prepare the exact inputs and the user c
   - Data Agent item creation works via `POST /v1/workspaces/{ws}/dataAgents` but datasource attachment requires portal Save/Publish (no public API). Create via API, open in portal, add datasource, Save.
   - **"Add AI instructions (preview)"** on a semantic model (Prep for AI): portal-only. No REST API endpoint or TMDL annotation works for this field.
   - SupplyAgent_Raw gets **zero instructions** — that is intentional. It is the bare baseline for the demo contrast.
-- **Scope ends when both agents exist with instructions applied.** Explicitly **out of scope:**
+  - SupplyAgent_Raw_Plus is the same raw data with **heavy agent-side instructions** (`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md`) — the instructions-only experiment. Point it at the **lakehouse `lh_supply_demo` SQL endpoint** (T-SQL), not the Raw model, or the instructions can't steer query generation.
+- **Scope ends when the three agents exist:** SupplyAgent_Raw (bare), SupplyAgent_Raw_Plus (instructed raw), SupplyAgent_Modeled (modeled). Explicitly **out of scope:**
   any report, verified answers, **Teams/Copilot Studio**, and **answering the 12 eval questions**
   (that's the live demo, done by a human).
 
@@ -61,7 +62,8 @@ that last phase is portal work where you prepare the exact inputs and the user c
   **Option B**. *Every* object lives in **Option B**.
 - Capacity **fabricassesmentcoe** — the workspace is already on it; do **not** assign capacity.
 - Names: lakehouse **lh_supply_demo** · models **MultiSource_Raw** / **MultiSource_Modeled** ·
-  notebook **build_modeled_layer** · agents **SupplyAgent_Raw** / **SupplyAgent_Modeled** ·
+  notebook **build_modeled_layer** · agents **SupplyAgent_Raw** / **SupplyAgent_Raw_Plus** /
+  **SupplyAgent_Modeled** ·
   conformed tables **c_*** · raw tables keep their source names.
 - Data window **2025-06-01 → 2026-05-31**; Lakeside acquisition **2026-02-01**.
 

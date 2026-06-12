@@ -6,7 +6,8 @@ conformed schema, the relationships and measures (for the Phase 5b portal fallba
 rationale behind the AI-layer text.
 
 Names: lakehouse **lh_supply_demo** · models **MultiSource_Raw** / **MultiSource_Modeled** ·
-notebook **build_modeled_layer** · agents **SupplyAgent_Raw** / **SupplyAgent_Modeled**. Location:
+notebook **build_modeled_layer** · agents **SupplyAgent_Raw** / **SupplyAgent_Raw_Plus** /
+**SupplyAgent_Modeled**. Location:
 workspace *Microsoft Fabric Demo Stand* → folder *data-model-comparison* → subfolder *Option B*.
 
 ---
@@ -116,8 +117,10 @@ The exact paste-text is in `fabric/agent-config/`. Why it's split the way it is:
 
 ## 6. Scope boundary
 
-The build stops when **SupplyAgent_Raw** (bare, on MultiSource_Raw) and **SupplyAgent_Modeled**
-(on MultiSource_Modeled, with Prep-for-AI + style instructions) both exist. Out of scope: any
+The build stops when all three agents exist: **SupplyAgent_Raw** (bare, on MultiSource_Raw),
+**SupplyAgent_Raw_Plus** (raw data on the lh_supply_demo SQL endpoint + heavy agent instructions —
+the instructions-only experiment), and **SupplyAgent_Modeled** (on MultiSource_Modeled, with
+Prep-for-AI + style instructions). Out of scope: any
 report, verified answers, Teams/Copilot Studio, and **answering the 12 questions** — that walk-
 through is the live demo, scored against `eval/MultiSourceAgent_Eval.xlsx` (gold answers,
 2/1/0/−1 with a hallucination penalty, and token-per-correct-answer). Token/CU capture uses the

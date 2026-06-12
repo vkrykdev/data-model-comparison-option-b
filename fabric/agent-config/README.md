@@ -1,6 +1,6 @@
 # agent-config
 
-The text to paste when creating the two data agents in the portal (Phase 6 — the build's
+The text to paste when creating the three data agents in the portal (Phase 6 — the build's
 stop point). Data agents have no CLI/API creation path on this license, so this phase is
 portal work; these files are the exact inputs.
 
@@ -12,5 +12,5 @@ portal work; these files are the exact inputs.
   instructions alone — no model optimization — can rescue raw-data answers. Best run against
   the `lh_supply_demo` SQL endpoint (T-SQL), not the relationship-less Raw semantic model.
 
-Scope ends when both agents exist with the above applied. No report, no verified answers,
+Scope ends when all three agents exist with the above applied. No report, no verified answers,
 no Teams, no answering the 12 eval questions — those are the live demo / later.
