@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "xxp11page000000000000v",
+  "position": {
+    "x": 16,
+    "y": 100,
+    "z": 1000,
+    "width": 360,
+    "height": 200,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "RP Lakeside Since Acq"
+                }
+              },
+              "queryRef": "sales_order_lines.RP Lakeside Since Acq",
+              "nativeQueryRef": "RP Lakeside Since Acq"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

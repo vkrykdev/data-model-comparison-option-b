@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "xxp05page000000000000t",
+  "position": {
+    "x": 16,
+    "y": 16,
+    "z": 0,
+    "width": 1248,
+    "height": 72,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Q5 \u2014 Net marketplace revenue after fees, by month  [INSTRUCTED RAW / forced]",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Forced via report-level DAX: RP Marketplace Net = SUM(payoutAmount). No date dimension to bucket by month, so a single window total is forced (gold net $7.335M).",
+                    "textStyle": {
+                      "fontSize": "11pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

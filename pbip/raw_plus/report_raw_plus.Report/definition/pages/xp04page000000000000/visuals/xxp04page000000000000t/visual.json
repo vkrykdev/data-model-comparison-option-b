@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "xxp04page000000000000t",
+  "position": {
+    "x": 16,
+    "y": 16,
+    "z": 0,
+    "width": 1248,
+    "height": 72,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Q4 \u2014 Total company sales May 2026 incl. Lakeside + marketplace  [INSTRUCTED RAW / forced]",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Forced via report-level DAX: Cross-source sum re-derived in DAX: ERP (date_key) + marketplace NET (parsed settlementDate) + Lakeside (parsed DD/MM/YYYY). Targets gold $10.054M.",
+                    "textStyle": {
+                      "fontSize": "11pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

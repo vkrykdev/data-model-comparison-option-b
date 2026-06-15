@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "xxp09page000000000000t",
+  "position": {
+    "x": 16,
+    "y": 16,
+    "z": 0,
+    "width": 1248,
+    "height": 72,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Q9 \u2014 Lakeside store sell-through vs DCs since acquisition  [INSTRUCTED RAW / forced]",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Forced via report-level DAX: Both ratios re-derived since 2026-02-01 (Lakeside via parsed DD/MM/YYYY + weekly counts; DC via date_key + daily). Mixed grain makes both approximate (gold 2.85x vs 1.70x).",
+                    "textStyle": {
+                      "fontSize": "11pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

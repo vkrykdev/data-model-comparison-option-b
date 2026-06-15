@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "xxp11page000000000000t",
+  "position": {
+    "x": 16,
+    "y": 16,
+    "z": 0,
+    "width": 1248,
+    "height": 72,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Q11 \u2014 Lakeside revenue since the acquisition (from 2026-02-01)  [INSTRUCTED RAW / forced]",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Forced via report-level DAX: SUM(TOTAL_AMT) where parsed DD/MM/YYYY >= 2026-02-01. Targets gold $4.324M.",
+                    "textStyle": {
+                      "fontSize": "11pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
