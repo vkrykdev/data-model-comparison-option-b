@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp04page000000000000d",
   "position": {
     "x": 952,
     "y": 100,
     "z": 1000,
-    "width": 300,
     "height": 200,
+    "width": 300,
     "tabOrder": 0
   },
   "visual": {
@@ -20,19 +20,58 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Total May"
                 }
               },
-              "queryRef": "sales_order_lines.RP Total May",
-              "nativeQueryRef": "RP Total May"
+              "queryRef": "sales_order_lines.RP Total May1",
+              "nativeQueryRef": "RP Total May1"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP Total May"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "51ebe70702de990c191e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Total May"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

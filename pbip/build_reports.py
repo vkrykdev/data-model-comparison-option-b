@@ -535,10 +535,11 @@ RP_MEASURES = [
      "VAR t = COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn)) "
      "RETURN DIVIDE(t, SUM(sales_order_lines[qty_sold])) * 1000", "0.0"),
     ("RP Parts per 100 Hydraulics",
-     "VAR parts = SUMX(FILTER(ServicePartsUsage, "
-     "VAR s = LOOKUPVALUE(sku_xref_master[sku], sku_xref_master[itm_code], ServicePartsUsage[ItemCode]) "
-     "RETURN NOT ISBLANK(s) && LOOKUPVALUE(products[category], products[sku], s) = \"Hydraulics\"), "
-     "ServicePartsUsage[QtyUsed]) "
+     # set-based mapping via TREATAS (no row-by-row LOOKUPVALUE -> no multi-match
+     # error from the planted sku_xref_master conflict rows)
+     "VAR hydSku = CALCULATETABLE(VALUES(products[sku]), products[category] = \"Hydraulics\") "
+     "VAR hydItm = CALCULATETABLE(VALUES(sku_xref_master[itm_code]), TREATAS(hydSku, sku_xref_master[sku])) "
+     "VAR parts = CALCULATE(SUM(ServicePartsUsage[QtyUsed]), TREATAS(hydItm, ServicePartsUsage[ItemCode])) "
      "VAR units = CALCULATE(SUM(sales_order_lines[qty_sold]), products[category] = \"Hydraulics\") "
      "RETURN DIVIDE(parts, units) * 100", "0.0"),
     ("RP Open Complaints Exact",
@@ -601,8 +602,11 @@ def rp_scaffold():
 
 def rp_extensions():
     os.makedirs(os.path.join(RAWPLUS, "definition"), exist_ok=True)
-    measures = [{"name": n, "expression": e, "dataType": "Double", "formatString": f,
-                 "hidden": False, "references": {"unrecognizedReferences": False}}
+    # Match exactly what Power BI Desktop writes for a report-level measure:
+    # name, dataType, expression, formatString — and NO "references"/"hidden".
+    # Including a hand-authored references block makes Desktop reject the measure
+    # with Missing_References (confirmed by diffing a Desktop-created measure).
+    measures = [{"name": n, "dataType": "Double", "expression": e, "formatString": f}
                 for n, e, f in RP_MEASURES]
     with open(os.path.join(RAWPLUS, "definition", "reportExtensions.json"), "w",
               encoding="utf-8", newline="\n") as fh:

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp04page000000000000c",
   "position": {
     "x": 640,
     "y": 100,
     "z": 1000,
-    "width": 300,
     "height": 200,
+    "width": 300,
     "tabOrder": 0
   },
   "visual": {
@@ -20,19 +20,58 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP LS May"
                 }
               },
-              "queryRef": "sales_order_lines.RP LS May",
-              "nativeQueryRef": "RP LS May"
+              "queryRef": "sales_order_lines.RP LS May1",
+              "nativeQueryRef": "RP LS May1"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP LS May"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e1a304869acc21667856",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP LS May"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

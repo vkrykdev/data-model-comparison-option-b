@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp08page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "width": 1100,
     "height": 540,
+    "width": 1100,
     "tabOrder": 0
   },
   "visual": {
@@ -48,48 +48,33 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Open Complaints Exact"
                 }
               },
-              "queryRef": "sales_order_lines.RP Open Complaints Exact",
-              "nativeQueryRef": "RP Open Complaints Exact"
+              "queryRef": "sales_order_lines.RP Open Complaints Exact1",
+              "nativeQueryRef": "RP Open Complaints Exact1"
             },
             {
               "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP At Stockout Risk"
                 }
               },
-              "queryRef": "sales_order_lines.RP At Stockout Risk",
-              "nativeQueryRef": "RP At Stockout Risk"
+              "queryRef": "sales_order_lines.RP At Stockout Risk1",
+              "nativeQueryRef": "RP At Stockout Risk1"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "sales_order_lines"
-                  }
-                },
-                "Property": "RP Open Complaints Exact"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "drillFilterOtherVisuals": true
@@ -147,7 +132,66 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "2c93dd46e5110257c69d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "products"
+              }
+            },
+            "Property": "sku"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "40583829a8997c8ba6ee",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "products"
+              }
+            },
+            "Property": "product_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "80e5f454e9ca34b491aa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Open Complaints Exact"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "403f571e21080228ce02",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP At Stockout Risk"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

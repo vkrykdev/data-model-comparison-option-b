@@ -7,183 +7,111 @@
       "measures": [
         {
           "name": "RP Revenue",
-          "expression": "SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP Stockout Rate",
-          "expression": "DIVIDE(CALCULATE(COUNTROWS(inventory_daily), inventory_daily[is_stockout] = 1), COUNTROWS(inventory_daily))",
           "dataType": "Double",
-          "formatString": "0.0%",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "DIVIDE(CALCULATE(COUNTROWS(inventory_daily), inventory_daily[is_stockout] = 1), COUNTROWS(inventory_daily))",
+          "formatString": "0.0%"
         },
         {
           "name": "RP Marketplace Net",
-          "expression": "SUM(mm_settlements[payoutAmount])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUM(mm_settlements[payoutAmount])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP ERP May",
-          "expression": "CALCULATE(SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price]), sales_order_lines[date_key] >= 20260501, sales_order_lines[date_key] <= 20260531)",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "CALCULATE(SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price]), sales_order_lines[date_key] >= 20260501, sales_order_lines[date_key] <= 20260531)",
+          "formatString": "#,##0"
         },
         {
           "name": "RP MM Net May",
-          "expression": "SUMX(FILTER(mm_settlements, VALUE(LEFT(mm_settlements[settlementDate],4)) = 2026 && VALUE(MID(mm_settlements[settlementDate],6,2)) = 5), mm_settlements[payoutAmount])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUMX(FILTER(mm_settlements, VALUE(LEFT(mm_settlements[settlementDate],4)) = 2026 && VALUE(MID(mm_settlements[settlementDate],6,2)) = 5), mm_settlements[payoutAmount])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP LS May",
-          "expression": "SUMX(FILTER(LS_SALES_EXPORT, VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) = 2026 && VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) = 5), LS_SALES_EXPORT[TOTAL_AMT])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUMX(FILTER(LS_SALES_EXPORT, VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) = 2026 && VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) = 5), LS_SALES_EXPORT[TOTAL_AMT])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP Total May",
-          "expression": "VAR erp = CALCULATE(SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price]), sales_order_lines[date_key] >= 20260501, sales_order_lines[date_key] <= 20260531) VAR mm = SUMX(FILTER(mm_settlements, VALUE(LEFT(mm_settlements[settlementDate],4)) = 2026 && VALUE(MID(mm_settlements[settlementDate],6,2)) = 5), mm_settlements[payoutAmount]) VAR ls = SUMX(FILTER(LS_SALES_EXPORT, VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) = 2026 && VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) = 5), LS_SALES_EXPORT[TOTAL_AMT]) RETURN erp + mm + ls",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR erp = CALCULATE(SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price]), sales_order_lines[date_key] >= 20260501, sales_order_lines[date_key] <= 20260531) VAR mm = SUMX(FILTER(mm_settlements, VALUE(LEFT(mm_settlements[settlementDate],4)) = 2026 && VALUE(MID(mm_settlements[settlementDate],6,2)) = 5), mm_settlements[payoutAmount]) VAR ls = SUMX(FILTER(LS_SALES_EXPORT, VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) = 2026 && VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) = 5), LS_SALES_EXPORT[TOTAL_AMT]) RETURN erp + mm + ls",
+          "formatString": "#,##0"
         },
         {
           "name": "RP Tickets Exact",
-          "expression": "VAR pn = SELECTEDVALUE(products[product_name]) RETURN COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn))",
           "dataType": "Double",
-          "formatString": "0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR pn = SELECTEDVALUE(products[product_name]) RETURN COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn))",
+          "formatString": "0"
         },
         {
           "name": "RP Units",
-          "expression": "SUM(sales_order_lines[qty_sold])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUM(sales_order_lines[qty_sold])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP Tickets per 1K",
-          "expression": "VAR pn = SELECTEDVALUE(products[product_name]) VAR t = COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn)) RETURN DIVIDE(t, SUM(sales_order_lines[qty_sold])) * 1000",
           "dataType": "Double",
-          "formatString": "0.0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR pn = SELECTEDVALUE(products[product_name]) VAR t = COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn)) RETURN DIVIDE(t, SUM(sales_order_lines[qty_sold])) * 1000",
+          "formatString": "0.0"
         },
         {
           "name": "RP Parts per 100 Hydraulics",
-          "expression": "VAR parts = SUMX(FILTER(ServicePartsUsage, VAR s = LOOKUPVALUE(sku_xref_master[sku], sku_xref_master[itm_code], ServicePartsUsage[ItemCode]) RETURN NOT ISBLANK(s) && LOOKUPVALUE(products[category], products[sku], s) = \"Hydraulics\"), ServicePartsUsage[QtyUsed]) VAR units = CALCULATE(SUM(sales_order_lines[qty_sold]), products[category] = \"Hydraulics\") RETURN DIVIDE(parts, units) * 100",
           "dataType": "Double",
-          "formatString": "0.0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR hydSku = CALCULATETABLE(VALUES(products[sku]), products[category] = \"Hydraulics\") VAR hydItm = CALCULATETABLE(VALUES(sku_xref_master[itm_code]), TREATAS(hydSku, sku_xref_master[sku])) VAR parts = CALCULATE(SUM(ServicePartsUsage[QtyUsed]), TREATAS(hydItm, ServicePartsUsage[ItemCode])) VAR units = CALCULATE(SUM(sales_order_lines[qty_sold]), products[category] = \"Hydraulics\") RETURN DIVIDE(parts, units) * 100",
+          "formatString": "0.0"
         },
         {
           "name": "RP Open Complaints Exact",
-          "expression": "VAR pn = SELECTEDVALUE(products[product_name]) RETURN COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn && hdTickets[categoryId] = 1 && hdTickets[status] = \"open\"))",
           "dataType": "Double",
-          "formatString": "0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR pn = SELECTEDVALUE(products[product_name]) RETURN COUNTROWS(FILTER(hdTickets, hdTickets[productRef] = pn && hdTickets[categoryId] = 1 && hdTickets[status] = \"open\"))",
+          "formatString": "0"
         },
         {
           "name": "RP At Stockout Risk",
-          "expression": "VAR latest = CALCULATE(MAX(inventory_daily[date_key]), ALL(inventory_daily)) VAR oh = CALCULATE(SUM(inventory_daily[on_hand_qty]), inventory_daily[date_key] = latest) VAR ss = CALCULATE(SUM(inventory_daily[safety_stock]), inventory_daily[date_key] = latest) RETURN IF(oh <= ss, 1, 0)",
           "dataType": "Double",
-          "formatString": "0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR latest = CALCULATE(MAX(inventory_daily[date_key]), ALL(inventory_daily)) VAR oh = CALCULATE(SUM(inventory_daily[on_hand_qty]), inventory_daily[date_key] = latest) VAR ss = CALCULATE(SUM(inventory_daily[safety_stock]), inventory_daily[date_key] = latest) RETURN IF(oh <= ss, 1, 0)",
+          "formatString": "0"
         },
         {
           "name": "RP Lakeside Sell-Through",
-          "expression": "VAR u = SUMX(FILTER(LS_SALES_EXPORT, (VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) * 10000 + VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) * 100 + VALUE(LEFT(LS_SALES_EXPORT[SALE_DATE],2))) >= 20260201), LS_SALES_EXPORT[QTY]) VAR inv = AVERAGE(LS_STOCK_COUNT[QTY_ON_HAND]) RETURN DIVIDE(u, inv)",
           "dataType": "Double",
-          "formatString": "0.00",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR u = SUMX(FILTER(LS_SALES_EXPORT, (VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) * 10000 + VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) * 100 + VALUE(LEFT(LS_SALES_EXPORT[SALE_DATE],2))) >= 20260201), LS_SALES_EXPORT[QTY]) VAR inv = AVERAGE(LS_STOCK_COUNT[QTY_ON_HAND]) RETURN DIVIDE(u, inv)",
+          "formatString": "0.00"
         },
         {
           "name": "RP DC Sell-Through",
-          "expression": "VAR u = CALCULATE(SUM(sales_order_lines[qty_sold]), sales_order_lines[date_key] >= 20260201) VAR inv = CALCULATE(AVERAGE(inventory_daily[on_hand_qty]), inventory_daily[date_key] >= 20260201) RETURN DIVIDE(u, inv)",
           "dataType": "Double",
-          "formatString": "0.00",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "VAR u = CALCULATE(SUM(sales_order_lines[qty_sold]), sales_order_lines[date_key] >= 20260201) VAR inv = CALCULATE(AVERAGE(inventory_daily[on_hand_qty]), inventory_daily[date_key] >= 20260201) RETURN DIVIDE(u, inv)",
+          "formatString": "0.00"
         },
         {
           "name": "RP Lakeside Sales 03Feb",
-          "expression": "SUMX(FILTER(LS_SALES_EXPORT, LS_SALES_EXPORT[SALE_DATE] = \"03/02/2026\"), LS_SALES_EXPORT[TOTAL_AMT])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUMX(FILTER(LS_SALES_EXPORT, LS_SALES_EXPORT[SALE_DATE] = \"03/02/2026\"), LS_SALES_EXPORT[TOTAL_AMT])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP Lakeside Since Acq",
-          "expression": "SUMX(FILTER(LS_SALES_EXPORT, (VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) * 10000 + VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) * 100 + VALUE(LEFT(LS_SALES_EXPORT[SALE_DATE],2))) >= 20260201), LS_SALES_EXPORT[TOTAL_AMT])",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUMX(FILTER(LS_SALES_EXPORT, (VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) * 10000 + VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) * 100 + VALUE(LEFT(LS_SALES_EXPORT[SALE_DATE],2))) >= 20260201), LS_SALES_EXPORT[TOTAL_AMT])",
+          "formatString": "#,##0"
         },
         {
           "name": "RP Unmatched MM Gross",
-          "expression": "SUMX(mm_orders, VAR lid = mm_orders[listingId] VAR cnt = CALCULATE(COUNTROWS(sku_xref_master), sku_xref_master[mm_listing_id] = lid) RETURN IF(cnt = 0, mm_orders[grossAmount], 0))",
           "dataType": "Double",
-          "formatString": "#,##0",
-          "hidden": false,
-          "references": {
-            "unrecognizedReferences": false
-          }
+          "expression": "SUMX(mm_orders, VAR lid = mm_orders[listingId] VAR cnt = CALCULATE(COUNTROWS(sku_xref_master), sku_xref_master[mm_listing_id] = lid) RETURN IF(cnt = 0, mm_orders[grossAmount], 0))",
+          "formatString": "#,##0"
         }
       ]
     }

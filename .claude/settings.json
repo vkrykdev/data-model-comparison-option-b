@@ -12,7 +12,14 @@
       "Bash(fab pwd *)",
       "Bash(fab import *)",
       "Bash(fab job *)",
-      "Bash(python fabric/render_notebook.py)"
+      "Bash(python fabric/render_notebook.py)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cd /c/Work/RnD/data-model-comparison/option-b/pbip && python build_reports.py && echo \"--- reportExtensions.json ---\" && cat raw/report_raw.Report/definition/reportExtensions.json)",
+      "Read(//c/c/Work/RnD/data-model-comparison/option-b/pbip/raw/report_raw.Report/definition/**)",
+      "WebSearch",
+      "Bash(gh search *)",
+      "PowerShell(gh search code --filename reportExtensions.json \"expression\" --limit 10 2>&1)",
+      "Bash(git check-ignore *)"
     ]
   }
 }

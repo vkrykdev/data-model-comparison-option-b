@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp03page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "width": 360,
     "height": 200,
+    "width": 360,
     "tabOrder": 0
   },
   "visual": {
@@ -20,17 +20,37 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Stockout Rate"
                 }
               },
-              "queryRef": "sales_order_lines.RP Stockout Rate",
-              "nativeQueryRef": "RP Stockout Rate"
+              "queryRef": "sales_order_lines.RP Stockout Rate1",
+              "nativeQueryRef": "RP Stockout Rate1"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP Stockout Rate"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
@@ -105,7 +125,23 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "0209d0f84c66e90998a4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Stockout Rate"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp06page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "width": 1100,
     "height": 540,
+    "width": 1100,
     "tabOrder": 0
   },
   "visual": {
@@ -48,64 +48,127 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Tickets Exact"
                 }
               },
-              "queryRef": "sales_order_lines.RP Tickets Exact",
-              "nativeQueryRef": "RP Tickets Exact"
+              "queryRef": "sales_order_lines.RP Tickets Exact1",
+              "nativeQueryRef": "RP Tickets Exact1"
             },
             {
               "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Units"
                 }
               },
-              "queryRef": "sales_order_lines.RP Units",
-              "nativeQueryRef": "RP Units"
+              "queryRef": "sales_order_lines.RP Units1",
+              "nativeQueryRef": "RP Units1"
             },
             {
               "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Tickets per 1K"
                 }
               },
-              "queryRef": "sales_order_lines.RP Tickets per 1K",
-              "nativeQueryRef": "RP Tickets per 1K"
+              "queryRef": "sales_order_lines.RP Tickets per 1K1",
+              "nativeQueryRef": "RP Tickets per 1K1"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "sales_order_lines"
-                  }
-                },
-                "Property": "RP Tickets per 1K"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7111710a4c95e4000943",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "products"
+              }
+            },
+            "Property": "sku"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "65c7d1d81d2366710b34",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "products"
+              }
+            },
+            "Property": "product_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d9a99d8170453898e063",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Tickets Exact"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0a64b5105748ae334803",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Units"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bffc4001e9ae6e5813c0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Tickets per 1K"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

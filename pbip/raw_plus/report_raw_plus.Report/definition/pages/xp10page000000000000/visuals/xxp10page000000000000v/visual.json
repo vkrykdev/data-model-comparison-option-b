@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp10page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "width": 360,
     "height": 200,
+    "width": 360,
     "tabOrder": 0
   },
   "visual": {
@@ -20,19 +20,58 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Lakeside Sales 03Feb"
                 }
               },
-              "queryRef": "sales_order_lines.RP Lakeside Sales 03Feb",
-              "nativeQueryRef": "RP Lakeside Sales 03Feb"
+              "queryRef": "sales_order_lines.RP Lakeside Sales 03Feb1",
+              "nativeQueryRef": "RP Lakeside Sales 03Feb1"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP Lakeside Sales 03Feb"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "45915c0a604054056827",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Lakeside Sales 03Feb"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

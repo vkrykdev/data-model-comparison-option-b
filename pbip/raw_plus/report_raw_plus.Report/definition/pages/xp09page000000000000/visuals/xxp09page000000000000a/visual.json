@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxp09page000000000000a",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "width": 360,
     "height": 200,
+    "width": 360,
     "tabOrder": 0
   },
   "visual": {
@@ -20,19 +20,58 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
+                      "Schema": "extension",
                       "Entity": "sales_order_lines"
                     }
                   },
                   "Property": "RP Lakeside Sell-Through"
                 }
               },
-              "queryRef": "sales_order_lines.RP Lakeside Sell-Through",
-              "nativeQueryRef": "RP Lakeside Sell-Through"
+              "queryRef": "sales_order_lines.RP Lakeside Sell-Through1",
+              "nativeQueryRef": "RP Lakeside Sell-Through1"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP Lakeside Sell-Through"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2a9cf002e86b8e900473",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Schema": "extension",
+                "Entity": "sales_order_lines"
+              }
+            },
+            "Property": "RP Lakeside Sell-Through"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
