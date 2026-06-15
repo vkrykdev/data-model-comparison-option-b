@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "m05pageeval000000000",
+  "displayName": "Q5 \u2014 Net marketplace revenue by month",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

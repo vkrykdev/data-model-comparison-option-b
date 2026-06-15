@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "rr09pageeval000000000b",
+  "position": {
+    "x": 648,
+    "y": 100,
+    "z": 1000,
+    "width": 616,
+    "height": 540,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "location_id"
+                }
+              },
+              "queryRef": "sales_order_lines.location_id",
+              "nativeQueryRef": "location_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "qty_sold"
+                }
+              },
+              "queryRef": "sales_order_lines.qty_sold",
+              "nativeQueryRef": "qty_sold"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

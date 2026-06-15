@@ -1,0 +1,80 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "rr07pageeval000000000b",
+  "position": {
+    "x": 648,
+    "y": 100,
+    "z": 1000,
+    "width": 616,
+    "height": 540,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ServiceWorkOrders"
+                    }
+                  },
+                  "Property": "WorkOrderID"
+                }
+              },
+              "queryRef": "ServiceWorkOrders.WorkOrderID",
+              "nativeQueryRef": "WorkOrderID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ServiceWorkOrders"
+                    }
+                  },
+                  "Property": "ItemCode"
+                }
+              },
+              "queryRef": "ServiceWorkOrders.ItemCode",
+              "nativeQueryRef": "ItemCode"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ServiceWorkOrders"
+                    }
+                  },
+                  "Property": "WorkType"
+                }
+              },
+              "queryRef": "ServiceWorkOrders.WorkType",
+              "nativeQueryRef": "WorkType"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ServiceWorkOrders"
+                    }
+                  },
+                  "Property": "Status"
+                }
+              },
+              "queryRef": "ServiceWorkOrders.Status",
+              "nativeQueryRef": "Status"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

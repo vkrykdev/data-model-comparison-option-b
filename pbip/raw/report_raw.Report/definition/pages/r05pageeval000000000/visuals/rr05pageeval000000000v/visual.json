@@ -1,0 +1,80 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "rr05pageeval000000000v",
+  "position": {
+    "x": 16,
+    "y": 100,
+    "z": 1000,
+    "width": 900,
+    "height": 300,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_settlements"
+                    }
+                  },
+                  "Property": "grossAmount"
+                }
+              },
+              "queryRef": "mm_settlements.grossAmount",
+              "nativeQueryRef": "grossAmount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_settlements"
+                    }
+                  },
+                  "Property": "commissionFee"
+                }
+              },
+              "queryRef": "mm_settlements.commissionFee",
+              "nativeQueryRef": "commissionFee"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_settlements"
+                    }
+                  },
+                  "Property": "fulfillmentFee"
+                }
+              },
+              "queryRef": "mm_settlements.fulfillmentFee",
+              "nativeQueryRef": "fulfillmentFee"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_settlements"
+                    }
+                  },
+                  "Property": "payoutAmount"
+                }
+              },
+              "queryRef": "mm_settlements.payoutAmount",
+              "nativeQueryRef": "payoutAmount"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

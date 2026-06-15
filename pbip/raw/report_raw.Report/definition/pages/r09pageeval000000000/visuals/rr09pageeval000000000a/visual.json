@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "rr09pageeval000000000a",
+  "position": {
+    "x": 16,
+    "y": 100,
+    "z": 1000,
+    "width": 616,
+    "height": 540,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LS_SALES_EXPORT"
+                    }
+                  },
+                  "Property": "STORE_CODE"
+                }
+              },
+              "queryRef": "LS_SALES_EXPORT.STORE_CODE",
+              "nativeQueryRef": "STORE_CODE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LS_SALES_EXPORT"
+                    }
+                  },
+                  "Property": "QTY"
+                }
+              },
+              "queryRef": "LS_SALES_EXPORT.QTY",
+              "nativeQueryRef": "QTY"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LS_SALES_EXPORT"
+                    }
+                  },
+                  "Property": "TOTAL_AMT"
+                }
+              },
+              "queryRef": "LS_SALES_EXPORT.TOTAL_AMT",
+              "nativeQueryRef": "TOTAL_AMT"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

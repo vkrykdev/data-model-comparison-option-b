@@ -1,0 +1,111 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "mm06pageeval000000000v",
+  "position": {
+    "x": 16,
+    "y": 88,
+    "z": 1000,
+    "width": 1100,
+    "height": 560,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_dim_product"
+                    }
+                  },
+                  "Property": "sku"
+                }
+              },
+              "queryRef": "c_dim_product.sku",
+              "nativeQueryRef": "sku"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_dim_product"
+                    }
+                  },
+                  "Property": "product_name"
+                }
+              },
+              "queryRef": "c_dim_product.product_name",
+              "nativeQueryRef": "product_name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_fact_sales_unified"
+                    }
+                  },
+                  "Property": "Tickets per 1K Units"
+                }
+              },
+              "queryRef": "c_fact_sales_unified.Tickets per 1K Units",
+              "nativeQueryRef": "Tickets per 1K Units"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_fact_sales_unified"
+                    }
+                  },
+                  "Property": "Units Sold"
+                }
+              },
+              "queryRef": "c_fact_sales_unified.Units Sold",
+              "nativeQueryRef": "Units Sold"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_fact_sales_unified"
+                    }
+                  },
+                  "Property": "Tickets"
+                }
+              },
+              "queryRef": "c_fact_sales_unified.Tickets",
+              "nativeQueryRef": "Tickets"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "c_fact_sales_unified"
+                  }
+                },
+                "Property": "Tickets per 1K Units"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -13,3 +13,10 @@ __pycache__/
 # Tracked sources keep placeholders; render/deploy scripts inject real values from .env.
 fabric/models/.deploy_*/
 fabric/notebooks/.deploy_*/
+
+# Filled-in eval results (live-demo scoring). The tracked workbook is the BLANK
+# template; the filled copy holds actual agent answers/scores and stays local.
+eval/MultiSourceAgent_Eval.filled.xlsx
+
+# Power BI per-user local report settings (Microsoft recommends ignoring)
+**/.pbi/localSettings.json

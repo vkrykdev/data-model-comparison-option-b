@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "rr12pageeval000000000a",
+  "position": {
+    "x": 16,
+    "y": 100,
+    "z": 1000,
+    "width": 616,
+    "height": 540,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_orders"
+                    }
+                  },
+                  "Property": "mmOrderId"
+                }
+              },
+              "queryRef": "mm_orders.mmOrderId",
+              "nativeQueryRef": "mmOrderId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_orders"
+                    }
+                  },
+                  "Property": "listingId"
+                }
+              },
+              "queryRef": "mm_orders.listingId",
+              "nativeQueryRef": "listingId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_orders"
+                    }
+                  },
+                  "Property": "grossAmount"
+                }
+              },
+              "queryRef": "mm_orders.grossAmount",
+              "nativeQueryRef": "grossAmount"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
