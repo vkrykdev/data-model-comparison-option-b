@@ -52,9 +52,11 @@ that last phase is portal work where you prepare the exact inputs and the user c
   - **"Add AI instructions (preview)"** on a semantic model (Prep for AI): portal-only. No REST API endpoint or TMDL annotation works for this field.
   - SupplyAgent_Raw gets **zero instructions** — that is intentional. It is the bare baseline for the demo contrast.
   - SupplyAgent_Raw_Plus is the same raw data with **heavy agent-side instructions** (`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md`) — the instructions-only experiment. Point it at the **lakehouse `lh_supply_demo` SQL endpoint** (T-SQL), not the Raw model, or the instructions can't steer query generation.
-- **Scope ends when the three agents exist:** SupplyAgent_Raw (bare), SupplyAgent_Raw_Plus (instructed raw), SupplyAgent_Modeled (modeled). Explicitly **out of scope:**
-  any report, verified answers, **Teams/Copilot Studio**, and **answering the 12 eval questions**
-  (that's the live demo, done by a human).
+- **Phases 1–6 scope = the three agents:** SupplyAgent_Raw (bare), SupplyAgent_Raw_Plus
+  (instructed raw), SupplyAgent_Modeled (modeled). **Phase 7 (added after the original scope)** =
+  three matching Power BI reports in `pbip/` (one per agent, same 12 questions, for a visual
+  side-by-side). Still **out of scope:** verified answers, **Teams/Copilot Studio**, and
+  **answering the 12 eval questions** (that's the live demo, done by a human).
 
 ## Fixed facts (use exactly these)
 
@@ -88,7 +90,14 @@ that last phase is portal work where you prepare the exact inputs and the user c
 │   ├── models/                     ← MultiSource_Raw / MultiSource_Modeled .SemanticModel (TMDL)
 │   ├── notebooks/build_modeled_layer.Notebook/  ← importable notebook source (placeholders)
 │   └── agent-config/               ← Phase 6 paste-text (Prep-for-AI, agent instructions, raw setup)
-├── eval/MultiSourceAgent_Eval.xlsx ← 12-question gold-answer workbook — LIVE-DEMO reference only
+├── pbip/                           ← Phase 7: three Power BI reports (PBIR) over the deployed models
+│   ├── build_reports.py            ← generator: emits every page/visual for all three reports
+│   ├── raw/                        ← report_raw → MultiSource_Raw (bare; honest-demo visuals)
+│   ├── raw_plus/                   ← report_raw_plus → MultiSource_Raw + report-level DAX (forces all 12)
+│   └── modeled/                    ← report_modeled → MultiSource_Modeled (governed measures)
+├── eval/MultiSourceAgent_Eval.xlsx ← 12-question workbook — BLANK template (.filled.xlsx is git-ignored)
+├── build_data_layer.md             ← plain-English explanation of the star-schema grouping
+├── history.md / history.uk.md      ← demo narrative (EN / UK) for presenting
 └── docs/GUIDE_MULTISOURCE_DEMO.md  ← reference: schema, relationships, measures, instruction rationale
 ```
 
@@ -148,6 +157,17 @@ the portal. No public API publish endpoint exists.
 **Phase 6 — Prep-for-AI "Add AI instructions":** Portal-only. `getDefinition`/`updateDefinition`
 TMDL annotations do not map to this preview field.
 
+**Phase 7 — PBIR reports (`pbip/`):** Reports use `byConnection` (live connect) to the published
+models; `build_reports.py` regenerates every page/visual deterministically. Two sharp edges:
+1. **Report-level (extension) measures** (raw_plus's `reportExtensions.json`) must be referenced
+   in every `visual.json` with `SourceRef: {"Schema": "extension", "Entity": <home table>}`.
+   Omit `Schema: "extension"` and Power BI resolves the measure against the *model*, fails, and
+   raises **`Missing_References`**. `build_reports.py` emits it automatically (its `extension=True`
+   path); model measures (modeled report) and plain columns must NOT carry it. The raw and modeled
+   reports use no report-level measures (implicit aggregation / model measures).
+2. A paused capacity surfaces as **`CapacityNotActive`** (HTTP 404 on `…/workspaceandmodel`) and
+   breaks every live-connected visual — resume the F4 before opening the reports.
+
 ## Gold answers (from the full dataset; for the live demo, not this build)
 
 Q4 total May-2026 sales **$10.054M** (ERP 8.382 + MM net 0.622 + Lakeside 1.051) · Q5 marketplace
@@ -171,4 +191,6 @@ with 3 TODO gaps + 1 retired-SKU + 2 conflict rows. The notebook materializes **
 
 Change the `c_` schema in the notebook → re-run `fabric/generate_model_tmdl.py` so the Modeled
 TMDL still matches. Change the `c_` schema or measures → resync the numbers in
-`eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`.
+`eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`. Change a table/column/
+measure either model exposes → re-run `pbip/build_reports.py` so the reports' field bindings stay
+valid (it verifies every bound field against the deployed model's columns).

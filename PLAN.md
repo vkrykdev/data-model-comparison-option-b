@@ -25,8 +25,9 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
   via API but datasource attachment requires a portal Save/Publish), and Prep-for-AI "Add AI
   instructions" (portal-only — no REST or TMDL API path exists for this preview field).
   You hand the user the exact text from `fabric/agent-config/`.
-- **Scope ends when the three agents exist** (Raw bare, Raw_Plus instructed, Modeled). No report,
-  no verified answers, no Teams, no answering the 12 eval questions (that's the live demo).
+- **Phases 1–6 end at the three agents** (Raw bare, Raw_Plus instructed, Modeled); **Phase 7**
+  adds the three Power BI reports (`pbip/`). No verified answers, no Teams, no answering the 12
+  eval questions (that's the live demo).
 
 ## Fixed facts
 
@@ -194,9 +195,29 @@ can't steer DAX there, so the example SQL won't apply.
 *Done-when:* the agent exists, points at the lakehouse SQL endpoint, has the full instructions.
 ⛔ STOP.
 
-**✅ DONE.** All three agents exist (Raw bare, Raw_Plus instructed, Modeled). Development scope
-complete. The 12-question walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) scores all three for the
-live demo, not this build.
+**✅ Phases 1–6 DONE.** All three agents exist (Raw bare, Raw_Plus instructed, Modeled). The
+12-question walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) scores all three for the live demo, not
+this build.
+
+## Phase 7 — Power BI reports (PBIR; one per agent)
+
+Three reports in `pbip/`, **one page per eval question**, all `byConnection` (live connect) to the
+published models. `pbip/build_reports.py` regenerates every page/visual deterministically and
+verifies each bound field against the model — re-run it after any model schema/measure change.
+
+**7.1** `report_raw` → **MultiSource_Raw** — bare, honest-demo visuals: implicit aggregation on raw
+columns only, surfacing the traps (no revenue column, free-text/ITM joins, text dates). No
+report-level measures.
+**7.2** `report_modeled` → **MultiSource_Modeled** — the governed measures answer all 12 cleanly.
+**7.3** `report_raw_plus` → **MultiSource_Raw** + ~18 report-level DAX measures in
+`reportExtensions.json` — forces an answer on every page (cross-source sums, text-date parsing,
+xref lookups); like the Raw_Plus agent, some answers stay approximate.
+- Visuals binding a report-level measure must use `SourceRef: {"Schema": "extension", …}` —
+  omitting it makes Power BI look in the model and raise `Missing_References`. `build_reports.py`
+  handles this (`extension=True`).
+- Resume the F4 first: a paused capacity shows as `CapacityNotActive` and breaks every visual.
+*Done-when:* `python pbip/build_reports.py` runs clean and each `.pbip` opens in Power BI Desktop
+(capacity active) with visuals rendering.
 
 ---
 

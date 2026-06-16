@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "xxp07page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "height": 200,
     "width": 360,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -27,51 +27,13 @@
                   "Property": "RP Parts per 100 Hydraulics"
                 }
               },
-              "queryRef": "sales_order_lines.RP Parts per 100 Hydraulics1",
-              "nativeQueryRef": "RP Parts per 100 Hydraulics1"
+              "queryRef": "sales_order_lines.RP Parts per 100 Hydraulics",
+              "nativeQueryRef": "RP Parts per 100 Hydraulics"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Schema": "extension",
-                    "Entity": "sales_order_lines"
-                  }
-                },
-                "Property": "RP Parts per 100 Hydraulics"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "6b702cd320c2eda06573",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "RP Parts per 100 Hydraulics"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

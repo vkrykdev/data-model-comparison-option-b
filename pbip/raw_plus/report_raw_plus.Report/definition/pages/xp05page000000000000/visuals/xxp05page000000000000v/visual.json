@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "xxp05page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "height": 200,
     "width": 360,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -27,51 +27,13 @@
                   "Property": "RP Marketplace Net"
                 }
               },
-              "queryRef": "sales_order_lines.RP Marketplace Net1",
-              "nativeQueryRef": "RP Marketplace Net1"
+              "queryRef": "sales_order_lines.RP Marketplace Net",
+              "nativeQueryRef": "RP Marketplace Net"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Schema": "extension",
-                    "Entity": "sales_order_lines"
-                  }
-                },
-                "Property": "RP Marketplace Net"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "2a20bf51356535c105a8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "RP Marketplace Net"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

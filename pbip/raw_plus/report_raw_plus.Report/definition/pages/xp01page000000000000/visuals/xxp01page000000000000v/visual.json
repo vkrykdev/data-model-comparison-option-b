@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "xxp01page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "height": 540,
     "width": 1248,
+    "height": 540,
     "tabOrder": 0
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "sales_order_lines.channel",
-              "nativeQueryRef": "channel",
-              "active": true
+              "nativeQueryRef": "channel"
             }
           ]
         },
@@ -46,8 +45,8 @@
                   "Property": "RP Revenue"
                 }
               },
-              "queryRef": "sales_order_lines.RP Revenue1",
-              "nativeQueryRef": "RP Revenue1"
+              "queryRef": "sales_order_lines.RP Revenue",
+              "nativeQueryRef": "RP Revenue"
             }
           ]
         }
@@ -68,8 +67,7 @@
             },
             "direction": "Descending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "drillFilterOtherVisuals": true
@@ -144,37 +142,7 @@
               }
             }
           ]
-        },
-        "howCreated": "User"
-      },
-      {
-        "name": "01fe87fa24e71c7884ab",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "channel"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "7845dd02756a99e5b70a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "RP Revenue"
-          }
-        },
-        "type": "Advanced"
+        }
       }
     ]
   }

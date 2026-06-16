@@ -26,13 +26,16 @@ EXT = "https://developer.microsoft.com/json-schemas/fabric/item/report/definitio
 # low-level field / projection / filter helpers
 # ----------------------------------------------------------------------------
 
-def field(entity, prop, measure=False):
+def field(entity, prop, measure=False, extension=False):
     kind = "Measure" if measure else "Column"
-    return {kind: {"Expression": {"SourceRef": {"Entity": entity}}, "Property": prop}}
+    # Report-level (extension) measures MUST be referenced with Schema="extension",
+    # otherwise Power BI resolves against the model, fails, and raises Missing_References.
+    sref = {"Schema": "extension", "Entity": entity} if extension else {"Entity": entity}
+    return {kind: {"Expression": {"SourceRef": sref}, "Property": prop}}
 
 
-def proj(entity, prop, measure=False):
-    return {"field": field(entity, prop, measure),
+def proj(entity, prop, measure=False, extension=False):
+    return {"field": field(entity, prop, measure, extension),
             "queryRef": f"{entity}.{prop}", "nativeQueryRef": prop}
 
 
@@ -71,8 +74,8 @@ def f_range(name, entity, col, lo, hi):
     }
 
 
-def sort_desc(entity, prop, measure=True):
-    return {"sortDefinition": {"sort": [{"field": field(entity, prop, measure), "direction": "Descending"}]}}
+def sort_desc(entity, prop, measure=True, extension=False):
+    return {"sortDefinition": {"sort": [{"field": field(entity, prop, measure, extension), "direction": "Descending"}]}}
 
 
 def sort_asc(entity, prop, measure=False):
@@ -615,7 +618,7 @@ def rp_extensions():
 
 
 def m(name):
-    return proj(RP_HOME, name, True)
+    return proj(RP_HOME, name, True, extension=True)
 
 
 def build_raw_plus():
@@ -638,7 +641,7 @@ def build_raw_plus():
         column_chart(f"x{p}v", 16, 100, 1248, 540,
                      proj("sales_order_lines", "channel"), m("RP Revenue"),
                      filters=[f_range("xq1d", "sales_order_lines", "date_key", "20260101L", "20260331L")],
-                     sort=sort_desc(RP_HOME, "RP Revenue")),
+                     sort=sort_desc(RP_HOME, "RP Revenue", extension=True)),
     ]))
 
     # Q2
@@ -648,7 +651,7 @@ def build_raw_plus():
               "RP Revenue by SKU, sorted desc. ERP-only (no marketplace/Lakeside) so ranking can differ from gold."),
         table(f"x{p}v", 16, 100, 900, 540,
               [proj("sales_order_lines", "sku"), proj("products", "product_name"), m("RP Revenue")],
-              sort=sort_desc(RP_HOME, "RP Revenue")),
+              sort=sort_desc(RP_HOME, "RP Revenue", extension=True)),
     ]))
 
     # Q3
@@ -687,7 +690,7 @@ def build_raw_plus():
         table(f"x{p}v", 16, 100, 1100, 540,
               [proj("products", "sku"), proj("products", "product_name"),
                m("RP Tickets Exact"), m("RP Units"), m("RP Tickets per 1K")],
-              sort=sort_desc(RP_HOME, "RP Tickets per 1K")),
+              sort=sort_desc(RP_HOME, "RP Tickets per 1K", extension=True)),
     ]))
 
     # Q7
@@ -707,7 +710,7 @@ def build_raw_plus():
               [proj("products", "sku"), proj("products", "product_name"),
                m("RP Open Complaints Exact"), m("RP At Stockout Risk")],
               filters=[f_cat("xq8a", "products", "abc_class", "'A'")],
-              sort=sort_desc(RP_HOME, "RP Open Complaints Exact")),
+              sort=sort_desc(RP_HOME, "RP Open Complaints Exact", extension=True)),
     ]))
 
     # Q9

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "xxp12page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "height": 200,
     "width": 360,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -27,51 +27,13 @@
                   "Property": "RP Unmatched MM Gross"
                 }
               },
-              "queryRef": "sales_order_lines.RP Unmatched MM Gross1",
-              "nativeQueryRef": "RP Unmatched MM Gross1"
+              "queryRef": "sales_order_lines.RP Unmatched MM Gross",
+              "nativeQueryRef": "RP Unmatched MM Gross"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Schema": "extension",
-                    "Entity": "sales_order_lines"
-                  }
-                },
-                "Property": "RP Unmatched MM Gross"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "a670e716b90256db8a31",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "RP Unmatched MM Gross"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

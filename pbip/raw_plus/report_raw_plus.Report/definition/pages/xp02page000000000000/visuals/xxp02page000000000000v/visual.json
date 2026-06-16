@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "xxp02page000000000000v",
   "position": {
     "x": 16,
     "y": 100,
     "z": 1000,
-    "height": 540,
     "width": 900,
+    "height": 540,
     "tabOrder": 0
   },
   "visual": {
@@ -55,60 +55,31 @@
                   "Property": "RP Revenue"
                 }
               },
-              "queryRef": "sales_order_lines.RP Revenue1",
-              "nativeQueryRef": "RP Revenue1"
+              "queryRef": "sales_order_lines.RP Revenue",
+              "nativeQueryRef": "RP Revenue"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "bd5ce88a60262003d21c",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "sku"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "29fb53153971d1a5b6db",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "products"
-              }
-            },
-            "Property": "product_name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "41b7bf8d3aed29c44653",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Schema": "extension",
-                "Entity": "sales_order_lines"
-              }
-            },
-            "Property": "RP Revenue"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
