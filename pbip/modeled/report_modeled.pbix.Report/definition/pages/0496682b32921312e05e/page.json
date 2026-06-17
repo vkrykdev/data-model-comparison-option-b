@@ -11,13 +11,19 @@
         "properties": {
           "image": {
             "image": {
-              "name": "img7354361593760486",
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'img.png'"
+                  }
+                }
+              },
               "url": {
                 "expr": {
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "img7354361593760486.png"
+                    "ItemName": "img36806745444987365.png"
                   }
                 }
               },
@@ -33,7 +39,7 @@
           "transparency": {
             "expr": {
               "Literal": {
-                "Value": "0D"
+                "Value": "85D"
               }
             }
           }

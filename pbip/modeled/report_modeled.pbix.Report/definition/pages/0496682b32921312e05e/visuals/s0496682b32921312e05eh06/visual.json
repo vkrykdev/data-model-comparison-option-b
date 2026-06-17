@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05eh06",
   "position": {
-    "x": 492,
-    "y": 421,
+    "x": 488.00000000000006,
+    "y": 424,
     "z": 0,
-    "width": 460,
     "height": 64,
+    "width": 464,
     "tabOrder": 0
   },
   "visual": {
@@ -19,10 +19,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q6 \u2014 Tickets per 1K units",
+                    "value": "Q6 - Tickets per 1K units",
                     "textStyle": {
-                      "fontSize": "16pt",
-                      "fontWeight": "bold"
+                      "fontWeight": "bold",
+                      "fontSize": "16pt"
                     }
                   }
                 ]
@@ -38,6 +38,46 @@
                 ]
               }
             ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.2
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       ]

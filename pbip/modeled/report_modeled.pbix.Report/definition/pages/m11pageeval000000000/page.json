@@ -1,8 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
-  "name": "m11pageeval000000000",
-  "displayName": "Q11 \u2014 Lakeside revenue since acquisition",
-  "displayOption": "FitToPage",
-  "height": 720,
-  "width": 1280
-}

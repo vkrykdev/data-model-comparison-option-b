@@ -2,10 +2,19 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
   "themeCollection": {
     "baseTheme": {
-      "name": "SoftServe",
+      "name": "CY26SU05",
       "reportVersionAtImport": {
         "visual": "2.9.0",
         "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "AccessibleTidal",
+      "reportVersionAtImport": {
+        "visual": "2.10.0",
+        "report": "3.4.0",
         "page": "2.3.1"
       },
       "type": "SharedResources"
@@ -45,8 +54,13 @@
       "type": "SharedResources",
       "items": [
         {
-          "name": "SoftServe",
-          "path": "BaseThemes/SoftServe.json",
+          "name": "AccessibleTidal",
+          "path": "BuiltInThemes/AccessibleTidal.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "CY26SU05",
+          "path": "BaseThemes/CY26SU05.json",
           "type": "BaseTheme"
         }
       ]
@@ -56,8 +70,8 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "img7354361593760486.png",
-          "path": "img7354361593760486.png",
+          "name": "img36806745444987365.png",
+          "path": "img36806745444987365.png",
           "type": "Image"
         }
       ]

@@ -1,8 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
-  "name": "9395695480646891e085",
-  "displayName": "Q1 \u2014 Revenue by channel",
-  "displayOption": "FitToPage",
-  "height": 720,
-  "width": 1280
-}

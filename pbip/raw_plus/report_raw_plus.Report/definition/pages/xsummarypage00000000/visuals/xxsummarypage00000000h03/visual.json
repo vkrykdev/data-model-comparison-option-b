@@ -5,7 +5,7 @@
     "x": 968,
     "y": 104,
     "z": 2000,
-    "height": 56,
+    "height": 64,
     "width": 464,
     "tabOrder": 2000
   },
@@ -50,6 +50,31 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.2
+                    }
+                  }
                 }
               }
             }

@@ -1,8 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
-  "name": "m04pageeval000000000",
-  "displayName": "Q4 \u2014 Total company sales May 2026",
-  "displayOption": "FitToPage",
-  "height": 720,
-  "width": 1280
-}
