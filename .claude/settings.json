@@ -36,7 +36,14 @@
       "Read(//tmp/**)",
       "Bash(git grep *)",
       "Bash(cd /c/Work/RnD/data-model-comparison/option-b && grep -niE 'three \\(agents|reports\\)|bare[- ]?raw|SupplyAgent_Raw[^_]|report_raw[^_]|all three' CLAUDE.md | grep -ivE 'Raw_Plus')",
-      "Read(//c/c/Work/RnD/data-model-comparison/option-b/**)"
+      "Read(//c/c/Work/RnD/data-model-comparison/option-b/**)",
+      "Bash(sqlcmd --help)",
+      "Bash(sqlcmd query *)",
+      "Bash(echo \"=== ODBC drivers ===\"; ls \"/c/Windows/System32/\" 2>/dev/null | grep -i odbc | head; python -c \"import struct,os; print\\('py ok'\\)\"; echo \"=== try pip pyodbc ===\"; pip install pyodbc -q 2>&1 | tail -3)",
+      "Read(//c/Windows/System32//**)",
+      "Bash(sqlcmd '-?')",
+      "Bash(sqlcmd -S xj5gsmud64gedpw3hfuc4xoevy-4sd5jwt5eaqu5azjrwzsmlcvse.datawarehouse.fabric.microsoft.com -d lh_supply_demo --authentication-method ActiveDirectoryAzCli -Q 'SELECT TOP 1 '\\\\''ok'\\\\'' AS c')",
+      "Bash(fab -c \"auth status\")"
     ]
   }
 }
