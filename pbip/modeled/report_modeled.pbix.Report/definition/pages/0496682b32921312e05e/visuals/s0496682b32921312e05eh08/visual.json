@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05eh08",
   "position": {
-    "x": 1440,
+    "x": 1448,
     "y": 424,
     "z": 0,
     "height": 64,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q8 - A-class open complaints + stockout",
+                    "value": "Q8 - Lakeside sales 03/02/2026 (3 Feb)",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Gold: SKU-0014, SKU-0045",
+                    "value": "Gold: $36,836",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

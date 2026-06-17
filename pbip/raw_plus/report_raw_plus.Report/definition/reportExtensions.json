@@ -21,7 +21,7 @@
           "name": "RP Marketplace Net",
           "dataType": "Double",
           "expression": "SUM(mm_settlements[payoutAmount])",
-          "formatString": "0.00"
+          "formatString": "#,##0"
         },
         {
           "name": "RP ERP May",
@@ -45,7 +45,7 @@
           "name": "RP Total May",
           "dataType": "Double",
           "expression": "VAR erp = CALCULATE(SUMX(sales_order_lines, sales_order_lines[qty_sold] * sales_order_lines[unit_price]), sales_order_lines[date_key] >= 20260501, sales_order_lines[date_key] <= 20260531) VAR mm = SUMX(FILTER(mm_settlements, YEAR(mm_settlements[settlementDate]) = 2026 && MONTH(mm_settlements[settlementDate]) = 5), mm_settlements[payoutAmount]) VAR ls = SUMX(FILTER(LS_SALES_EXPORT, VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) = 2026 && VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) = 5), LS_SALES_EXPORT[TOTAL_AMT]) RETURN erp + mm + ls",
-          "formatString": "0.000"
+          "formatString": "#,##0"
         },
         {
           "name": "RP Tickets Exact",
@@ -99,19 +99,37 @@
           "name": "RP Lakeside Sales 03Feb",
           "dataType": "Double",
           "expression": "SUMX(FILTER(LS_SALES_EXPORT, LS_SALES_EXPORT[SALE_DATE] = \"03/02/2026\"), LS_SALES_EXPORT[TOTAL_AMT])",
-          "formatString": "0.000"
+          "formatString": "#,##0"
         },
         {
           "name": "RP Lakeside Since Acq",
           "dataType": "Double",
           "expression": "SUMX(FILTER(LS_SALES_EXPORT, (VALUE(RIGHT(LS_SALES_EXPORT[SALE_DATE],4)) * 10000 + VALUE(MID(LS_SALES_EXPORT[SALE_DATE],4,2)) * 100 + VALUE(LEFT(LS_SALES_EXPORT[SALE_DATE],2))) >= 20260201), LS_SALES_EXPORT[TOTAL_AMT])",
-          "formatString": "0.000"
+          "formatString": "#,##0"
         },
         {
           "name": "RP Unmatched MM Gross",
           "dataType": "Double",
           "expression": "SUMX(mm_orders, VAR lid = mm_orders[listingId] VAR cnt = CALCULATE(COUNTROWS(sku_xref_master), sku_xref_master[mm_listing_id] = lid) RETURN IF(cnt = 0, mm_orders[grossAmount], 0))",
-          "formatString": "0.000"
+          "formatString": "#,##0"
+        },
+        {
+          "name": "RP After-Sale per 1K",
+          "dataType": "Double",
+          "expression": "VAR units = SUM(sales_order_lines[qty_sold]) VAR names = VALUES(products[product_name]) VAR comp = COUNTROWS(FILTER(hdTickets, hdTickets[categoryId] = 1 && hdTickets[productRef] IN names)) VAR itm = CALCULATETABLE(VALUES(sku_xref_master[itm_code]), TREATAS(VALUES(products[sku]), sku_xref_master[sku])) VAR parts = CALCULATE(SUM(ServicePartsUsage[QtyUsed]), TREATAS(itm, ServicePartsUsage[ItemCode])) RETURN DIVIDE(comp + parts, units) * 1000",
+          "formatString": "0.0"
+        },
+        {
+          "name": "RP Sell-Through",
+          "dataType": "Double",
+          "expression": "DIVIDE(SUM(sales_order_lines[qty_sold]), CALCULATE(AVERAGE(inventory_daily[on_hand_qty])))",
+          "formatString": "0.00"
+        },
+        {
+          "name": "RP Category Avg Sell-Through",
+          "dataType": "Double",
+          "expression": "VAR cat = SELECTEDVALUE(products[category]) RETURN AVERAGEX(FILTER(ALL(products), products[category] = cat), CALCULATE(DIVIDE(SUM(sales_order_lines[qty_sold]), AVERAGE(inventory_daily[on_hand_qty]))))",
+          "formatString": "0.00"
         }
       ]
     }

@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "MultiSource Raw + instructions - all 12 forced via report-level DAX",
+                    "value": "Multi Source Raw + instructions - all 12 forced via report-level DAX",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

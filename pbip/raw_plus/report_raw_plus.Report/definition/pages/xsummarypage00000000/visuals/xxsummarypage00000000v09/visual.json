@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "xxsummarypage00000000v07",
+  "name": "xxsummarypage00000000v09",
   "position": {
-    "x": 968,
-    "y": 495.99999999999994,
-    "z": 19000,
+    "x": 8,
+    "y": 816,
+    "z": 22000,
     "height": 224,
     "width": 464,
-    "tabOrder": 19000
+    "tabOrder": 22000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -24,24 +24,25 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Parts per 100 Hydraulics"
+                  "Property": "RP Lakeside Since Acq"
                 }
               },
-              "queryRef": "sales_order_lines.RP Parts per 100 Hydraulics",
-              "nativeQueryRef": "RP Parts per 100 Hydraulics"
+              "queryRef": "sales_order_lines.RP Lakeside Since Acq",
+              "nativeQueryRef": "RP Lakeside Since Acq",
+              "format": "0.000"
             }
           ]
         }
       }
     },
     "objects": {
-      "value": [
+      "glowCustom": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "true"
                 }
               }
             }
@@ -51,13 +52,13 @@
           }
         }
       ],
-      "glowCustom": [
+      "value": [
         {
           "properties": {
-            "show": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'center'"
                 }
               }
             }

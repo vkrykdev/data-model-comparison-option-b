@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05ev12",
   "position": {
-    "x": 1440,
+    "x": 1448,
     "y": 816,
     "z": 1000,
     "height": 224,
@@ -10,11 +10,39 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "cardVisual",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Data": {
+        "Values": {
           "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_dim_product"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "c_dim_product.category",
+              "nativeQueryRef": "category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_dim_product"
+                    }
+                  },
+                  "Property": "sku"
+                }
+              },
+              "queryRef": "c_dim_product.sku",
+              "nativeQueryRef": "sku"
+            },
             {
               "field": {
                 "Measure": {
@@ -23,47 +51,80 @@
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Marketplace Gross Revenue"
+                  "Property": "Sell-Through Ratio"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Marketplace Gross Revenue",
-              "nativeQueryRef": "Marketplace Gross Revenue"
+              "queryRef": "c_fact_sales_unified.Sell-Through Ratio",
+              "nativeQueryRef": "Sell-Through Ratio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_fact_sales_unified"
+                    }
+                  },
+                  "Property": "Category Avg Sell-Through"
+                }
+              },
+              "queryRef": "c_fact_sales_unified.Category Avg Sell-Through",
+              "nativeQueryRef": "Category Avg Sell-Through"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "c_fact_sales_unified"
+                  }
+                },
+                "Property": "Sell-Through Ratio"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
-      "value": [
+      "values": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "wordWrap": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "false"
                 }
               }
             }
-          },
-          "selector": {
-            "id": "default"
           }
         }
       ],
-      "glowCustom": [
+      "columnWidth": [
         {
           "properties": {
-            "show": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "77.13560102669896D"
                 }
               }
             }
           },
           "selector": {
-            "id": "default"
+            "metadata": "c_dim_product.sku"
           }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },
@@ -95,62 +156,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "sq12u",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "c_dim_product"
-              }
-            },
-            "Property": "sku"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "f",
-              "Entity": "c_dim_product",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "f"
-                          }
-                        },
-                        "Property": "sku"
-                      }
-                    }
-                  ],
-                  "Values": [
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'UNMAPPED'"
-                        }
-                      }
-                    ]
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
   }
 }

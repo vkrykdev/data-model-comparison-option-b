@@ -10,11 +10,25 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "cardVisual",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Data": {
+        "Values": {
           "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_dim_product"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "c_dim_product.category",
+              "nativeQueryRef": "category"
+            },
             {
               "field": {
                 "Measure": {
@@ -23,46 +37,72 @@
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Lakeside Revenue"
+                  "Property": "After-Sale Issues per 1K Units"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Lakeside Revenue",
-              "nativeQueryRef": "Lakeside Revenue"
+              "queryRef": "c_fact_sales_unified.After-Sale Issues per 1K Units",
+              "nativeQueryRef": "After-Sale Issues per 1K Units"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_fact_sales_unified"
+                    }
+                  },
+                  "Property": "Complaints"
+                }
+              },
+              "queryRef": "c_fact_sales_unified.Complaints",
+              "nativeQueryRef": "Complaints"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_fact_sales_unified"
+                    }
+                  },
+                  "Property": "Service Parts Used"
+                }
+              },
+              "queryRef": "c_fact_sales_unified.Service Parts Used",
+              "nativeQueryRef": "Service Parts Used"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "c_fact_sales_unified"
+                  }
+                },
+                "Property": "After-Sale Issues per 1K Units"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
-      "value": [
+      "values": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "wordWrap": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "false"
                 }
               }
             }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
-      ],
-      "glowCustom": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
           }
         }
       ]
@@ -95,62 +135,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "sq11p",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "c_dim_date"
-              }
-            },
-            "Property": "is_post_acquisition"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "f",
-              "Entity": "c_dim_date",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "f"
-                          }
-                        },
-                        "Property": "is_post_acquisition"
-                      }
-                    }
-                  ],
-                  "Values": [
-                    [
-                      {
-                        "Literal": {
-                          "Value": "true"
-                        }
-                      }
-                    ]
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
   }
 }

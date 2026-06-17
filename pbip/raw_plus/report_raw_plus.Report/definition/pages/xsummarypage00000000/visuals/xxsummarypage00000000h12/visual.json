@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q12 - Marketplace revenue, no product",
+                    "value": "Q12 - O/stock vs category AVG sell-through",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Anti-join on missing xref listingId; targets ~$94K",
+                    "value": "DC-only sell-through + re-derived benchmark; misses Lakeside grain",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

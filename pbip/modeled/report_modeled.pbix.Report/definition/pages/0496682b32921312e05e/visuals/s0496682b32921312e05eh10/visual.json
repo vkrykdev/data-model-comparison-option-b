@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q10 - Lakeside sales 03/02/2026 (3 Feb)",
+                    "value": "Q10 - Revenue tied to a known product",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Gold: $36,836",
+                    "value": "Gold: 99.5% attributable; $0.55M unmapped",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

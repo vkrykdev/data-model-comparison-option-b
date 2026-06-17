@@ -10,11 +10,39 @@
     "tabOrder": 16000
   },
   "visual": {
-    "visualType": "cardVisual",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Data": {
+        "Values": {
           "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "products"
+                    }
+                  },
+                  "Property": "sku"
+                }
+              },
+              "queryRef": "products.sku",
+              "nativeQueryRef": "sku"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "products"
+                    }
+                  },
+                  "Property": "product_name"
+                }
+              },
+              "queryRef": "products.product_name",
+              "nativeQueryRef": "product_name"
+            },
             {
               "field": {
                 "Measure": {
@@ -24,11 +52,11 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Total May"
+                  "Property": "RP Tickets per 1K"
                 }
               },
-              "queryRef": "sales_order_lines.RP Total May",
-              "nativeQueryRef": "RP Total May"
+              "queryRef": "sales_order_lines.RP Tickets per 1K",
+              "nativeQueryRef": "RP Tickets per 1K"
             }
           ]
         }
@@ -44,74 +72,30 @@
                     "Entity": "sales_order_lines"
                   }
                 },
-                "Property": "RP Total May"
+                "Property": "RP Tickets per 1K"
               }
             },
             "direction": "Descending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "objects": {
-      "glowCustom": [
+      "values": [
         {
           "properties": {
-            "show": {
+            "wordWrap": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
-      ],
-      "value": [
-        {
-          "properties": {
-            "horizontalAlignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'center'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
           }
         }
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

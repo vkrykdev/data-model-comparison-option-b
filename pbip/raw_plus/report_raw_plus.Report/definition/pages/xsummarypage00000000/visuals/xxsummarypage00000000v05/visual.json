@@ -24,24 +24,24 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Marketplace Net"
+                  "Property": "RP Parts per 100 Hydraulics"
                 }
               },
-              "queryRef": "sales_order_lines.RP Marketplace Net",
-              "nativeQueryRef": "RP Marketplace Net"
+              "queryRef": "sales_order_lines.RP Parts per 100 Hydraulics",
+              "nativeQueryRef": "RP Parts per 100 Hydraulics"
             }
           ]
         }
       }
     },
     "objects": {
-      "value": [
+      "glowCustom": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "true"
                 }
               }
             }
@@ -51,13 +51,13 @@
           }
         }
       ],
-      "glowCustom": [
+      "value": [
         {
           "properties": {
-            "show": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'center'"
                 }
               }
             }

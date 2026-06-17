@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q4 - Total company sales, May 2026",
+                    "value": "Q4 - Tickets per 1K units",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "RP Total May = ERP + MM net + Lakeside (parsed dates)",
+                    "value": "Exact name match of free-text refs; under-reports",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

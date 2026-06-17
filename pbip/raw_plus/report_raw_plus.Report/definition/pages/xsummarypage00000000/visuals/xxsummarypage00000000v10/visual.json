@@ -24,24 +24,25 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Lakeside Sales 03Feb"
+                  "Property": "RP Unmatched MM Gross"
                 }
               },
-              "queryRef": "sales_order_lines.RP Lakeside Sales 03Feb",
-              "nativeQueryRef": "RP Lakeside Sales 03Feb"
+              "queryRef": "sales_order_lines.RP Unmatched MM Gross",
+              "nativeQueryRef": "RP Unmatched MM Gross",
+              "format": "0.000"
             }
           ]
         }
       }
     },
     "objects": {
-      "value": [
+      "glowCustom": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "true"
                 }
               }
             }
@@ -51,13 +52,13 @@
           }
         }
       ],
-      "glowCustom": [
+      "value": [
         {
           "properties": {
-            "show": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'center'"
                 }
               }
             }

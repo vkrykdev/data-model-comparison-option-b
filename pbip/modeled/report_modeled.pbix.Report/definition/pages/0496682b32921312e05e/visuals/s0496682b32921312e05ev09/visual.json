@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05ev09",
   "position": {
-    "x": 16,
+    "x": 8,
     "y": 816,
     "z": 1000,
     "height": 224,
@@ -10,29 +10,10 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "c_dim_location"
-                    }
-                  },
-                  "Property": "location_type"
-                }
-              },
-              "queryRef": "c_dim_location.location_type",
-              "nativeQueryRef": "location_type",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
+        "Data": {
           "projections": [
             {
               "field": {
@@ -42,35 +23,19 @@
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Sell-Through Ratio"
+                  "Property": "Lakeside Revenue"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Sell-Through Ratio",
-              "nativeQueryRef": "Sell-Through Ratio"
+              "queryRef": "c_fact_sales_unified.Lakeside Revenue",
+              "nativeQueryRef": "Lakeside Revenue",
+              "format": "0.000"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "c_fact_sales_unified"
-                  }
-                },
-                "Property": "Sell-Through Ratio"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "objects": {
-      "labels": [
+      "glowCustom": [
         {
           "properties": {
             "show": {
@@ -80,39 +45,25 @@
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
-      "categoryAxis": [
+      "value": [
         {
           "properties": {
-            "show": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "'center'"
                 }
               }
             }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]

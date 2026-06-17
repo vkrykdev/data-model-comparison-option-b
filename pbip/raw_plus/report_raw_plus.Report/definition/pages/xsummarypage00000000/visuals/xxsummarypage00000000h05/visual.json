@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q5 - Net marketplace revenue by month",
+                    "value": "Q5 - Parts attach rate, Hydraulics",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "RP Marketplace Net; no date dim, window total only",
+                    "value": "ITM->SKU via xref TREATAS; targets gold 8.1",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

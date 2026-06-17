@@ -10,10 +10,29 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "cardVisual",
+    "visualType": "clusteredColumnChart",
     "query": {
       "queryState": {
-        "Data": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "c_dim_location"
+                    }
+                  },
+                  "Property": "location_type"
+                }
+              },
+              "queryRef": "c_dim_location.location_type",
+              "nativeQueryRef": "location_type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
           "projections": [
             {
               "field": {
@@ -23,34 +42,61 @@
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Parts per 100 Units"
+                  "Property": "Sell-Through Ratio"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Parts per 100 Units",
-              "nativeQueryRef": "Parts per 100 Units"
+              "queryRef": "c_fact_sales_unified.Sell-Through Ratio",
+              "nativeQueryRef": "Sell-Through Ratio"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "c_fact_sales_unified"
+                  }
+                },
+                "Property": "Sell-Through Ratio"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
-      "value": [
+      "categoryAxis": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "false"
                 }
               }
             }
-          },
-          "selector": {
-            "id": "default"
           }
         }
       ],
-      "glowCustom": [
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
         {
           "properties": {
             "show": {
@@ -59,10 +105,14 @@
                   "Value": "true"
                 }
               }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "2L"
+                }
+              }
             }
-          },
-          "selector": {
-            "id": "default"
           }
         }
       ]
@@ -92,6 +142,19 @@
             }
           }
         }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
@@ -99,15 +162,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "sq7c",
+        "name": "sq7p",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "c_dim_product"
+                "Entity": "c_dim_date"
               }
             },
-            "Property": "category"
+            "Property": "is_post_acquisition"
           }
         },
         "type": "Categorical",
@@ -116,7 +179,7 @@
           "From": [
             {
               "Name": "f",
-              "Entity": "c_dim_product",
+              "Entity": "c_dim_date",
               "Type": 0
             }
           ],
@@ -132,7 +195,7 @@
                             "Source": "f"
                           }
                         },
-                        "Property": "category"
+                        "Property": "is_post_acquisition"
                       }
                     }
                   ],
@@ -140,7 +203,7 @@
                     [
                       {
                         "Literal": {
-                          "Value": "'Hydraulics'"
+                          "Value": "true"
                         }
                       }
                     ]

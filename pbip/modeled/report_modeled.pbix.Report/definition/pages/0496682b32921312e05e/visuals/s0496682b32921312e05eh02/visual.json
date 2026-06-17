@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q2 - Top 5 products by revenue",
+                    "value": "Q2 - Stockout rate, May 2026",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Gold: SKU-0074, 0094, 0014, 0079, 0080",
+                    "value": "Gold: 1.52% of SKU-location-days",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

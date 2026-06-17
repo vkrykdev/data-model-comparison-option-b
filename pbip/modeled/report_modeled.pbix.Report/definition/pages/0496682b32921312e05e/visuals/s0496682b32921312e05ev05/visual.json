@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05ev05",
   "position": {
-    "x": 16,
+    "x": 8,
     "y": 495.99999999999994,
     "z": 1000,
     "height": 224,
@@ -10,44 +10,10 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "c_dim_date"
-                    }
-                  },
-                  "Property": "month_name"
-                }
-              },
-              "queryRef": "c_dim_date.month_name",
-              "nativeQueryRef": "month_name",
-              "active": true
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "c_dim_date"
-                    }
-                  },
-                  "Property": "year"
-                }
-              },
-              "queryRef": "c_dim_date.year",
-              "nativeQueryRef": "year",
-              "active": false
-            }
-          ]
-        },
-        "Y": {
+        "Data": {
           "projections": [
             {
               "field": {
@@ -57,18 +23,18 @@
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Marketplace Net Revenue"
+                  "Property": "Parts per 100 Units"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Marketplace Net Revenue",
-              "nativeQueryRef": "Marketplace Net Revenue"
+              "queryRef": "c_fact_sales_unified.Parts per 100 Units",
+              "nativeQueryRef": "Parts per 100 Units"
             }
           ]
         }
       }
     },
     "objects": {
-      "labels": [
+      "glowCustom": [
         {
           "properties": {
             "show": {
@@ -77,47 +43,26 @@
                   "Value": "true"
                 }
               }
-            },
-            "labelPrecision": {
-              "expr": {
-                "Literal": {
-                  "Value": "2L"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
-      "valueAxis": [
+      "value": [
         {
           "properties": {
-            "showAxisTitle": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'center'"
                 }
               }
             }
-          }
-        }
-      ],
-      "categoryAxis": [
-        {
-          "properties": {
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]
@@ -147,21 +92,65 @@
             }
           }
         }
-      ],
-      "title": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "sq5c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "c_dim_product"
+              }
+            },
+            "Property": "category"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "c_dim_product",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Property": "category"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Hydraulics'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }

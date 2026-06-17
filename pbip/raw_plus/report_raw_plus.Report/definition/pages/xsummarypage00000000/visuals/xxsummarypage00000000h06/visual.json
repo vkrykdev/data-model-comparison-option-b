@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q6 - Tickets per 1K units",
+                    "value": "Q6 - A-class open complaints + stockout",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Exact name match of free-text refs; under-reports",
+                    "value": "Exact-name complaints; may miss gold SKUs",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q9 - Lakeside vs DC sell-through",
+                    "value": "Q9 - Lakeside revenue since acquisition",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Both re-derived since 2026-02-01; mixed grain",
+                    "value": "SUM(TOTAL_AMT) where parsed date >= 2026-02-01",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

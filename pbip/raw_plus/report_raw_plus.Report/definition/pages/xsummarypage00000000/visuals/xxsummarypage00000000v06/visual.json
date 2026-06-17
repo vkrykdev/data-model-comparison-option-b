@@ -52,11 +52,26 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Tickets per 1K"
+                  "Property": "RP Open Complaints Exact"
                 }
               },
-              "queryRef": "sales_order_lines.RP Tickets per 1K",
-              "nativeQueryRef": "RP Tickets per 1K"
+              "queryRef": "sales_order_lines.RP Open Complaints Exact",
+              "nativeQueryRef": "RP Open Complaints Exact"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Schema": "extension",
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "RP At Stockout Risk"
+                }
+              },
+              "queryRef": "sales_order_lines.RP At Stockout Risk",
+              "nativeQueryRef": "RP At Stockout Risk"
             }
           ]
         }
@@ -72,7 +87,7 @@
                     "Entity": "sales_order_lines"
                   }
                 },
-                "Property": "RP Tickets per 1K"
+                "Property": "RP Open Complaints Exact"
               }
             },
             "direction": "Descending"
@@ -81,27 +96,6 @@
       }
     },
     "objects": {
-      "columnWidth": [
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Literal": {
-                  "Value": "256.38418079096044D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "products.product_name"
-          }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
-        }
-      ],
       "values": [
         {
           "properties": {
@@ -114,22 +108,58 @@
             }
           }
         }
-      ]
-    },
-    "visualContainerObjects": {
-      "background": [
+      ],
+      "columnWidth": [
         {
           "properties": {
-            "transparency": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "110.67311798136298D"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "products.product_name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "134.3615735084335D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "sales_order_lines.RP Open Complaints Exact"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "119.67231970910696D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "sales_order_lines.RP At Stockout Risk"
           }
         }
       ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "visualContainerObjects": {
       "border": [
         {
           "properties": {
@@ -157,5 +187,62 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "xsq6a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "products"
+              }
+            },
+            "Property": "abc_class"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "products",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Property": "abc_class"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'A'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }

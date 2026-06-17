@@ -23,24 +23,25 @@
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Stockout Rate %"
+                  "Property": "Revenue Net"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Stockout Rate %",
-              "nativeQueryRef": "Stockout Rate %"
+              "queryRef": "c_fact_sales_unified.Revenue Net",
+              "nativeQueryRef": "Revenue Net",
+              "format": "0.000"
             }
           ]
         }
       }
     },
     "objects": {
-      "value": [
+      "glowCustom": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "true"
                 }
               }
             }
@@ -50,13 +51,13 @@
           }
         }
       ],
-      "glowCustom": [
+      "value": [
         {
           "properties": {
-            "show": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'center'"
                 }
               }
             }

@@ -24,24 +24,24 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Stockout Rate"
+                  "Property": "RP Total May"
                 }
               },
-              "queryRef": "sales_order_lines.RP Stockout Rate",
-              "nativeQueryRef": "RP Stockout Rate"
+              "queryRef": "sales_order_lines.RP Total May",
+              "nativeQueryRef": "RP Total May"
             }
           ]
         }
       }
     },
     "objects": {
-      "value": [
+      "glowCustom": [
         {
           "properties": {
-            "horizontalAlignment": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "true"
                 }
               }
             }
@@ -51,13 +51,13 @@
           }
         }
       ],
-      "glowCustom": [
+      "value": [
         {
           "properties": {
-            "show": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'center'"
                 }
               }
             }
@@ -96,79 +96,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "xsq3d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "inventory_daily"
-              }
-            },
-            "Property": "date_key"
-          }
-        },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "f",
-              "Entity": "inventory_daily",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 2,
-                  "Left": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "f"
-                        }
-                      },
-                      "Property": "date_key"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "20260501L"
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 4,
-                  "Left": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "f"
-                        }
-                      },
-                      "Property": "date_key"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "20260531L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
   }
 }

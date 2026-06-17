@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q3 - Stockout rate, May 2026",
+                    "value": "Q3 - Total company sales, May 2026",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Gold: 1.52% of SKU-location-days",
+                    "value": "Gold: $10.054M (ERP + MM net + Lakeside)",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

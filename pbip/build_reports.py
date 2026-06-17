@@ -79,8 +79,8 @@ def sort_desc(entity, prop, measure=True, extension=False):
     return {"sortDefinition": {"sort": [{"field": field(entity, prop, measure, extension), "direction": "Descending"}]}}
 
 
-def sort_asc(entity, prop, measure=False):
-    return {"sortDefinition": {"sort": [{"field": field(entity, prop, measure), "direction": "Ascending"}]}}
+def sort_asc(entity, prop, measure=False, extension=False):
+    return {"sortDefinition": {"sort": [{"field": field(entity, prop, measure, extension), "direction": "Ascending"}]}}
 
 
 # ----------------------------------------------------------------------------
@@ -195,63 +195,67 @@ SU = "c_fact_sales_unified"   # all measures live here
 # copy so both Summary pages render identically. Encoding it here keeps it
 # drift-safe — regeneration re-applies the look instead of wiping it.
 # ----------------------------------------------------------------------------
-BG_IMAGE = "img7354361593760486.png"  # registered background image (in RegisteredResources)
-SRC_THEME = os.path.join(MODELED, "StaticResources", "SharedResources", "BaseThemes", "SoftServe.json")
-SRC_IMG = os.path.join(MODELED, "StaticResources", "RegisteredResources", BG_IMAGE)
-
-# Canonical report.json branding (matches the modeled report): SoftServe theme,
-# top-aligned sections, collapsed filter pane, and both resource packages
-# (SharedResources theme + RegisteredResources background image).
-BRANDING = {
-    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
-    "themeCollection": {"baseTheme": {"name": "SoftServe",
-                                      "reportVersionAtImport": {"visual": "2.9.0", "report": "3.3.0", "page": "2.3.1"},
-                                      "type": "SharedResources"}},
-    "objects": {
-        "section": [{"properties": {"verticalAlignment": {"expr": {"Literal": {"Value": "'Top'"}}}}}],
-        "outspacePane": [{"properties": {"expanded": {"expr": {"Literal": {"Value": "false"}}}}}],
-    },
-    "resourcePackages": [
-        {"name": "SharedResources", "type": "SharedResources",
-         "items": [{"name": "SoftServe", "path": "BaseThemes/SoftServe.json", "type": "BaseTheme"}]},
-        {"name": "RegisteredResources", "type": "RegisteredResources",
-         "items": [{"name": BG_IMAGE, "path": BG_IMAGE, "type": "Image"}]},
-    ],
-    "settings": {"useStylableVisualContainerHeader": True, "exportDataMode": "AllowSummarized",
-                 "defaultDrillFilterOtherVisuals": True, "allowChangeFilterTypes": True,
-                 "useEnhancedTooltips": True, "useDefaultAggregateDisplayName": True},
-}
+# Theme = CY26SU05 base + AccessibleTidal custom (the committed restyle). Each
+# report owns its OWN committed StaticResources: the two theme JSONs and a
+# per-report background PNG (the two reports use DIFFERENT images). Regeneration
+# must PRESERVE those files and only (re)write report.json + the Summary page
+# background to point at the report's own image — never copy or clobber them.
+THEME_VER = {"visual": "2.9.0", "report": "3.3.0", "page": "2.3.1"}
+CUSTOM_VER = {"visual": "2.10.0", "report": "3.4.0", "page": "2.3.1"}
 
 
-def summary_bg():
-    """Page-level background = the registered image, scaled to fit, fully shown.
-    The SoftServe theme gives every visual an opaque white fill + border, so the
-    cards/charts stay readable while the branded image fills the page behind."""
+def _bg_image(report_dir):
+    """The report's own registered background image (first PNG under RegisteredResources)."""
+    rr = os.path.join(report_dir, "StaticResources", "RegisteredResources")
+    pngs = sorted(f for f in os.listdir(rr) if f.lower().endswith(".png")) if os.path.isdir(rr) else []
+    return pngs[0] if pngs else None
+
+
+def branding(image_name):
+    pkgs = [{"name": "SharedResources", "type": "SharedResources", "items": [
+        {"name": "AccessibleTidal", "path": "BuiltInThemes/AccessibleTidal.json", "type": "CustomTheme"},
+        {"name": "CY26SU05", "path": "BaseThemes/CY26SU05.json", "type": "BaseTheme"}]}]
+    if image_name:
+        pkgs.append({"name": "RegisteredResources", "type": "RegisteredResources",
+                     "items": [{"name": image_name, "path": image_name, "type": "Image"}]})
+    return {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+        "themeCollection": {
+            "baseTheme": {"name": "CY26SU05", "reportVersionAtImport": THEME_VER, "type": "SharedResources"},
+            "customTheme": {"name": "AccessibleTidal", "reportVersionAtImport": CUSTOM_VER, "type": "SharedResources"},
+        },
+        "objects": {
+            "section": [{"properties": {"verticalAlignment": {"expr": {"Literal": {"Value": "'Top'"}}}}}],
+            "outspacePane": [{"properties": {"expanded": {"expr": {"Literal": {"Value": "false"}}}}}],
+        },
+        "resourcePackages": pkgs,
+        "settings": {"useStylableVisualContainerHeader": True, "exportDataMode": "AllowSummarized",
+                     "defaultDrillFilterOtherVisuals": True, "allowChangeFilterTypes": True,
+                     "useEnhancedTooltips": True, "useDefaultAggregateDisplayName": True},
+    }
+
+
+def summary_bg(image_name):
+    """Page-level background = the report's registered image, scaled to fit, 85% transparent
+    (the AccessibleTidal theme gives every visual an opaque fill so tiles stay readable)."""
     return {"background": [{"properties": {
         "image": {"image": {
-            "name": BG_IMAGE.rsplit(".", 1)[0],
+            "name": {"expr": {"Literal": {"Value": "'img.png'"}}},
             "url": {"expr": {"ResourcePackageItem": {
-                "PackageName": "RegisteredResources", "PackageType": 1, "ItemName": BG_IMAGE}}},
+                "PackageName": "RegisteredResources", "PackageType": 1, "ItemName": image_name}}},
             "scaling": {"expr": {"Literal": {"Value": "'Fit'"}}},
         }},
-        "transparency": {"expr": {"Literal": {"Value": "0D"}}},
+        "transparency": {"expr": {"Literal": {"Value": "85D"}}},
     }}]}
 
 
 def brand_report(report_dir):
-    """Ensure a report carries the SoftServe theme + background image and a
-    report.json that registers both. No-op copies when report_dir == MODELED."""
-    dst_theme = os.path.join(report_dir, "StaticResources", "SharedResources", "BaseThemes", "SoftServe.json")
-    if os.path.abspath(dst_theme) != os.path.abspath(SRC_THEME):
-        os.makedirs(os.path.dirname(dst_theme), exist_ok=True)
-        shutil.copyfile(SRC_THEME, dst_theme)
-    dst_img = os.path.join(report_dir, "StaticResources", "RegisteredResources", BG_IMAGE)
-    if os.path.abspath(dst_img) != os.path.abspath(SRC_IMG):
-        os.makedirs(os.path.dirname(dst_img), exist_ok=True)
-        shutil.copyfile(SRC_IMG, dst_img)
+    """Rewrite report.json to register the committed CY26SU05 + AccessibleTidal
+    themes and the report's own background image. Does NOT copy or create any
+    StaticResources — they are committed per report."""
     with open(os.path.join(report_dir, "definition", "report.json"), "w",
               encoding="utf-8", newline="\n") as fh:
-        json.dump(BRANDING, fh, indent=2)
+        json.dump(branding(_bg_image(report_dir)), fh, indent=2)
 
 
 def build_modeled_summary():
@@ -286,83 +290,83 @@ def build_modeled_summary():
                                          f_cat("sq1q", "c_dim_date", "quarter", "1L")],
                                 sort=sort_desc(SU, "Revenue Net")))
 
-    # Q2 — top products by revenue
+    # Q2 — stockout rate May 2026
     x, y = cell(1)
-    visuals.append(hdr(2, x, y, "Top 5 products by revenue", "SKU-0074, 0094, 0014, 0079, 0080"))
-    visuals.append(table(f"s{SUM}v02", x, y + CY, W, CH,
-                         [proj("c_dim_product", "sku"), proj("c_dim_product", "product_name"),
-                          proj(SU, "Revenue Net", True)],
-                         sort=sort_desc(SU, "Revenue Net")))
+    visuals.append(hdr(2, x, y, "Stockout rate, May 2026", "1.52% of SKU-location-days"))
+    visuals.append(card(f"s{SUM}v02", x, y + CY, CW_CARD, CH, proj(SU, "Stockout Rate %", True),
+                        filters=[f_cat("sq2y", "c_dim_date", "year", "2026L"),
+                                 f_cat("sq2m", "c_dim_date", "month", "5L")]))
 
-    # Q3 — stockout rate May 2026
+    # Q3 — total company sales May 2026
     x, y = cell(2)
-    visuals.append(hdr(3, x, y, "Stockout rate, May 2026", "1.52% of SKU-location-days"))
-    visuals.append(card(f"s{SUM}v03", x, y + CY, CW_CARD, CH, proj(SU, "Stockout Rate %", True),
+    visuals.append(hdr(3, x, y, "Total company sales, May 2026", "$10.054M (ERP + MM net + Lakeside)"))
+    visuals.append(card(f"s{SUM}v03", x, y + CY, CW_CARD, CH, proj(SU, "Revenue Net", True),
                         filters=[f_cat("sq3y", "c_dim_date", "year", "2026L"),
                                  f_cat("sq3m", "c_dim_date", "month", "5L")]))
 
-    # Q4 — total company sales May 2026
+    # Q4 — tickets per 1K units
     x, y = cell(3)
-    visuals.append(hdr(4, x, y, "Total company sales, May 2026", "$10.054M (ERP + MM net + Lakeside)"))
-    visuals.append(card(f"s{SUM}v04", x, y + CY, CW_CARD, CH, proj(SU, "Revenue Net", True),
-                        filters=[f_cat("sq4y", "c_dim_date", "year", "2026L"),
-                                 f_cat("sq4m", "c_dim_date", "month", "5L")]))
-
-    # Q5 — net marketplace revenue by month
-    x, y = cell(4)
-    visuals.append(hdr(5, x, y, "Net marketplace revenue by month", "$7.335M net for the window"))
-    visuals.append(column_chart(f"s{SUM}v05", x, y + CY, W, CH,
-                                proj("c_dim_date", "month"), proj(SU, "Marketplace Net Revenue", True),
-                                sort=sort_asc("c_dim_date", "month")))
-
-    # Q6 — tickets per 1K units
-    x, y = cell(5)
-    visuals.append(hdr(6, x, y, "Tickets per 1K units", "SKU-0045, SKU-0014"))
-    visuals.append(table(f"s{SUM}v06", x, y + CY, W, CH,
+    visuals.append(hdr(4, x, y, "Tickets per 1K units", "SKU-0045, SKU-0014"))
+    visuals.append(table(f"s{SUM}v04", x, y + CY, W, CH,
                          [proj("c_dim_product", "sku"), proj("c_dim_product", "product_name"),
                           proj(SU, "Tickets per 1K Units", True)],
                          sort=sort_desc(SU, "Tickets per 1K Units")))
 
-    # Q7 — parts attach rate Hydraulics
-    x, y = cell(6)
-    visuals.append(hdr(7, x, y, "Parts attach rate, Hydraulics", "8.1 parts per 100 units"))
-    visuals.append(card(f"s{SUM}v07", x, y + CY, CW_CARD, CH, proj(SU, "Parts per 100 Units", True),
-                        filters=[f_cat("sq7c", "c_dim_product", "category", "'Hydraulics'")]))
+    # Q5 — parts attach rate Hydraulics
+    x, y = cell(4)
+    visuals.append(hdr(5, x, y, "Parts attach rate, Hydraulics", "8.1 parts per 100 units"))
+    visuals.append(card(f"s{SUM}v05", x, y + CY, CW_CARD, CH, proj(SU, "Parts per 100 Units", True),
+                        filters=[f_cat("sq5c", "c_dim_product", "category", "'Hydraulics'")]))
 
-    # Q8 — A-class open complaints + stockout
-    x, y = cell(7)
-    visuals.append(hdr(8, x, y, "A-class open complaints + stockout", "SKU-0014, SKU-0045"))
-    visuals.append(table(f"s{SUM}v08", x, y + CY, W, CH,
+    # Q6 — A-class open complaints + stockout
+    x, y = cell(5)
+    visuals.append(hdr(6, x, y, "A-class open complaints + stockout", "SKU-0014, SKU-0045"))
+    visuals.append(table(f"s{SUM}v06", x, y + CY, W, CH,
                          [proj("c_dim_product", "sku"), proj("c_dim_product", "product_name"),
                           proj(SU, "Open Complaints", True), proj(SU, "Avg On-Hand Units", True)],
-                         filters=[f_cat("sq8a", "c_dim_product", "abc_class", "'A'")],
+                         filters=[f_cat("sq6a", "c_dim_product", "abc_class", "'A'")],
                          sort=sort_desc(SU, "Open Complaints")))
 
-    # Q9 — Lakeside vs DC sell-through
-    x, y = cell(8)
-    visuals.append(hdr(9, x, y, "Lakeside vs DC sell-through", "Lakeside 2.85x vs DCs 1.70x"))
-    visuals.append(column_chart(f"s{SUM}v09", x, y + CY, W, CH,
+    # Q7 — Lakeside vs DC sell-through
+    x, y = cell(6)
+    visuals.append(hdr(7, x, y, "Lakeside vs DC sell-through", "Lakeside 2.85x vs DCs 1.70x"))
+    visuals.append(column_chart(f"s{SUM}v07", x, y + CY, W, CH,
                                 proj("c_dim_location", "location_type"), proj(SU, "Sell-Through Ratio", True),
-                                filters=[f_cat("sq9p", "c_dim_date", "is_post_acquisition", "true")],
+                                filters=[f_cat("sq7p", "c_dim_date", "is_post_acquisition", "true")],
                                 sort=sort_desc(SU, "Sell-Through Ratio")))
 
-    # Q10 — Lakeside sales 03/02/2026
+    # Q8 — Lakeside sales 03/02/2026
+    x, y = cell(7)
+    visuals.append(hdr(8, x, y, "Lakeside sales 03/02/2026 (3 Feb)", "$36,836"))
+    visuals.append(card(f"s{SUM}v08", x, y + CY, CW_CARD, CH, proj(SU, "Lakeside Revenue", True),
+                        filters=[f_cat("sq8d", "c_dim_date", "date_key", "20260203L")]))
+
+    # Q9 — Lakeside revenue since acquisition
+    x, y = cell(8)
+    visuals.append(hdr(9, x, y, "Lakeside revenue since acquisition", "$4.324M"))
+    visuals.append(card(f"s{SUM}v09", x, y + CY, CW_CARD, CH, proj(SU, "Lakeside Revenue", True),
+                        filters=[f_cat("sq9p", "c_dim_date", "is_post_acquisition", "true")]))
+
+    # Q10 — share of revenue tied to a known product
     x, y = cell(9)
-    visuals.append(hdr(10, x, y, "Lakeside sales 03/02/2026 (3 Feb)", "$36,836"))
-    visuals.append(card(f"s{SUM}v10", x, y + CY, CW_CARD, CH, proj(SU, "Lakeside Revenue", True),
-                        filters=[f_cat("sq10d", "c_dim_date", "date_key", "20260203L")]))
+    visuals.append(hdr(10, x, y, "Revenue tied to a known product", "99.5% attributable; $0.55M unmapped"))
+    visuals.append(card(f"s{SUM}v10", x, y + CY, CW_CARD, CH, proj(SU, "Attributable Revenue %", True)))
 
-    # Q11 — Lakeside revenue since acquisition
+    # Q11 — worst after-sale reliability by category
     x, y = cell(10)
-    visuals.append(hdr(11, x, y, "Lakeside revenue since acquisition", "$4.324M"))
-    visuals.append(card(f"s{SUM}v11", x, y + CY, CW_CARD, CH, proj(SU, "Lakeside Revenue", True),
-                        filters=[f_cat("sq11p", "c_dim_date", "is_post_acquisition", "true")]))
+    visuals.append(hdr(11, x, y, "After-sale issues per 1K, by category", "Hydraulics 88.5/1K (worst)"))
+    visuals.append(table(f"s{SUM}v11", x, y + CY, W, CH,
+                         [proj("c_dim_product", "category"), proj(SU, "After-Sale Issues per 1K Units", True),
+                          proj(SU, "Complaints", True), proj(SU, "Service Parts Used", True)],
+                         sort=sort_desc(SU, "After-Sale Issues per 1K Units")))
 
-    # Q12 — marketplace revenue not tied to a product
+    # Q12 — most overstocked vs category-average sell-through
     x, y = cell(11)
-    visuals.append(hdr(12, x, y, "Marketplace revenue, no product", "~$94K gross (UNMAPPED)"))
-    visuals.append(card(f"s{SUM}v12", x, y + CY, CW_CARD, CH, proj(SU, "Marketplace Gross Revenue", True),
-                        filters=[f_cat("sq12u", "c_dim_product", "sku", "'UNMAPPED'")]))
+    visuals.append(hdr(12, x, y, "Overstock vs category avg sell-through", "SKU-0029/0039/0081 (~0.5x vs ~6x)"))
+    visuals.append(table(f"s{SUM}v12", x, y + CY, W, CH,
+                         [proj("c_dim_product", "category"), proj("c_dim_product", "sku"),
+                          proj(SU, "Sell-Through Ratio", True), proj(SU, "Category Avg Sell-Through", True)],
+                         sort=sort_asc(SU, "Sell-Through Ratio", measure=True)))
 
     return (SUM, "Summary", visuals)
 
@@ -387,50 +391,31 @@ def build_modeled():
     def P(n):
         return f"m{n:02d}pageeval0000000000"[:20]
 
-    # Q2
+    # Q2 — stockout rate May 2026
     p = P(2)
-    pages.append((p, "Q2 — Top 5 products by revenue", [
-        title(p, 2, "Top 5 products by revenue", "SKU-0074, 0094, 0014, 0079, 0080 (read top 5 rows)"),
-        table(f"m{p}v", 16, 88, 900, 560,
-              [proj("c_dim_product", "sku"), proj("c_dim_product", "product_name"),
-               proj(SU, "Revenue Net", True)],
-              sort=sort_desc(SU, "Revenue Net")),
-    ]))
-
-    # Q3
-    p = P(3)
-    pages.append((p, "Q3 — Stockout rate May 2026", [
-        title(p, 3, "Stockout rate in May 2026", "1.52% of SKU-location-days"),
+    pages.append((p, "Q2 — Stockout rate May 2026", [
+        title(p, 2, "Stockout rate in May 2026", "1.52% of SKU-location-days"),
         card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Stockout Rate %", True),
-             filters=[f_cat("mq3y", "c_dim_date", "year", "2026L"),
-                      f_cat("mq3m", "c_dim_date", "month", "5L")]),
+             filters=[f_cat("mq2y", "c_dim_date", "year", "2026L"),
+                      f_cat("mq2m", "c_dim_date", "month", "5L")]),
     ]))
 
-    # Q4 — four cards
-    p = P(4)
-    f4 = [f_cat("mq4y", "c_dim_date", "year", "2026L"), f_cat("mq4m", "c_dim_date", "month", "5L")]
-    pages.append((p, "Q4 — Total company sales May 2026", [
-        title(p, 4, "Total company sales May 2026 incl. Lakeside + marketplace",
+    # Q3 — total company sales May 2026 (four cards)
+    p = P(3)
+    f3 = [f_cat("mq3y", "c_dim_date", "year", "2026L"), f_cat("mq3m", "c_dim_date", "month", "5L")]
+    pages.append((p, "Q3 — Total company sales May 2026", [
+        title(p, 3, "Total company sales May 2026 incl. Lakeside + marketplace",
               "$10.054M = ERP $8.382M + MM net $0.622M + Lakeside $1.051M"),
-        card(f"m{p}a", 16, 88, 300, 200, proj(SU, "ERP Revenue", True), filters=f4),
-        card(f"m{p}b", 328, 88, 300, 200, proj(SU, "Marketplace Net Revenue", True), filters=f4),
-        card(f"m{p}c", 640, 88, 300, 200, proj(SU, "Lakeside Revenue", True), filters=f4),
-        card(f"m{p}d", 952, 88, 300, 200, proj(SU, "Revenue Net", True), filters=f4),
+        card(f"m{p}a", 16, 88, 300, 200, proj(SU, "ERP Revenue", True), filters=f3),
+        card(f"m{p}b", 328, 88, 300, 200, proj(SU, "Marketplace Net Revenue", True), filters=f3),
+        card(f"m{p}c", 640, 88, 300, 200, proj(SU, "Lakeside Revenue", True), filters=f3),
+        card(f"m{p}d", 952, 88, 300, 200, proj(SU, "Revenue Net", True), filters=f3),
     ]))
 
-    # Q5
-    p = P(5)
-    pages.append((p, "Q5 — Net marketplace revenue by month", [
-        title(p, 5, "Net marketplace revenue after fees, by month", "$7.335M net for the window (gross $8.534M, 14% fees)"),
-        column_chart(f"m{p}v", 16, 88, 1248, 560,
-                     proj("c_dim_date", "month"), proj(SU, "Marketplace Net Revenue", True),
-                     sort=sort_asc("c_dim_date", "month")),
-    ]))
-
-    # Q6
-    p = P(6)
-    pages.append((p, "Q6 — Tickets per 1K units", [
-        title(p, 6, "Products with most helpdesk tickets per 1,000 units sold", "SKU-0045, SKU-0014 (read top rows)"),
+    # Q4 — tickets per 1K units
+    p = P(4)
+    pages.append((p, "Q4 — Tickets per 1K units", [
+        title(p, 4, "Products with most helpdesk tickets per 1,000 units sold", "SKU-0045, SKU-0014 (read top rows)"),
         table(f"m{p}v", 16, 88, 1100, 560,
               [proj("c_dim_product", "sku"), proj("c_dim_product", "product_name"),
                proj(SU, "Tickets per 1K Units", True), proj(SU, "Units Sold", True),
@@ -438,57 +423,82 @@ def build_modeled():
               sort=sort_desc(SU, "Tickets per 1K Units")),
     ]))
 
-    # Q7
-    p = P(7)
-    pages.append((p, "Q7 — Parts attach rate Hydraulics", [
-        title(p, 7, "Service parts attach rate for Hydraulics products", "8.1 parts per 100 units"),
+    # Q5 — parts attach rate Hydraulics
+    p = P(5)
+    pages.append((p, "Q5 — Parts attach rate Hydraulics", [
+        title(p, 5, "Service parts attach rate for Hydraulics products", "8.1 parts per 100 units"),
         card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Parts per 100 Units", True),
-             filters=[f_cat("mq7c", "c_dim_product", "category", "'Hydraulics'")]),
+             filters=[f_cat("mq5c", "c_dim_product", "category", "'Hydraulics'")]),
     ]))
 
-    # Q8
-    p = P(8)
-    pages.append((p, "Q8 — A-class open complaints + stockout", [
-        title(p, 8, "A-class products with open complaints AND stockout risk", "SKU-0014, SKU-0045 (top rows: complaints>0, low on-hand)"),
+    # Q6 — A-class open complaints + stockout
+    p = P(6)
+    pages.append((p, "Q6 — A-class open complaints + stockout", [
+        title(p, 6, "A-class products with open complaints AND stockout risk", "SKU-0014, SKU-0045 (top rows: complaints>0, low on-hand)"),
         table(f"m{p}v", 16, 88, 1100, 560,
               [proj("c_dim_product", "sku"), proj("c_dim_product", "product_name"),
                proj(SU, "Open Complaints", True), proj(SU, "Avg On-Hand Units", True)],
-              filters=[f_cat("mq8a", "c_dim_product", "abc_class", "'A'")],
+              filters=[f_cat("mq6a", "c_dim_product", "abc_class", "'A'")],
               sort=sort_desc(SU, "Open Complaints")),
     ]))
 
-    # Q9
-    p = P(9)
-    pages.append((p, "Q9 — Lakeside vs DC sell-through", [
-        title(p, 9, "Lakeside store sell-through vs DCs since acquisition", "Lakeside 2.85x vs DCs 1.70x"),
+    # Q7 — Lakeside vs DC sell-through
+    p = P(7)
+    pages.append((p, "Q7 — Lakeside vs DC sell-through", [
+        title(p, 7, "Lakeside store sell-through vs DCs since acquisition", "Lakeside 2.85x vs DCs 1.70x"),
         column_chart(f"m{p}v", 16, 88, 1248, 560,
                      proj("c_dim_location", "location_type"), proj(SU, "Sell-Through Ratio", True),
-                     filters=[f_cat("mq9p", "c_dim_date", "is_post_acquisition", "true")],
+                     filters=[f_cat("mq7p", "c_dim_date", "is_post_acquisition", "true")],
                      sort=sort_desc(SU, "Sell-Through Ratio")),
     ]))
 
-    # Q10
+    # Q8 — Lakeside sales 03/02/2026
+    p = P(8)
+    pages.append((p, "Q8 — Lakeside sales 03/02/2026", [
+        title(p, 8, "Lakeside sales on 03/02/2026 (DD/MM/YYYY = 3 Feb)", "$36,836"),
+        card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Lakeside Revenue", True),
+             filters=[f_cat("mq8d", "c_dim_date", "date_key", "20260203L")]),
+    ]))
+
+    # Q9 — Lakeside revenue since acquisition
+    p = P(9)
+    pages.append((p, "Q9 — Lakeside revenue since acquisition", [
+        title(p, 9, "Lakeside revenue since the acquisition (from 2026-02-01)", "$4.324M"),
+        card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Lakeside Revenue", True),
+             filters=[f_cat("mq9p", "c_dim_date", "is_post_acquisition", "true")]),
+    ]))
+
+    # Q10 — share of revenue tied to a known product
     p = P(10)
-    pages.append((p, "Q10 — Lakeside sales 03/02/2026", [
-        title(p, 10, "Lakeside sales on 03/02/2026 (DD/MM/YYYY = 3 Feb)", "$36,836"),
-        card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Lakeside Revenue", True),
-             filters=[f_cat("mq10d", "c_dim_date", "date_key", "20260203L")]),
+    pages.append((p, "Q10 — Revenue tied to a known product", [
+        title(p, 10, "Share of total revenue that ties to a known product",
+              "99.5% attributable; $0.553M (0.48%) unattributable — all stale MegaMart UNMAPPED listings"),
+        card(f"m{p}a", 16, 88, 360, 200, proj(SU, "Attributable Revenue %", True)),
+        card(f"m{p}b", 392, 88, 360, 200, proj(SU, "Unattributable Revenue", True)),
+        card(f"m{p}c", 768, 88, 360, 200, proj(SU, "Revenue Net", True)),
     ]))
 
-    # Q11
+    # Q11 — worst after-sale reliability by category
     p = P(11)
-    pages.append((p, "Q11 — Lakeside revenue since acquisition", [
-        title(p, 11, "Lakeside revenue since the acquisition (from 2026-02-01)", "$4.324M"),
-        card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Lakeside Revenue", True),
-             filters=[f_cat("mq11p", "c_dim_date", "is_post_acquisition", "true")]),
+    pages.append((p, "Q11 — After-sale reliability by category", [
+        title(p, 11, "Product category with the worst after-sale reliability",
+              "Hydraulics 88.5 issues/1K (1,420 complaints + 16,156 parts / 198,582 units); ignore tiny 'Unknown' bucket"),
+        table(f"m{p}v", 16, 88, 1100, 560,
+              [proj("c_dim_product", "category"), proj(SU, "After-Sale Issues per 1K Units", True),
+               proj(SU, "Complaints", True), proj(SU, "Service Parts Used", True), proj(SU, "Units Sold", True)],
+              sort=sort_desc(SU, "After-Sale Issues per 1K Units")),
     ]))
 
-    # Q12
+    # Q12 — most overstocked vs category-average sell-through
     p = P(12)
-    pages.append((p, "Q12 — Marketplace revenue not tied to a product", [
-        title(p, 12, "Marketplace revenue not tied to one of our products", "~$94K gross (orphan listings; here the UNMAPPED member)"),
-        card(f"m{p}v", 16, 88, 360, 200, proj(SU, "Marketplace Gross Revenue", True),
-             filters=[f_cat("mq12u", "c_dim_product", "sku", "'UNMAPPED'")]),
+    pages.append((p, "Q12 — Overstock vs category average", [
+        title(p, 12, "Products most overstocked vs their category's average sell-through",
+              "Worst: SKU-0029, SKU-0039 (Fasteners), SKU-0081 (Hydraulics) ~0.5x vs ~6x category avg (read bottom rows)"),
+        table(f"m{p}v", 16, 88, 1100, 560,
+              [proj("c_dim_product", "category"), proj("c_dim_product", "sku"),
+               proj("c_dim_product", "product_name"), proj("c_dim_product", "abc_class"),
+               proj(SU, "Sell-Through Ratio", True), proj(SU, "Category Avg Sell-Through", True)],
+              sort=sort_asc(SU, "Sell-Through Ratio", measure=True)),
     ]))
 
     # Summary page first, then the 12 per-question pages
@@ -498,7 +508,7 @@ def build_modeled():
     clean_old_pages(MODELED, set(order))
     for pid, disp, vis in pages:
         if pid == MSUMMARY:
-            write_page(MODELED, pid, disp, vis, width=1920, height=1080, objects=summary_bg())
+            write_page(MODELED, pid, disp, vis, width=1920, height=1080, objects=summary_bg(_bg_image(MODELED)))
         else:
             write_page(MODELED, pid, disp, vis)
     write_pages_json(MODELED, order, order[0])
@@ -595,6 +605,23 @@ RP_MEASURES = [
      "SUMX(mm_orders, VAR lid = mm_orders[listingId] "
      "VAR cnt = CALCULATE(COUNTROWS(sku_xref_master), sku_xref_master[mm_listing_id] = lid) "
      "RETURN IF(cnt = 0, mm_orders[grossAmount], 0))", "#,##0"),
+    # Q11 — after-sale per 1K by category: exact-name complaints (under-counts free-text refs)
+    # + ITM->SKU parts via xref TREATAS; grouped by products[category] in the visual.
+    ("RP After-Sale per 1K",
+     "VAR units = SUM(sales_order_lines[qty_sold]) "
+     "VAR names = VALUES(products[product_name]) "
+     "VAR comp = COUNTROWS(FILTER(hdTickets, hdTickets[categoryId] = 1 && hdTickets[productRef] IN names)) "
+     "VAR itm = CALCULATETABLE(VALUES(sku_xref_master[itm_code]), TREATAS(VALUES(products[sku]), sku_xref_master[sku])) "
+     "VAR parts = CALCULATE(SUM(ServicePartsUsage[QtyUsed]), TREATAS(itm, ServicePartsUsage[ItemCode])) "
+     "RETURN DIVIDE(comp + parts, units) * 1000", "0.0"),
+    # Q12 — per-product DC sell-through (ERP daily only; blind to Lakeside weekly grain)
+    ("RP Sell-Through",
+     "DIVIDE(SUM(sales_order_lines[qty_sold]), CALCULATE(AVERAGE(inventory_daily[on_hand_qty])))", "0.00"),
+    # Q12 — category-average benchmark, re-derived in the report layer (approximate)
+    ("RP Category Avg Sell-Through",
+     "VAR cat = SELECTEDVALUE(products[category]) "
+     "RETURN AVERAGEX(FILTER(ALL(products), products[category] = cat), "
+     "CALCULATE(DIVIDE(SUM(sales_order_lines[qty_sold]), AVERAGE(inventory_daily[on_hand_qty]))))", "0.00"),
 ]
 
 
@@ -686,70 +713,73 @@ def build_raw_plus_summary():
                                 filters=[f_range("xsq1d", "sales_order_lines", "date_key", "20260101L", "20260331L")],
                                 sort=sort_desc(RP_HOME, "RP Revenue", extension=True)))
 
-    # Q2
+    # Q2 — stockout rate May
     x, y = cell(1)
-    visuals.append(hdr(2, x, y, "Top 5 products by revenue", "RP Revenue by SKU; ERP-only, ranking can differ"))
-    visuals.append(table(f"x{SUM}v02", x, y + CY, W, CH,
-                         [proj("sales_order_lines", "sku"), proj("products", "product_name"), m("RP Revenue")],
-                         sort=sort_desc(RP_HOME, "RP Revenue", extension=True)))
+    visuals.append(hdr(2, x, y, "Stockout rate, May 2026", "RP Stockout Rate, filtered to May; close to gold"))
+    visuals.append(card(f"x{SUM}v02", x, y + CY, CW, CH, m("RP Stockout Rate"),
+                        filters=[f_range("xsq2d", "inventory_daily", "date_key", "20260501L", "20260531L")]))
 
-    # Q3
+    # Q3 — total company sales May
     x, y = cell(2)
-    visuals.append(hdr(3, x, y, "Stockout rate, May 2026", "RP Stockout Rate, filtered to May; close to gold"))
-    visuals.append(card(f"x{SUM}v03", x, y + CY, CW, CH, m("RP Stockout Rate"),
-                        filters=[f_range("xsq3d", "inventory_daily", "date_key", "20260501L", "20260531L")]))
+    visuals.append(hdr(3, x, y, "Total company sales, May 2026", "RP Total May = ERP + MM net + Lakeside (parsed dates)"))
+    visuals.append(card(f"x{SUM}v03", x, y + CY, CW, CH, m("RP Total May")))
 
-    # Q4
+    # Q4 — tickets per 1K
     x, y = cell(3)
-    visuals.append(hdr(4, x, y, "Total company sales, May 2026", "RP Total May = ERP + MM net + Lakeside (parsed dates)"))
-    visuals.append(card(f"x{SUM}v04", x, y + CY, CW, CH, m("RP Total May")))
-
-    # Q5
-    x, y = cell(4)
-    visuals.append(hdr(5, x, y, "Net marketplace revenue by month", "RP Marketplace Net; no date dim, window total only"))
-    visuals.append(card(f"x{SUM}v05", x, y + CY, CW, CH, m("RP Marketplace Net")))
-
-    # Q6
-    x, y = cell(5)
-    visuals.append(hdr(6, x, y, "Tickets per 1K units", "Exact name match of free-text refs; under-reports"))
-    visuals.append(table(f"x{SUM}v06", x, y + CY, W, CH,
+    visuals.append(hdr(4, x, y, "Tickets per 1K units", "Exact name match of free-text refs; under-reports"))
+    visuals.append(table(f"x{SUM}v04", x, y + CY, W, CH,
                          [proj("products", "sku"), proj("products", "product_name"), m("RP Tickets per 1K")],
                          sort=sort_desc(RP_HOME, "RP Tickets per 1K", extension=True)))
 
-    # Q7
-    x, y = cell(6)
-    visuals.append(hdr(7, x, y, "Parts attach rate, Hydraulics", "ITM->SKU via xref TREATAS; targets gold 8.1"))
-    visuals.append(card(f"x{SUM}v07", x, y + CY, CW, CH, m("RP Parts per 100 Hydraulics")))
+    # Q5 — parts attach Hydraulics
+    x, y = cell(4)
+    visuals.append(hdr(5, x, y, "Parts attach rate, Hydraulics", "ITM->SKU via xref TREATAS; targets gold 8.1"))
+    visuals.append(card(f"x{SUM}v05", x, y + CY, CW, CH, m("RP Parts per 100 Hydraulics")))
 
-    # Q8
-    x, y = cell(7)
-    visuals.append(hdr(8, x, y, "A-class open complaints + stockout", "Exact-name complaints; may miss gold SKUs"))
-    visuals.append(table(f"x{SUM}v08", x, y + CY, W, CH,
+    # Q6 — A-class open complaints + stockout
+    x, y = cell(5)
+    visuals.append(hdr(6, x, y, "A-class open complaints + stockout", "Exact-name complaints; may miss gold SKUs"))
+    visuals.append(table(f"x{SUM}v06", x, y + CY, W, CH,
                          [proj("products", "sku"), proj("products", "product_name"),
                           m("RP Open Complaints Exact"), m("RP At Stockout Risk")],
-                         filters=[f_cat("xsq8a", "products", "abc_class", "'A'")],
+                         filters=[f_cat("xsq6a", "products", "abc_class", "'A'")],
                          sort=sort_desc(RP_HOME, "RP Open Complaints Exact", extension=True)))
 
-    # Q9 — two cards (Lakeside vs DC)
+    # Q7 — two cards (Lakeside vs DC)
+    x, y = cell(6)
+    visuals.append(hdr(7, x, y, "Lakeside vs DC sell-through", "Both re-derived since 2026-02-01; mixed grain"))
+    visuals.append(card(f"x{SUM}v07a", x, y + CY, CW, CH, m("RP Lakeside Sell-Through")))
+    visuals.append(card(f"x{SUM}v07b", x + CW + 20, y + CY, CW, CH, m("RP DC Sell-Through")))
+
+    # Q8 — Lakeside sales 03/02
+    x, y = cell(7)
+    visuals.append(hdr(8, x, y, "Lakeside sales 03/02/2026", "Text equality read as DD/MM = 3 Feb; correct"))
+    visuals.append(card(f"x{SUM}v08", x, y + CY, CW, CH, m("RP Lakeside Sales 03Feb")))
+
+    # Q9 — Lakeside revenue since acquisition
     x, y = cell(8)
-    visuals.append(hdr(9, x, y, "Lakeside vs DC sell-through", "Both re-derived since 2026-02-01; mixed grain"))
-    visuals.append(card(f"x{SUM}v09a", x, y + CY, CW, CH, m("RP Lakeside Sell-Through")))
-    visuals.append(card(f"x{SUM}v09b", x + CW + 20, y + CY, CW, CH, m("RP DC Sell-Through")))
+    visuals.append(hdr(9, x, y, "Lakeside revenue since acquisition", "SUM(TOTAL_AMT) where parsed date >= 2026-02-01"))
+    visuals.append(card(f"x{SUM}v09", x, y + CY, CW, CH, m("RP Lakeside Since Acq")))
 
-    # Q10
+    # Q10 — revenue tied to a known product (raw is blind to UNMAPPED; best-effort anti-join)
     x, y = cell(9)
-    visuals.append(hdr(10, x, y, "Lakeside sales 03/02/2026", "Text equality read as DD/MM = 3 Feb; correct"))
-    visuals.append(card(f"x{SUM}v10", x, y + CY, CW, CH, m("RP Lakeside Sales 03Feb")))
+    visuals.append(hdr(10, x, y, "Revenue not tied to a product", "Anti-join on missing xref listingId only; misses the real gap"))
+    visuals.append(card(f"x{SUM}v10", x, y + CY, CW, CH, m("RP Unmatched MM Gross")))
 
-    # Q11
+    # Q11 — after-sale reliability by category
     x, y = cell(10)
-    visuals.append(hdr(11, x, y, "Lakeside revenue since acquisition", "SUM(TOTAL_AMT) where parsed date >= 2026-02-01"))
-    visuals.append(card(f"x{SUM}v11", x, y + CY, CW, CH, m("RP Lakeside Since Acq")))
+    visuals.append(hdr(11, x, y, "After-sale issues per 1K, by category", "Exact-name complaints + xref parts; ranking approximate"))
+    visuals.append(table(f"x{SUM}v11", x, y + CY, W, CH,
+                         [proj("products", "category"), m("RP After-Sale per 1K")],
+                         sort=sort_desc(RP_HOME, "RP After-Sale per 1K", extension=True)))
 
-    # Q12
+    # Q12 — overstock vs category-average sell-through
     x, y = cell(11)
-    visuals.append(hdr(12, x, y, "Marketplace revenue, no product", "Anti-join on missing xref listingId; targets ~$94K"))
-    visuals.append(card(f"x{SUM}v12", x, y + CY, CW, CH, m("RP Unmatched MM Gross")))
+    visuals.append(hdr(12, x, y, "Overstock vs category avg sell-through", "DC-only sell-through + re-derived benchmark; misses Lakeside grain"))
+    visuals.append(table(f"x{SUM}v12", x, y + CY, W, CH,
+                         [proj("products", "category"), proj("products", "sku"),
+                          m("RP Sell-Through"), m("RP Category Avg Sell-Through")],
+                         sort=sort_asc(RP_HOME, "RP Sell-Through", measure=True, extension=True)))
 
     return (SUM, "Summary", visuals)
 
@@ -884,7 +914,7 @@ def build_raw_plus():
     clean_old_pages(RAWPLUS, set(order))
     for pid, disp, vis in pages:
         if pid == RP_SUMMARY:
-            write_page(RAWPLUS, pid, disp, vis, width=1920, height=1080, objects=summary_bg())
+            write_page(RAWPLUS, pid, disp, vis, width=1920, height=1080, objects=summary_bg(_bg_image(RAWPLUS)))
         else:
             write_page(RAWPLUS, pid, disp, vis)
     write_pages_json(RAWPLUS, order, order[0])

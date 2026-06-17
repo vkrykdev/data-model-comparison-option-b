@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q8 - A-class open complaints + stockout",
+                    "value": "Q8 - Lakeside sales 03/02/2026",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Exact-name complaints; may miss gold SKUs",
+                    "value": "Text equality read as DD/MM = 3 Feb; correct",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

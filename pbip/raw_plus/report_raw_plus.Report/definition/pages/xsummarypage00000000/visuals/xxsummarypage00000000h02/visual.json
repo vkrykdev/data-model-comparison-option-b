@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q2 - Top 5 products by revenue",
+                    "value": "Q2 - Stockout rate, May 2026",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "RP Revenue by SKU; ERP-only, ranking can differ",
+                    "value": "RP Stockout Rate, filtered to May; close to gold",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

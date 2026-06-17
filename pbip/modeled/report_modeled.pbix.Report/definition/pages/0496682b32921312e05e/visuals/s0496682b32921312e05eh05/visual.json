@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05eh05",
   "position": {
-    "x": 16,
+    "x": 8,
     "y": 424,
     "z": 0,
     "height": 64,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q5 - Net marketplace revenue by month",
+                    "value": "Q5 - Parts attach rate, Hydraulics",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Gold: $7.335M net for the window",
+                    "value": "Gold: 8.1 parts per 100 units",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

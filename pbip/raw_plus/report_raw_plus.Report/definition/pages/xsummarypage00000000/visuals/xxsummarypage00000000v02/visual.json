@@ -10,39 +10,11 @@
     "tabOrder": 14000
   },
   "visual": {
-    "visualType": "tableEx",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Values": {
+        "Data": {
           "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "sales_order_lines"
-                    }
-                  },
-                  "Property": "sku"
-                }
-              },
-              "queryRef": "sales_order_lines.sku",
-              "nativeQueryRef": "sku"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "products"
-                    }
-                  },
-                  "Property": "product_name"
-                }
-              },
-              "queryRef": "products.product_name",
-              "nativeQueryRef": "product_name"
-            },
             {
               "field": {
                 "Measure": {
@@ -52,84 +24,52 @@
                       "Entity": "sales_order_lines"
                     }
                   },
-                  "Property": "RP Revenue"
+                  "Property": "RP Stockout Rate"
                 }
               },
-              "queryRef": "sales_order_lines.RP Revenue",
-              "nativeQueryRef": "RP Revenue"
+              "queryRef": "sales_order_lines.RP Stockout Rate",
+              "nativeQueryRef": "RP Stockout Rate",
+              "format": "0.000%;-0.000%;0.000%"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Schema": "extension",
-                    "Entity": "sales_order_lines"
-                  }
-                },
-                "Property": "RP Revenue"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "objects": {
-      "columnWidth": [
+      "glowCustom": [
         {
           "properties": {
-            "value": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "280.6384124707849D"
+                  "Value": "true"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "products.product_name"
+            "id": "default"
           }
         }
       ],
-      "columnHeaders": [
-        {
-          "properties": {}
-        }
-      ],
-      "values": [
+      "value": [
         {
           "properties": {
-            "wordWrap": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'center'"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
@@ -157,5 +97,79 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "xsq2d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "inventory_daily"
+              }
+            },
+            "Property": "date_key"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "inventory_daily",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 2,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "f"
+                        }
+                      },
+                      "Property": "date_key"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "20260501L"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 4,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "f"
+                        }
+                      },
+                      "Property": "date_key"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "20260531L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }

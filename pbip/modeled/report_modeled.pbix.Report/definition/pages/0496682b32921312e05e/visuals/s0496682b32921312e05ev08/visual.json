@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05ev08",
   "position": {
-    "x": 1440,
+    "x": 1448,
     "y": 495.99999999999994,
     "z": 1000,
     "height": 224,
@@ -10,146 +10,65 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "tableEx",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Values": {
+        "Data": {
           "projections": [
             {
               "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "c_dim_product"
-                    }
-                  },
-                  "Property": "sku"
-                }
-              },
-              "queryRef": "c_dim_product.sku",
-              "nativeQueryRef": "sku"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "c_dim_product"
-                    }
-                  },
-                  "Property": "product_name"
-                }
-              },
-              "queryRef": "c_dim_product.product_name",
-              "nativeQueryRef": "product_name"
-            },
-            {
-              "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
                       "Entity": "c_fact_sales_unified"
                     }
                   },
-                  "Property": "Open Complaints"
+                  "Property": "Lakeside Revenue"
                 }
               },
-              "queryRef": "c_fact_sales_unified.Open Complaints",
-              "nativeQueryRef": "Open Complaints"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "c_fact_sales_unified"
-                    }
-                  },
-                  "Property": "Avg On-Hand Units"
-                }
-              },
-              "queryRef": "c_fact_sales_unified.Avg On-Hand Units",
-              "nativeQueryRef": "Avg On-Hand Units"
+              "queryRef": "c_fact_sales_unified.Lakeside Revenue",
+              "nativeQueryRef": "Lakeside Revenue",
+              "format": "0.000"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "c_fact_sales_unified"
-                  }
-                },
-                "Property": "Open Complaints"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "objects": {
-      "columnHeaders": [
+      "glowCustom": [
         {
           "properties": {
-            "wordWrap": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
-      "values": [
+      "value": [
         {
           "properties": {
-            "wordWrap": {
+            "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "columnWidth": [
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Literal": {
-                  "Value": "131.48589653708467D"
+                  "Value": "'center'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "c_dim_product.product_name"
+            "id": "default"
           }
         }
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
@@ -181,15 +100,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "sq8a",
+        "name": "sq8d",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "c_dim_product"
+                "Entity": "c_dim_date"
               }
             },
-            "Property": "abc_class"
+            "Property": "date_key"
           }
         },
         "type": "Categorical",
@@ -198,7 +117,7 @@
           "From": [
             {
               "Name": "f",
-              "Entity": "c_dim_product",
+              "Entity": "c_dim_date",
               "Type": 0
             }
           ],
@@ -214,7 +133,7 @@
                             "Source": "f"
                           }
                         },
-                        "Property": "abc_class"
+                        "Property": "date_key"
                       }
                     }
                   ],
@@ -222,7 +141,7 @@
                     [
                       {
                         "Literal": {
-                          "Value": "'A'"
+                          "Value": "20260203L"
                         }
                       }
                     ]

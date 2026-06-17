@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "xxsummarypage00000000h10",
   "position": {
-    "x": 487.30543585815064,
+    "x": 488.00000000000006,
     "y": 744,
     "z": 9000,
     "height": 64,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q10 - Lakeside sales 03/02/2026",
+                    "value": "Q10 - Revenue not tied to a product",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Text equality read as DD/MM = 3 Feb; correct",
+                    "value": "Anti-join on missing xref listingId only; misses the real gap",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

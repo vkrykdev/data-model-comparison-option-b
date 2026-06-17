@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q7 - Parts attach rate, Hydraulics",
+                    "value": "Q7 - Lakeside vs DC sell-through",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "ITM->SKU via xref TREATAS; targets gold 8.1",
+                    "value": "Both re-derived since 2026-02-01; mixed grain",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

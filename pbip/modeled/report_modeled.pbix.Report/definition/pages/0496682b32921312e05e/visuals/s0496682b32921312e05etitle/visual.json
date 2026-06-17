@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "s0496682b32921312e05etitle",
   "position": {
-    "x": 16,
+    "x": 8,
     "y": 16,
     "z": 0,
     "height": 64,
-    "width": 1888,
+    "width": 1896,
     "tabOrder": 0
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Multi Source Model - all 12 answers",
+                    "value": "Multi Source Modeled - all 12 answers",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {

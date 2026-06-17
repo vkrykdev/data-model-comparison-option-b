@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Q11 - Lakeside revenue since acquisition",
+                    "value": "Q11 - After-sale issues per 1K, by category",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "SUM(TOTAL_AMT) where parsed date >= 2026-02-01",
+                    "value": "Exact-name complaints + xref parts; ranking approximate",
                     "textStyle": {
                       "fontSize": "11pt"
                     }
@@ -43,19 +43,6 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
