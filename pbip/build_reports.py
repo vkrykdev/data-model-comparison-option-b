@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Generate PBIR pages + visuals for the RAW and MODELED eval reports.
+"""Generate PBIR pages + visuals for the RAW_PLUS and MODELED eval reports.
 
-One page per eval question (12 each). The MODELED report answers each question
-with the governed measures; the RAW report follows the honest-demo philosophy:
-it shows the raw reality (partial numbers, disconnected tables, the planted
-traps) and adds only two minimal report-level measures.
+The MODELED report answers each question with the governed measures. The
+RAW_PLUS report ("instructed raw") live-connects to the MultiSource_Raw model
+and forces an answer on every tile via report-level DAX (cross-source sums,
+text-date parsing, xref lookups) — like the Raw_Plus agent, some answers stay
+approximate because the raw schema fights back.
 
 Author-only: no Power BI Desktop validation. Grammar verified against the
 microsoft/json-schemas PBIR schemas (visualContainer 2.9.0, visualConfiguration
@@ -190,8 +191,8 @@ SU = "c_fact_sales_unified"   # all measures live here
 
 # ----------------------------------------------------------------------------
 # Shared branding for the Summary pages (theme + registered background image).
-# The modeled report holds the canonical theme + image; raw / raw_plus get a
-# copy so all three Summary pages render identically. Encoding it here keeps it
+# The modeled report holds the canonical theme + image; raw_plus gets a
+# copy so both Summary pages render identically. Encoding it here keeps it
 # drift-safe — regeneration re-applies the look instead of wiping it.
 # ----------------------------------------------------------------------------
 BG_IMAGE = "img7354361593760486.png"  # registered background image (in RegisteredResources)
@@ -506,290 +507,6 @@ def build_modeled():
 
 
 # ============================================================================
-# RAW report — honest demo
-# ============================================================================
-RAW = os.path.join(HERE, "raw", "report_raw.Report")
-RQ1 = "45dc5d48eca9b4541c4d"  # existing page folder, reuse for Q1
-RSUMMARY = "rsummarypage00000000"  # "Summary" page (1920x1080) — raw reality, all 12
-
-
-def build_raw_summary():
-    """Summary page mirroring the modeled one, but honest: each tile shows the
-    best the raw tables can do for that question (and the header says why it
-    falls short — no revenue column, free-text refs, text dates, no joins)."""
-    SUM = RSUMMARY
-    visuals = [textbox(f"r{SUM}title", 16, 16, 1888, 60,
-                       ["MultiSource Raw — what the undermodeled tables can (and cannot) answer",
-                        "No revenue column, no relationships, text dates, free-text refs — most answers are partial"])]
-
-    cols = [16, 492, 968, 1444]
-    rows = [100, 421, 742]
-    W = 460
-    HH = 64
-    CY = 72
-    CH = 229
-    CW = 220
-
-    def cell(i):
-        return cols[i % 4], rows[i // 4]
-
-    def hdr(n, x, y, q, note):
-        return textbox(f"r{SUM}h{n:02d}", x, y, W, HH, [f"Q{n} — {q}", note])
-
-    # Q1 — units by channel (no revenue column)
-    x, y = cell(0)
-    visuals.append(hdr(1, x, y, "Revenue by channel, Q1 2026", "No revenue column — shows UNITS; ERP channels only"))
-    visuals.append(column_chart(f"r{SUM}v01", x, y + CY, W, CH,
-                                proj("sales_order_lines", "channel"), proj("sales_order_lines", "qty_sold"),
-                                filters=[f_range("rsq1d", "sales_order_lines", "date_key", "20260101L", "20260331L")],
-                                sort=sort_desc("sales_order_lines", "qty_sold", measure=False)))
-
-    # Q2 — ranked by units
-    x, y = cell(1)
-    visuals.append(hdr(2, x, y, "Top 5 products by revenue", "Ranked by UNITS (no revenue); ERP only"))
-    visuals.append(table(f"r{SUM}v02", x, y + CY, W, CH,
-                         [proj("sales_order_lines", "sku"), proj("products", "product_name"),
-                          proj("sales_order_lines", "qty_sold")],
-                         sort=sort_desc("sales_order_lines", "qty_sold", measure=False)))
-
-    # Q3 — stockout-day count, no rate
-    x, y = cell(2)
-    visuals.append(hdr(3, x, y, "Stockout rate, May 2026", "Only stockout-day COUNT; no rate measure"))
-    visuals.append(card(f"r{SUM}v03", x, y + CY, CW, CH, proj("inventory_daily", "is_stockout"),
-                        filters=[f_range("rsq3d", "inventory_daily", "date_key", "20260501L", "20260531L")]))
-
-    # Q4 — ERP units only (3 disconnected tables)
-    x, y = cell(3)
-    visuals.append(hdr(4, x, y, "Total company sales, May 2026", "3 disconnected tables; ERP shows UNITS only"))
-    visuals.append(card(f"r{SUM}v04", x, y + CY, CW, CH, proj("sales_order_lines", "qty_sold"),
-                        filters=[f_range("rsq4d", "sales_order_lines", "date_key", "20260501L", "20260531L")]))
-
-    # Q5 — settlement payout total, no month bucket
-    x, y = cell(4)
-    visuals.append(hdr(5, x, y, "Net marketplace revenue by month", "Settlement payout total; cannot bucket by month"))
-    visuals.append(card(f"r{SUM}v05", x, y + CY, CW, CH, proj("mm_settlements", "payoutAmount")))
-
-    # Q6 — free-text helpdesk refs
-    x, y = cell(5)
-    visuals.append(hdr(6, x, y, "Tickets per 1K units", "productRef is free text — unjoinable to SKU"))
-    visuals.append(table(f"r{SUM}v06", x, y + CY, W, CH,
-                         [proj("hdTickets", "ticketId"), proj("hdTickets", "productRef"),
-                          proj("hdTickets", "status")]))
-
-    # Q7 — ITM codes, no relationship
-    x, y = cell(6)
-    visuals.append(hdr(7, x, y, "Parts attach rate, Hydraulics", "ITM- codes, no relationship to SKU/category"))
-    visuals.append(table(f"r{SUM}v07", x, y + CY, W, CH,
-                         [proj("ServicePartsUsage", "ItemCode"), proj("ServicePartsUsage", "QtyUsed")],
-                         sort=sort_desc("ServicePartsUsage", "QtyUsed", measure=False)))
-
-    # Q8 — A-class list only (3-way intersection impossible)
-    x, y = cell(7)
-    visuals.append(hdr(8, x, y, "A-class open complaints + stockout", "3-way intersection impossible; A-class list only"))
-    visuals.append(table(f"r{SUM}v08", x, y + CY, W, CH,
-                         [proj("products", "sku"), proj("products", "product_name"), proj("products", "abc_class")],
-                         filters=[f_cat("rsq8a", "products", "abc_class", "'A'")]))
-
-    # Q9 — Lakeside isolated
-    x, y = cell(8)
-    visuals.append(hdr(9, x, y, "Lakeside vs DC sell-through", "Lakeside isolated, text dates, no join"))
-    visuals.append(table(f"r{SUM}v09", x, y + CY, W, CH,
-                         [proj("LS_SALES_EXPORT", "STORE_CODE"), proj("LS_SALES_EXPORT", "QTY"),
-                          proj("LS_SALES_EXPORT", "TOTAL_AMT")]))
-
-    # Q10 — text-equality on DD/MM/YYYY
-    x, y = cell(9)
-    visuals.append(hdr(10, x, y, "Lakeside sales 03/02/2026", "Text equality works IF you know DD/MM format"))
-    visuals.append(card(f"r{SUM}v10", x, y + CY, CW, CH, proj("LS_SALES_EXPORT", "TOTAL_AMT"),
-                        filters=[f_cat("rsq10d", "LS_SALES_EXPORT", "SALE_DATE", "'03/02/2026'")]))
-
-    # Q11 — whole-window total (cannot range text dates)
-    x, y = cell(10)
-    visuals.append(hdr(11, x, y, "Lakeside revenue since acquisition", "Whole-window total; cannot range text dates"))
-    visuals.append(card(f"r{SUM}v11", x, y + CY, CW, CH, proj("LS_SALES_EXPORT", "TOTAL_AMT")))
-
-    # Q12 — no referential integrity
-    x, y = cell(11)
-    visuals.append(hdr(12, x, y, "Marketplace revenue, no product", "Needs an anti-join raw has no relationship for"))
-    visuals.append(table(f"r{SUM}v12", x, y + CY, W, CH,
-                         [proj("mm_orders", "mmOrderId"), proj("mm_orders", "listingId"),
-                          proj("mm_orders", "grossAmount")]))
-
-    return (SUM, "Summary", visuals)
-
-
-def remove_raw_extensions():
-    """Honest-demo raw report uses no report-level measures (implicit
-    aggregations only), so make sure no stale extension file is left behind."""
-    p = os.path.join(RAW, "definition", "reportExtensions.json")
-    if os.path.exists(p):
-        os.remove(p)
-
-
-def build_raw():
-    pages = []
-
-    def title(pid, n, q, note):
-        return textbox(f"r{pid}t", 16, 16, 1248, 72,
-                       [f"Q{n} — {q}", f"RAW reality: {note}"])
-
-    def P(n):
-        return f"r{n:02d}pageeval0000000000"[:20]
-
-    # Q1 — ERP channels only; no revenue column exists in raw
-    pages.append((RQ1, "Q1 — Revenue by channel (RAW)", [
-        title(RQ1, 1, "Revenue in Q1 2026 by channel",
-              "Raw ERP has NO revenue column (revenue = qty x price needs DAX the raw model lacks); chart shows UNITS by channel. ERP channels only - Lakeside & marketplace missing. No date dim -> hand-filter integer date_key 20260101-20260331."),
-        column_chart(f"r{RQ1}v", 16, 100, 1248, 540,
-                     proj("sales_order_lines", "channel"), proj("sales_order_lines", "qty_sold"),
-                     filters=[f_range("rq1d", "sales_order_lines", "date_key", "20260101L", "20260331L")],
-                     sort=sort_desc("sales_order_lines", "qty_sold", measure=False)),
-    ]))
-
-    # Q2 — rank by units (no revenue column)
-    p = P(2)
-    pages.append((p, "Q2 — Top products (RAW)", [
-        title(p, 2, "Top 5 products by revenue",
-              "No revenue column -> table ranks by UNITS sold (Sum qty_sold), not revenue. ERP sales only (sku->products join exists); excludes Lakeside & marketplace, so ranking can differ from gold."),
-        table(f"r{p}v", 16, 100, 900, 540,
-              [proj("sales_order_lines", "sku"), proj("products", "product_name"),
-               proj("sales_order_lines", "qty_sold")],
-              sort=sort_desc("sales_order_lines", "qty_sold", measure=False)),
-    ]))
-
-    # Q3 — stockout numerator only
-    p = P(3)
-    pages.append((p, "Q3 — Stockout rate (RAW)", [
-        title(p, 3, "Stockout rate in May 2026",
-              "is_stockout flag exists but there is NO rate measure. Card shows SUM(is_stockout)=stockout-day count; denominator/rate must be computed by hand."),
-        card(f"r{p}v", 16, 100, 360, 200, proj("inventory_daily", "is_stockout"),
-             filters=[f_range("rq3d", "inventory_daily", "date_key", "20260501L", "20260531L")]),
-    ]))
-
-    # Q4 — three disconnected numbers
-    p = P(4)
-    pages.append((p, "Q4 — Total company sales (RAW)", [
-        title(p, 4, "Total company sales May 2026 incl. Lakeside + marketplace",
-              "THE money trap: 3 disconnected tables, 3 incompatible shapes, no common key. ERP has no sales-amount column at all (card A shows UNITS); marketplace (gross $) and Lakeside (total $) each have their own amount column but cannot be date-filtered to May or summed together in one visual."),
-        card(f"r{p}a", 16, 100, 405, 200, proj("sales_order_lines", "qty_sold"),
-             filters=[f_range("rq4d", "sales_order_lines", "date_key", "20260501L", "20260531L")]),
-        card(f"r{p}b", 437, 100, 405, 200, proj("mm_orders", "grossAmount")),
-        card(f"r{p}c", 858, 100, 405, 200, proj("LS_SALES_EXPORT", "TOTAL_AMT")),
-    ]))
-
-    # Q5 — settlement totals, no month bucket
-    p = P(5)
-    pages.append((p, "Q5 — Net marketplace by month (RAW)", [
-        title(p, 5, "Net marketplace revenue after fees, by month",
-              "Gross & fees live on mm_settlements, but there is no date dim and mm_orders.orderDate is TEXT in a separate, unrelated table -> cannot bucket by month. Window totals only."),
-        table(f"r{p}v", 16, 100, 900, 300,
-              [proj("mm_settlements", "grossAmount"), proj("mm_settlements", "commissionFee"),
-               proj("mm_settlements", "fulfillmentFee"), proj("mm_settlements", "payoutAmount")]),
-    ]))
-
-    # Q6 — two disconnected tables
-    p = P(6)
-    pages.append((p, "Q6 — Tickets per 1K units (RAW)", [
-        title(p, 6, "Products with most helpdesk tickets per 1,000 units sold",
-              "hdTickets.productRef is FREE-TEXT with no relationship to products.sku -> the two tables below cannot be joined; tickets-per-1K-units is impossible."),
-        table(f"r{p}a", 16, 100, 616, 540,
-              [proj("hdTickets", "ticketId"), proj("hdTickets", "productRef"),
-               proj("hdTickets", "status")]),
-        table(f"r{p}b", 648, 100, 616, 540,
-              [proj("sales_order_lines", "sku"), proj("products", "product_name"),
-               proj("sales_order_lines", "qty_sold")],
-              sort=sort_desc("sales_order_lines", "qty_sold", measure=False)),
-    ]))
-
-    # Q7
-    p = P(7)
-    pages.append((p, "Q7 — Parts attach rate Hydraulics (RAW)", [
-        title(p, 7, "Service parts attach rate for Hydraulics products",
-              "ServiceWorkOrders/ServicePartsUsage use ITM- codes, not SKUs; mapping only via sku_xref_master and there are NO relationships -> category 'Hydraulics' (in products) is unreachable."),
-        table(f"r{p}a", 16, 100, 616, 540,
-              [proj("ServicePartsUsage", "ItemCode"), proj("ServicePartsUsage", "QtyUsed")],
-              sort=sort_desc("ServicePartsUsage", "QtyUsed", measure=False)),
-        table(f"r{p}b", 648, 100, 616, 540,
-              [proj("ServiceWorkOrders", "WorkOrderID"), proj("ServiceWorkOrders", "ItemCode"),
-               proj("ServiceWorkOrders", "WorkType"), proj("ServiceWorkOrders", "Status")]),
-    ]))
-
-    # Q8 — three disjoint lists
-    p = P(8)
-    pages.append((p, "Q8 — A-class open complaints + stockout (RAW)", [
-        title(p, 8, "A-class products with open complaints AND stockout risk",
-              "Three-way intersection impossible: helpdesk (free-text productRef), ABC class (products) and stockout (inventory_daily) share no usable join. Three disjoint lists below."),
-        table(f"r{p}a", 16, 100, 405, 540,
-              [proj("products", "sku"), proj("products", "product_name"), proj("products", "abc_class")],
-              filters=[f_cat("rq8a", "products", "abc_class", "'A'")]),
-        table(f"r{p}b", 437, 100, 405, 540,
-              [proj("hdTickets", "ticketId"), proj("hdTickets", "productRef"), proj("hdTickets", "status")],
-              filters=[f_cat("rq8s", "hdTickets", "status", "'open'")]),
-        table(f"r{p}c", 858, 100, 405, 540,
-              [proj("inventory_daily", "sku"), proj("inventory_daily", "location_id"),
-               proj("inventory_daily", "is_stockout")],
-              filters=[f_cat("rq8k", "inventory_daily", "is_stockout", "1L")]),
-    ]))
-
-    # Q9 — Lakeside vs DC, isolated
-    p = P(9)
-    pages.append((p, "Q9 — Lakeside vs DC sell-through (RAW)", [
-        title(p, 9, "Lakeside store sell-through vs DCs since acquisition",
-              "Lakeside (LS_* tables) is fully isolated with TEXT DD/MM/YYYY dates and no relationships; 'since acquisition' needs date parsing raw cannot do, and sell-through needs a sales/inventory join that is absent."),
-        table(f"r{p}a", 16, 100, 616, 540,
-              [proj("LS_SALES_EXPORT", "STORE_CODE"), proj("LS_SALES_EXPORT", "QTY"),
-               proj("LS_SALES_EXPORT", "TOTAL_AMT")]),
-        table(f"r{p}b", 648, 100, 616, 540,
-              [proj("sales_order_lines", "location_id"), proj("sales_order_lines", "qty_sold")]),
-    ]))
-
-    # Q10 — date format trap (text equality works)
-    p = P(10)
-    pages.append((p, "Q10 — Lakeside sales 03/02/2026 (RAW)", [
-        title(p, 10, "Lakeside sales on 03/02/2026",
-              "SALE_DATE is TEXT DD/MM/YYYY. Text-equality on '03/02/2026' returns 3 Feb ($36,836) only if you KNOW the format; a US MM/DD reading would query the wrong day."),
-        table(f"r{p}v", 16, 100, 800, 300,
-              [proj("LS_SALES_EXPORT", "SALE_DATE"), proj("LS_SALES_EXPORT", "STORE_CODE"),
-               proj("LS_SALES_EXPORT", "TOTAL_AMT")],
-              filters=[f_cat("rq10d", "LS_SALES_EXPORT", "SALE_DATE", "'03/02/2026'")]),
-    ]))
-
-    # Q11 — no reliable date range on text dates
-    p = P(11)
-    pages.append((p, "Q11 — Lakeside revenue since acquisition (RAW)", [
-        title(p, 11, "Lakeside revenue since the acquisition (from 2026-02-01)",
-              "Can SUM TOTAL_AMT but cannot apply a correct date range on a TEXT DD/MM/YYYY column (string order != chronological). Card shows the WHOLE-window total, not the $4.324M since-acquisition figure."),
-        card(f"r{p}v", 16, 100, 360, 200, proj("LS_SALES_EXPORT", "TOTAL_AMT")),
-    ]))
-
-    # Q12 — no referential integrity
-    p = P(12)
-    pages.append((p, "Q12 — Marketplace revenue not tied to a product (RAW)", [
-        title(p, 12, "Marketplace revenue not tied to one of our products",
-              "mm_listings maps listingId->sellerSku, but unmatched/orphan listings need an anti-join raw has no relationship for. Compare the two tables by hand; the ~$94K orphan gross is not isolable in a visual."),
-        table(f"r{p}a", 16, 100, 616, 540,
-              [proj("mm_orders", "mmOrderId"), proj("mm_orders", "listingId"),
-               proj("mm_orders", "grossAmount")]),
-        table(f"r{p}b", 648, 100, 616, 540,
-              [proj("mm_listings", "listingId"), proj("mm_listings", "sellerSku"),
-               proj("mm_listings", "status")]),
-    ]))
-
-    remove_raw_extensions()
-    pages = [build_raw_summary()]  # Summary page only; question pages dropped
-    order = [pid for pid, _, _ in pages]
-    clean_old_pages(RAW, set(order))
-    for pid, disp, vis in pages:
-        if pid == RSUMMARY:
-            write_page(RAW, pid, disp, vis, width=1920, height=1080, objects=summary_bg())
-        else:
-            write_page(RAW, pid, disp, vis)
-    write_pages_json(RAW, order, order[0])
-    brand_report(RAW)
-    return order
-
-
-# ============================================================================
 # RAW_PLUS report — instructed raw: force an answer on every page using heavy
 # report-level DAX (the report analog of the Raw_Plus agent's instructions).
 # Connects to the SAME raw model; re-derives cross-source joins, parses text
@@ -881,32 +598,40 @@ RP_MEASURES = [
 ]
 
 
-def _copy(src, dst):
-    os.makedirs(os.path.dirname(dst), exist_ok=True)
-    shutil.copyfile(src, dst)
+# raw_plus live-connects to the SAME MultiSource_Raw model the agent's raw data
+# lives in; the report layer re-derives every answer via report-level DAX.
+RP_CONN = ('Data Source="powerbi://api.powerbi.com/v1.0/myorg/Microsoft Fabric Demo Stand";'
+           'initial catalog=MultiSource_Raw;access mode=readonly;'
+           'integrated security=ClaimsToken;semanticmodelid=85a29e39-bf6e-44ef-8982-561e9b3eba7e')
+
+
+def _write_if_missing(path, obj):
+    if os.path.exists(path):
+        return
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(obj, fh, indent=2)
 
 
 def rp_scaffold():
-    """Create the raw_plus PBIP shell from the raw report's scaffolding,
-    bound to the SAME MultiSource_Raw model (definition.pbir copied verbatim)."""
-    # connection + theme + report/version metadata copied from the raw report
-    _copy(os.path.join(RAW, "definition.pbir"), os.path.join(RAWPLUS, "definition.pbir"))
-    _copy(os.path.join(RAW, "definition", "report.json"), os.path.join(RAWPLUS, "definition", "report.json"))
-    _copy(os.path.join(RAW, "definition", "version.json"), os.path.join(RAWPLUS, "definition", "version.json"))
-    _copy(os.path.join(RAW, "StaticResources", "SharedResources", "BaseThemes", "CY26SU05.json"),
-          os.path.join(RAWPLUS, "StaticResources", "SharedResources", "BaseThemes", "CY26SU05.json"))
-    # .platform with its own displayName + logicalId
-    with open(os.path.join(RAW, ".platform"), encoding="utf-8") as fh:
-        plat = json.load(fh)
-    plat["metadata"]["displayName"] = "report_raw_plus"
-    plat["config"]["logicalId"] = RP_LOGICAL_ID
-    with open(os.path.join(RAWPLUS, ".platform"), "w", encoding="utf-8", newline="\n") as fh:
-        json.dump(plat, fh, indent=2)
-    # the .pbip project file
-    with open(os.path.join(HERE, "raw_plus", "report_raw_plus.pbip"), "w", encoding="utf-8", newline="\n") as fh:
-        json.dump({"$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
-                   "version": "1.0", "artifacts": [{"report": {"path": "report_raw_plus.Report"}}],
-                   "settings": {"enableAutoRecovery": True}}, fh, indent=2)
+    """Bootstrap the raw_plus PBIP shell, bound to the MultiSource_Raw model.
+    Self-contained (no dependency on the removed bare-raw report); the committed
+    scaffolding is the source of truth, so each file is written only when absent."""
+    _write_if_missing(os.path.join(RAWPLUS, "definition.pbir"), {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+        "version": "4.0",
+        "datasetReference": {"byConnection": {"connectionString": RP_CONN}}})
+    _write_if_missing(os.path.join(RAWPLUS, "definition", "version.json"), {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/versionMetadata/1.0.0/schema.json",
+        "version": "2.0.0"})
+    _write_if_missing(os.path.join(RAWPLUS, ".platform"), {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+        "metadata": {"type": "Report", "displayName": "report_raw_plus"},
+        "config": {"version": "2.0", "logicalId": RP_LOGICAL_ID}})
+    _write_if_missing(os.path.join(HERE, "raw_plus", "report_raw_plus.pbip"), {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
+        "version": "1.0", "artifacts": [{"report": {"path": "report_raw_plus.Report"}}],
+        "settings": {"enableAutoRecovery": True}})
 
 
 def rp_extensions():
@@ -1169,8 +894,6 @@ def build_raw_plus():
 
 if __name__ == "__main__":
     mo = build_modeled()
-    ro = build_raw()
     rp = build_raw_plus()
     print("MODELED pages:", len(mo))
-    print("RAW pages:", len(ro))
     print("RAW_PLUS pages:", len(rp), "| measures:", len(RP_MEASURES))

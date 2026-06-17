@@ -21,12 +21,12 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
 - **CLI / REST API (you run):** Phases 1–5 — folders (REST API), lakehouse (REST API), upload
   CSVs (OneLake DFS API — `fab cp` does NOT work), table load (`fab table load`), notebook
   (Fabric Items API + `fab import`), both semantic models (`fab import` via REST move).
-- **Portal (you prepare, the user clicks):** Phase 6 — the three data agents (item creation works
+- **Portal (you prepare, the user clicks):** Phase 6 — the two data agents (item creation works
   via API but datasource attachment requires a portal Save/Publish), and Prep-for-AI "Add AI
   instructions" (portal-only — no REST or TMDL API path exists for this preview field).
   You hand the user the exact text from `fabric/agent-config/`.
-- **Phases 1–6 end at the three agents** (Raw bare, Raw_Plus instructed, Modeled); **Phase 7**
-  adds the three Power BI reports (`pbip/`). No verified answers, no Teams, no answering the 12
+- **Phases 1–6 end at the two agents** (Raw_Plus instructed, Modeled); **Phase 7**
+  adds the two Power BI reports (`pbip/`). No verified answers, no Teams, no answering the 12
   eval questions (that's the live demo).
 
 ## Fixed facts
@@ -35,8 +35,7 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
   **Option B**. Everything lives in *Option B*. Capacity **fabricassesmentcoe** (workspace is
   already on it — no capacity assignment).
 - Lakehouse **lh_supply_demo** · models **MultiSource_Raw**, **MultiSource_Modeled** ·
-  notebook **build_modeled_layer** · agents **SupplyAgent_Raw**, **SupplyAgent_Raw_Plus**,
-  **SupplyAgent_Modeled**.
+  notebook **build_modeled_layer** · agents **SupplyAgent_Raw_Plus**, **SupplyAgent_Modeled**.
 
 ---
 
@@ -159,19 +158,9 @@ descriptions from `docs/GUIDE_MULTISOURCE_DEMO.md` §"Modeled model".
 underlying data, so totals must agree.
 ⛔ STOP.
 
-## Phase 6 — Create the three data agents (portal; you prepare the inputs)
+## Phase 6 — Create the two data agents (portal; you prepare the inputs)
 
-**6.1** Create **SupplyAgent_Raw** in Option B → add data source **MultiSource_Raw** → **no
-instructions**. Follow `fabric/agent-config/SupplyAgent_Raw_setup.md`.
-Agent item creation works via `POST /v1/workspaces/{ws}/dataAgents`; BUT datasource attachment
-requires a portal Save/Publish step (no public API path). Create the item via API, then open in
-the portal, add MultiSource_Raw, and Save.
-**SupplyAgent_Raw intentionally has ZERO instructions** — it is the bare baseline.
-Adding instructions defeats the demo contrast.
-*Done-when:* the agent exists, points at MultiSource_Raw, has zero instructions.
-⛔ STOP.
-
-**6.2** Apply Prep-for-AI to **MultiSource_Modeled**: open the model → Prep for AI → in the
+**6.1** Apply Prep-for-AI to **MultiSource_Modeled**: open the model → Prep for AI → in the
 **"Add AI instructions (preview)"** box paste the instruction text from
 `fabric/agent-config/MultiSource_Modeled_prep_for_ai.md`; confirm AI data schema includes all
 9 `c_*` tables + measures.
@@ -179,37 +168,36 @@ Adding instructions defeats the demo contrast.
 *Done-when:* the Prep-for-AI instructions are saved on the model.
 ⛔ STOP.
 
-**6.3** Create **SupplyAgent_Modeled** in Option B → add data source **MultiSource_Modeled** →
+**6.2** Create **SupplyAgent_Modeled** in Option B → add data source **MultiSource_Modeled** →
 paste the agent instructions from `fabric/agent-config/SupplyAgent_Modeled_agent_instructions.md`.
-Same portal publish step as 6.1.
+Agent item creation works via `POST /v1/workspaces/{ws}/dataAgents`; BUT datasource attachment
+requires a portal Save/Publish step (no public API path). Create the item via API, then open in
+the portal, add the data source, paste instructions, and Save.
 *Done-when:* the agent exists, points at MultiSource_Modeled, has the style instructions.
 ⛔ STOP.
 
-**6.4** Create **SupplyAgent_Raw_Plus** in Option B → add data source **lh_supply_demo (SQL
+**6.3** Create **SupplyAgent_Raw_Plus** in Option B → add data source **lh_supply_demo (SQL
 analytics endpoint)** (the raw tables, T-SQL) → paste the single instruction block from
 `fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md` (≤15,000 chars; split at the
 `==== DATA SOURCE ====` divider if the portal offers separate agent vs data-source fields).
-Same portal publish step as 6.1. This is the **instructions-only** experiment: raw data, no model
+Same portal publish step as 6.2. This is the **instructions-only** experiment: raw data, no model
 optimization. Do **not** point it at the MultiSource_Raw semantic model — agent instructions
 can't steer DAX there, so the example SQL won't apply.
 *Done-when:* the agent exists, points at the lakehouse SQL endpoint, has the full instructions.
 ⛔ STOP.
 
-**✅ Phases 1–6 DONE.** All three agents exist (Raw bare, Raw_Plus instructed, Modeled). The
-12-question walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) scores all three for the live demo, not
+**✅ Phases 1–6 DONE.** Both agents exist (Raw_Plus instructed, Modeled). The
+12-question walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) scores both for the live demo, not
 this build.
 
 ## Phase 7 — Power BI reports (PBIR; one per agent)
 
-Three reports in `pbip/`, **one page per eval question**, all `byConnection` (live connect) to the
+Two reports in `pbip/`, **one page per eval question**, all `byConnection` (live connect) to the
 published models. `pbip/build_reports.py` regenerates every page/visual deterministically and
 verifies each bound field against the model — re-run it after any model schema/measure change.
 
-**7.1** `report_raw` → **MultiSource_Raw** — bare, honest-demo visuals: implicit aggregation on raw
-columns only, surfacing the traps (no revenue column, free-text/ITM joins, text dates). No
-report-level measures.
-**7.2** `report_modeled` → **MultiSource_Modeled** — the governed measures answer all 12 cleanly.
-**7.3** `report_raw_plus` → **MultiSource_Raw** + ~18 report-level DAX measures in
+**7.1** `report_modeled` → **MultiSource_Modeled** — the governed measures answer all 12 cleanly.
+**7.2** `report_raw_plus` → **MultiSource_Raw** + ~18 report-level DAX measures in
 `reportExtensions.json` — forces an answer on every page (cross-source sums, text-date parsing,
 xref lookups); like the Raw_Plus agent, some answers stay approximate.
 - Visuals binding a report-level measure must use `SourceRef: {"Schema": "extension", …}` —

@@ -14,8 +14,7 @@
       "Bash(fab job *)",
       "Bash(python fabric/render_notebook.py)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(cd /c/Work/RnD/data-model-comparison/option-b/pbip && python build_reports.py && echo \"--- reportExtensions.json ---\" && cat raw/report_raw.Report/definition/reportExtensions.json)",
-      "Read(//c/c/Work/RnD/data-model-comparison/option-b/pbip/raw/report_raw.Report/definition/**)",
+      "Bash(cd /c/Work/RnD/data-model-comparison/option-b/pbip && python build_reports.py && echo \"--- reportExtensions.json ---\" && cat raw_plus/report_raw_plus.Report/definition/reportExtensions.json)",
       "WebSearch",
       "Bash(gh search *)",
       "PowerShell(gh search code --filename reportExtensions.json \"expression\" --limit 10 2>&1)",
@@ -33,7 +32,11 @@
       "PowerShell(Get-ChildItem \"$env:LOCALAPPDATA\\\\Microsoft\\\\WinGet\" -Recurse -Filter sqlcmd.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName; Get-ChildItem \"C:\\\\Program Files\" -Recurse -Filter sqlcmd.exe -ErrorAction SilentlyContinue -Depth 3 | Select-Object -ExpandProperty FullName)",
       "PowerShell(& \"C:\\\\Program Files\\\\SqlCmd\\\\sqlcmd.exe\" -S $s -d lh_supply_demo -G -W -s\"|\" -Q $q)",
       "PowerShell($s=\"xj5gsmud64gedpw3hfuc4xoevy-4sd5jwt5eaqu5azjrwzsmlcvse.datawarehouse.fabric.microsoft.com\")",
-      "Bash(awk '{print $1}')"
+      "Bash(awk '{print $1}')",
+      "Read(//tmp/**)",
+      "Bash(git grep *)",
+      "Bash(cd /c/Work/RnD/data-model-comparison/option-b && grep -niE 'three \\(agents|reports\\)|bare[- ]?raw|SupplyAgent_Raw[^_]|report_raw[^_]|all three' CLAUDE.md | grep -ivE 'Raw_Plus')",
+      "Read(//c/c/Work/RnD/data-model-comparison/option-b/**)"
     ]
   }
 }

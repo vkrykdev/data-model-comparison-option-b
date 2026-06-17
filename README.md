@@ -1,29 +1,28 @@
 # Fabric Data Agent demo — Raw vs Well-Modeled (Option B)
 
-Three Fabric **Data Agents** over the *same* lakehouse data show that modeling + an AI layer beats
+Two Fabric **Data Agents** over the *same* lakehouse data show that modeling + an AI layer beats
 raw tables. **MultiSource_Raw** = 17 raw source tables as-landed; **MultiSource_Modeled** = the
 same data conformed by one notebook into a governed star with measures, descriptions, and
 Prep-for-AI. The wins are accuracy, fewer hallucinations, fewer clarification round-trips, and
 lower tokens per correct answer — not raw speed.
 
 The agents:
-- **SupplyAgent_Raw** — raw model, no instructions (bare baseline).
 - **SupplyAgent_Raw_Plus** — raw data + heavy agent-side instructions (table docs, conformance
   recipe, example SQL); the *instructions-only, no model optimization* experiment.
 - **SupplyAgent_Modeled** — the governed star + Prep-for-AI.
 
-Built **from an empty Fabric workspace**, mostly via `fabric-cli`, with the three data agents
+Built **from an empty Fabric workspace**, mostly via `fabric-cli`, with the two data agents
 created in the portal at the end.
 
-The repo also ships three matching **Power BI reports** (`pbip/`) — `report_raw`,
-`report_raw_plus`, `report_modeled` — that answer the same 12 questions over the same models, for a
+The repo also ships two matching **Power BI reports** (`pbip/`) — `report_raw_plus` and
+`report_modeled` — that answer the same 12 questions over the same models, for a
 visual side-by-side of the contrast. `pbip/build_reports.py` regenerates every page and visual.
 
 ## For the build agent (Claude Code)
 
 1. Read **`CLAUDE.md`** — context, the CLI-vs-portal capability split, and the hard rules.
 2. Follow **`PLAN.md`** — ordered steps, one at a time, **confirming after each** (`⛔ STOP`
-   gates). Phases 1–6 end at the three data agents; Phase 7 adds the three Power BI reports.
+   gates). Phases 1–6 end at the two data agents; Phase 7 adds the two Power BI reports.
 
 ## Local quickstart (no Fabric needed)
 
@@ -78,7 +77,7 @@ Tracked files (TMDL, the notebook artifact) carry placeholders like `__SQL_ENDPO
 | `data/` | the 17 raw multi-source tables — **sample** (see `data/README.md`) |
 | `scripts/` | `build_modeled_layer.py` — the conformance notebook as cell-delimited `.py` |
 | `fabric/` | bootstrap + upload/load + TMDL generator + deploy/render scripts + model/notebook/agent definitions |
-| `pbip/` | three Power BI reports (raw / raw_plus / modeled) + `build_reports.py` generator |
+| `pbip/` | two Power BI reports (raw_plus / modeled) + `build_reports.py` generator |
 | `eval/MultiSourceAgent_Eval.xlsx` | 12-question workbook — **blank live-demo template** (filled copy is git-ignored) |
 | `build_data_layer.md`, `history.md`, `history.uk.md` | plain-English data-layer + demo narrative (EN/UK) |
 | `docs/GUIDE_MULTISOURCE_DEMO.md` | reference: schema, relationships, measures, AI-layer rationale, Phase 5b fallback |

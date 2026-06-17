@@ -3,8 +3,8 @@
 ## What this is
 
 A **Microsoft Fabric demo** proving that a properly modeled, AI-described semantic model beats
-raw, undermodeled tables — judged by the answers three Fabric **Data Agents** (bare-raw,
-instructed-raw, and modeled) give over the *same data*. Two semantic models, one lakehouse:
+raw, undermodeled tables — judged by the answers two Fabric **Data Agents** (instructed-raw and
+modeled) give over the *same data*. Two semantic models, one lakehouse:
 
 - **MultiSource_Raw** — 17 raw tables exactly as five source systems exported them (mixed
   naming, almost no relationships, no measures, no descriptions).
@@ -50,11 +50,10 @@ that last phase is portal work where you prepare the exact inputs and the user c
 - **Portal (you prepare, user clicks):** Phase 6.
   - Data Agent item creation works via `POST /v1/workspaces/{ws}/dataAgents` but datasource attachment requires portal Save/Publish (no public API). Create via API, open in portal, add datasource, Save.
   - **"Add AI instructions (preview)"** on a semantic model (Prep for AI): portal-only. No REST API endpoint or TMDL annotation works for this field.
-  - SupplyAgent_Raw gets **zero instructions** — that is intentional. It is the bare baseline for the demo contrast.
-  - SupplyAgent_Raw_Plus is the same raw data with **heavy agent-side instructions** (`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md`) — the instructions-only experiment. Point it at the **lakehouse `lh_supply_demo` SQL endpoint** (T-SQL), not the Raw model, or the instructions can't steer query generation.
-- **Phases 1–6 scope = the three agents:** SupplyAgent_Raw (bare), SupplyAgent_Raw_Plus
-  (instructed raw), SupplyAgent_Modeled (modeled). **Phase 7 (added after the original scope)** =
-  three matching Power BI reports in `pbip/` (one per agent, same 12 questions, for a visual
+  - SupplyAgent_Raw_Plus is raw data with **heavy agent-side instructions** (`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md`) — the instructions-only experiment. Point it at the **lakehouse `lh_supply_demo` SQL endpoint** (T-SQL), not the Raw model, or the instructions can't steer query generation.
+- **Phases 1–6 scope = the two agents:** SupplyAgent_Raw_Plus (instructed raw) and
+  SupplyAgent_Modeled (modeled). **Phase 7 (added after the original scope)** =
+  two matching Power BI reports in `pbip/` (one per agent, same 12 questions, for a visual
   side-by-side). Still **out of scope:** verified answers, **Teams/Copilot Studio**, and
   **answering the 12 eval questions** (that's the live demo, done by a human).
 
@@ -64,8 +63,7 @@ that last phase is portal work where you prepare the exact inputs and the user c
   **Option B**. *Every* object lives in **Option B**.
 - Capacity **fabricassesmentcoe** — the workspace is already on it; do **not** assign capacity.
 - Names: lakehouse **lh_supply_demo** · models **MultiSource_Raw** / **MultiSource_Modeled** ·
-  notebook **build_modeled_layer** · agents **SupplyAgent_Raw** / **SupplyAgent_Raw_Plus** /
-  **SupplyAgent_Modeled** ·
+  notebook **build_modeled_layer** · agents **SupplyAgent_Raw_Plus** / **SupplyAgent_Modeled** ·
   conformed tables **c_*** · raw tables keep their source names.
 - Data window **2025-06-01 → 2026-05-31**; Lakeside acquisition **2026-02-01**.
 
@@ -89,10 +87,9 @@ that last phase is portal work where you prepare the exact inputs and the user c
 │   ├── render_notebook.py          ← Phase 4: inject lakehouse/workspace IDs (from .env) into a deploy copy
 │   ├── models/                     ← MultiSource_Raw / MultiSource_Modeled .SemanticModel (TMDL)
 │   ├── notebooks/build_modeled_layer.Notebook/  ← importable notebook source (placeholders)
-│   └── agent-config/               ← Phase 6 paste-text (Prep-for-AI, agent instructions, raw setup)
-├── pbip/                           ← Phase 7: three Power BI reports (PBIR) over the deployed models
-│   ├── build_reports.py            ← generator: emits every page/visual for all three reports
-│   ├── raw/                        ← report_raw → MultiSource_Raw (bare; honest-demo visuals)
+│   └── agent-config/               ← Phase 6 paste-text (Prep-for-AI, agent instructions)
+├── pbip/                           ← Phase 7: two Power BI reports (PBIR) over the deployed models
+│   ├── build_reports.py            ← generator: emits every page/visual for both reports
 │   ├── raw_plus/                   ← report_raw_plus → MultiSource_Raw + report-level DAX (forces all 12)
 │   └── modeled/                    ← report_modeled → MultiSource_Modeled (governed measures)
 ├── eval/MultiSourceAgent_Eval.xlsx ← 12-question workbook — BLANK template (.filled.xlsx is git-ignored)
@@ -163,8 +160,8 @@ models; `build_reports.py` regenerates every page/visual deterministically. Two 
    in every `visual.json` with `SourceRef: {"Schema": "extension", "Entity": <home table>}`.
    Omit `Schema: "extension"` and Power BI resolves the measure against the *model*, fails, and
    raises **`Missing_References`**. `build_reports.py` emits it automatically (its `extension=True`
-   path); model measures (modeled report) and plain columns must NOT carry it. The raw and modeled
-   reports use no report-level measures (implicit aggregation / model measures).
+   path); model measures (modeled report) and plain columns must NOT carry it. The modeled
+   report uses no report-level measures (governed model measures only).
 2. A paused capacity surfaces as **`CapacityNotActive`** (HTTP 404 on `…/workspaceandmodel`) and
    breaks every live-connected visual — resume the F4 before opening the reports.
 
