@@ -3,5 +3,5 @@ expression DatabaseQuery =
 			database = Sql.Database("__SQL_ENDPOINT__", "__DATABASE__")
 		in
 			database
-	lineageTag: 861bc5e6-ad3d-4f72-86e4-a6b23e623b7a
+	lineageTag: 3a4655b5-188a-40b9-8edc-beb6f3a084c9
 	annotation PBI_IncludeFutureArtifacts = False

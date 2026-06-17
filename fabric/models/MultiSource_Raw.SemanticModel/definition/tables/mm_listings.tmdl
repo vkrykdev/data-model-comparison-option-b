@@ -1,35 +1,35 @@
 table mm_listings
-	lineageTag: 3d2b107d-ad2b-4075-8383-e21a0eb248a8
+	lineageTag: bd11654a-2a4f-40d1-8419-119597674410
 
 	column listingId
 		dataType: string
 		summarizeBy: none
 		sourceColumn: listingId
-		lineageTag: b86695cb-1274-4c0f-bef7-2503ab60c267
+		lineageTag: bf761c30-c3bb-4f95-b777-1bf8690f9d5b
 
 	column sellerSku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sellerSku
-		lineageTag: 688c5ce5-f871-417a-b366-58811c965626
+		lineageTag: 2080ebf8-b75d-4cfc-8682-8ce5b298eea9
 
 	column title
 		dataType: string
 		summarizeBy: none
 		sourceColumn: title
-		lineageTag: 4db5b876-f4d7-412b-be03-751b220cb115
+		lineageTag: 71d7dc84-7767-4a6c-916f-4c768eff0704
 
 	column listPrice
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: listPrice
-		lineageTag: a74f3f14-7bb8-478b-9d56-afa064a1c0ee
+		lineageTag: 6fa798b3-4282-4728-85a4-770d7ae0d246
 
 	column status
 		dataType: string
 		summarizeBy: none
 		sourceColumn: status
-		lineageTag: 4b4dd6ca-d0f4-4712-b4bd-51cccd29659a
+		lineageTag: b81b8f3d-88bb-435d-9d5e-beb2a12cbc3f
 
 	partition mm_listings = entity
 		mode: directLake

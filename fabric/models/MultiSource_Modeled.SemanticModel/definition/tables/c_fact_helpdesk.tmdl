@@ -1,48 +1,48 @@
 /// Helpdesk tickets resolved to SKUs by product name (~88% resolved; rest sku='UNRESOLVED'). is_complaint = 'Product complaint' category; is_open = still open.
 table c_fact_helpdesk
-	lineageTag: ae5adcd6-92e5-4126-ac87-b337a7602f01
+	lineageTag: c0690a10-66b0-4a17-bbcf-f730b7a30089
 
 	column ticket_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: ticket_id
-		lineageTag: add37fee-b8e0-44d3-bfef-a8519e800cc7
+		lineageTag: ce106661-901b-4fa8-879b-53ba84afff5e
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: 14f0f6f6-3ab8-4295-9935-6569b96d5a51
+		lineageTag: 98ab6c83-4056-40c5-a880-3b19f3546015
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: b987349b-69e6-4cac-ae67-2f4f320423fb
+		lineageTag: eaea503b-69da-4130-96f8-a65797352d2f
 
 	column category
 		dataType: string
 		summarizeBy: none
 		sourceColumn: category
-		lineageTag: 38b7a3cc-f7fb-468b-8fad-7447ca037068
+		lineageTag: ee889861-8a6e-4caf-8b0e-9e69404e6257
 
 	column is_complaint
 		dataType: boolean
 		summarizeBy: none
 		sourceColumn: is_complaint
-		lineageTag: ef019a3d-53e2-401f-b315-d62c7bbb0394
+		lineageTag: f95b728f-f899-41aa-8c21-c4a08a51dccb
 
 	column is_open
 		dataType: boolean
 		summarizeBy: none
 		sourceColumn: is_open
-		lineageTag: 472d65da-78ec-4c78-9896-9273923bf96a
+		lineageTag: 98c1409a-e7d7-4ed1-8d55-10040699fa5c
 
 	column priority
 		dataType: string
 		summarizeBy: none
 		sourceColumn: priority
-		lineageTag: 1d86e7ed-9176-4850-a2fa-78d5e8ab2484
+		lineageTag: 7ff559a3-4f7f-496e-bd30-86673df955e2
 
 	partition c_fact_helpdesk = entity
 		mode: directLake

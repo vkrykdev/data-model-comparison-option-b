@@ -1,84 +1,84 @@
 /// One row per product: 100 corporate SKUs (with itm/lsp/listing codes), LSX-* Lakeside-local items, plus UNMAPPED/UNRESOLVED quality members.
 table c_dim_product
-	lineageTag: 95729ab1-67f5-4a65-bf01-0f9625a33104
+	lineageTag: c988b7e7-d6c0-471f-a426-65905bd76283
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: 8a9a8007-750f-446a-b128-be25a4852dc6
+		lineageTag: cb79736e-2a85-4652-be11-10864c0cad01
 
 	column product_name
 		dataType: string
 		summarizeBy: none
 		sourceColumn: product_name
-		lineageTag: 46f683d9-1fa8-474e-b439-a2ca805b8cf6
+		lineageTag: 0a1f0374-c6cc-4757-995b-78d7439eb265
 
 	column category
 		dataType: string
 		summarizeBy: none
 		sourceColumn: category
-		lineageTag: 783154b7-91c8-461a-8f1c-faffa04ea58b
+		lineageTag: 89f00914-1eef-4163-b0f6-73497364a2ec
 
 	column subcategory
 		dataType: string
 		summarizeBy: none
 		sourceColumn: subcategory
-		lineageTag: 604f6986-e321-4b8b-9796-b7564c85037d
+		lineageTag: dcc8310e-4aee-4d36-8e4b-e761efcf79a2
 
 	column brand
 		dataType: string
 		summarizeBy: none
 		sourceColumn: brand
-		lineageTag: 1854b942-ac03-4c0a-950f-c47761956089
+		lineageTag: eae2f816-f9be-4e83-8237-3f176537c4a4
 
 	column abc_class
 		dataType: string
 		summarizeBy: none
 		sourceColumn: abc_class
-		lineageTag: 4ca59f5e-35ee-4ef9-8651-3e3d7040b29b
+		lineageTag: db6e1d4b-6b39-4e27-b7c8-ad1fa74e0299
 
 	column standard_unit_cost
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: standard_unit_cost
-		lineageTag: 39cf84e4-eb07-4fbc-83e4-3c277b0cd2bb
+		lineageTag: 430e7aa8-b85d-40e8-81a9-93cd51d6d692
 
 	column list_price
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: list_price
-		lineageTag: b6f55cc6-674b-471b-ad96-5030c791a646
+		lineageTag: f112e1b6-e843-4b38-8c84-01a5665a77ec
 
 	column supplier_name
 		dataType: string
 		summarizeBy: none
 		sourceColumn: supplier_name
-		lineageTag: e4c24c5e-94c5-42b0-93c0-9f73fdb3b398
+		lineageTag: 559b71c1-12c1-4555-8532-f88a939c57e1
 
 	column itm_code
 		dataType: string
 		summarizeBy: none
 		sourceColumn: itm_code
-		lineageTag: dd195b91-b320-465b-a5b8-940ee77217fc
+		lineageTag: d3e05791-9e76-4545-97e0-29ff533c2f84
 
 	column lsp_code
 		dataType: string
 		summarizeBy: none
 		sourceColumn: lsp_code
-		lineageTag: d7f8f6a0-f89c-4494-8884-e244a9040932
+		lineageTag: 5b40ac28-2ed4-4275-9435-42580a890c1e
 
 	column mm_listing_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: mm_listing_id
-		lineageTag: 837a5bdb-5e69-4b5f-87d3-3c32ce221647
+		lineageTag: 920381c6-a039-4ba3-bce6-98dd02c9be60
 
 	column is_lakeside_only
 		dataType: boolean
 		summarizeBy: none
 		sourceColumn: is_lakeside_only
-		lineageTag: 0b2a746f-39af-493c-b9ab-46fe8cd4dc51
+		lineageTag: 1810fbe9-1a33-4be0-8496-6b056d0a79ee
 
 	partition c_dim_product = entity
 		mode: directLake

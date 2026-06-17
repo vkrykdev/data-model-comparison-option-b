@@ -1,17 +1,17 @@
 table hdCategories
-	lineageTag: 98fd5052-b1e5-437a-89eb-91b94e65847a
+	lineageTag: 08e18b0e-31c8-41c1-84f1-1368c6065c2f
 
 	column categoryId
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: categoryId
-		lineageTag: 586d69b6-6350-4b7b-8eff-cc60c8fb739a
+		lineageTag: 085ae629-0c42-4681-9d00-b410c35ac9cc
 
 	column categoryName
 		dataType: string
 		summarizeBy: none
 		sourceColumn: categoryName
-		lineageTag: 58d1caa9-30de-4129-ba20-3e94d2a90a49
+		lineageTag: 6d31da3a-566d-4e0d-8c1a-ba1aa1ec6b34
 
 	partition hdCategories = entity
 		mode: directLake

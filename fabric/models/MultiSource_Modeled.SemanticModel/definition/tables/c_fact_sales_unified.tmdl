@@ -1,117 +1,146 @@
 /// All sales unified: ERP, MegaMart marketplace (net = payout after ~14% fees; gross = before fees), and Lakeside stores. The source column identifies origin. sku='UNMAPPED' marks stale marketplace listings.
 table c_fact_sales_unified
-	lineageTag: 34a9b249-7c8a-411b-8074-3eccef054fb2
+	lineageTag: eea49b71-6ddf-4b6a-b706-3963342fb9f7
 
 	column source
 		dataType: string
 		summarizeBy: none
 		sourceColumn: source
-		lineageTag: 6dd449e6-b8cb-4bea-9a12-1c03209c62e4
+		lineageTag: 804b40e8-2ca5-40f2-984f-8c8c996cd5a2
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: 9f5795ee-e460-4594-a470-49f7be7f028b
+		lineageTag: 2bc16f0f-60ac-4e3d-b866-20185eaaa440
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: 4e41b3aa-aea4-4d7a-a4ba-edfc59b38771
+		lineageTag: 1f001c8f-89a8-46b7-af93-8d2d12d60772
 
 	column location_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: location_id
-		lineageTag: 2c0998b0-135e-4688-b92b-5dd7712c44b7
+		lineageTag: 556f6cea-456b-4131-9a2b-b580c9c9803f
 
 	column channel
 		dataType: string
 		summarizeBy: none
 		sourceColumn: channel
-		lineageTag: ec34d45d-0e1e-493c-a17e-e28a48ef7004
+		lineageTag: 5c7362e9-3586-40b3-a9b3-38cb61f8bbb8
 
 	column qty
 		isHidden
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: qty
-		lineageTag: 29ba9471-5c56-495b-89a6-238071dddbec
+		lineageTag: 5256901e-07fa-42bb-aadd-d8e477861e7b
 
 	column gross_amount
 		isHidden
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: gross_amount
-		lineageTag: 6d04d92c-f9c9-49a3-acc3-bd5df275ff2b
+		lineageTag: 9aded798-c5a4-427c-b2f6-d620d93a2d61
 
 	column net_amount
 		isHidden
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: net_amount
-		lineageTag: 8d2cb3b1-ba33-40ec-af8e-b7ddb588388e
+		lineageTag: 16b5db91-b830-408c-bd38-170244747732
 
 	/// Gross revenue, all sources.
 	measure 'Revenue Gross' = SUM ( c_fact_sales_unified[gross_amount] )
 		formatString: #,##0
-		lineageTag: 7845d2ab-e7ff-40ea-9d29-bac01905d5f3
+		lineageTag: 9f203500-9092-43af-bf5c-7b2c6de34b78
 
 	/// Net revenue (marketplace net of fees).
 	measure 'Revenue Net' = SUM ( c_fact_sales_unified[net_amount] )
 		formatString: #,##0
-		lineageTag: cb489166-ad28-4c59-9c62-64d4a016fdb7
+		lineageTag: 2cc1e2e8-7b70-4dc1-9cf1-a1480e526c6e
 
 	measure 'Units Sold' = SUM ( c_fact_sales_unified[qty] )
 		formatString: #,##0
-		lineageTag: 55e9d8ab-b640-446e-ad55-2099988fc192
+		lineageTag: a6e70434-d02a-4e67-b782-792fdbadf8e4
 
 	measure 'ERP Revenue' = CALCULATE ( [Revenue Net], c_fact_sales_unified[source] = "ERP" )
 		formatString: #,##0
-		lineageTag: 386f70f9-d1a1-4902-8a1e-ab4c868247da
+		lineageTag: 01a500d0-c597-4d06-8828-7fa3aea09469
 
 	measure 'Marketplace Net Revenue' = CALCULATE ( [Revenue Net], c_fact_sales_unified[source] = "MegaMart" )
 		formatString: #,##0
-		lineageTag: efeceba0-c1a1-48fd-8482-b15834450c1b
+		lineageTag: dc02a6fb-3952-464b-a1fb-e1a857f204b8
 
 	measure 'Marketplace Gross Revenue' = CALCULATE ( [Revenue Gross], c_fact_sales_unified[source] = "MegaMart" )
 		formatString: #,##0
-		lineageTag: 07bc71a7-8b5e-468e-b7b0-f1b3ba835a1f
+		lineageTag: 2817b880-d687-4971-a0cd-25c9a68c90d9
 
 	measure 'Lakeside Revenue' = CALCULATE ( [Revenue Net], c_fact_sales_unified[source] = "Lakeside" )
 		formatString: #,##0
-		lineageTag: 1e13978b-61eb-4778-86b7-924b9c0e425f
+		lineageTag: 8a898190-b0e2-4077-8365-2bc0bbfaa1ce
 
 	/// Share of daily ERP snapshot rows in stockout.
 	measure 'Stockout Rate %' = DIVIDE ( CALCULATE ( SUM ( c_fact_inventory[is_stockout] ), c_fact_inventory[grain] = "daily" ), CALCULATE ( COUNTROWS ( c_fact_inventory ), c_fact_inventory[grain] = "daily" ) )
 		formatString: 0.0%
-		lineageTag: d72ca640-a337-47fe-879a-a524f4e4cdd1
+		lineageTag: 3416a18a-5cd6-47be-9292-518063833989
 
 	measure 'Avg On-Hand Units' = AVERAGEX ( VALUES ( c_dim_date[date_key] ), CALCULATE ( SUM ( c_fact_inventory[on_hand_qty] ) ) )
 		formatString: #,##0
-		lineageTag: 28169f41-da1f-40ab-a9fb-cdf5a9298bcb
+		lineageTag: 3b9507cb-58c3-40a1-8a97-da91474d9a7e
 
 	measure 'Sell-Through Ratio' = DIVIDE ( [Units Sold], [Avg On-Hand Units] )
 		formatString: 0.00
-		lineageTag: 37212e7e-e11e-4f38-a46a-22a965fdfcea
+		lineageTag: 8a789418-ccb7-43c7-b803-d2ef119cceb2
 
 	measure Tickets = COUNTROWS ( c_fact_helpdesk )
 		formatString: #,##0
-		lineageTag: 21ba9ca2-3a46-498f-8b04-b1809f005a96
+		lineageTag: 6034e1e4-8762-4982-b94e-f52ef355f122
 
 	/// Open tickets in the Product complaint category.
 	measure 'Open Complaints' = CALCULATE ( [Tickets], c_fact_helpdesk[is_complaint] = TRUE, c_fact_helpdesk[is_open] = TRUE )
 		formatString: #,##0
-		lineageTag: 78e2ffb5-a66b-43db-bac4-514930a10f5b
+		lineageTag: 1945b224-070e-4feb-9476-f6a4d5d7270d
 
 	measure 'Tickets per 1K Units' = DIVIDE ( [Tickets], [Units Sold] ) * 1000
 		formatString: 0.0
-		lineageTag: 1da397c9-3de3-4be4-9b6b-e0c295862a1b
+		lineageTag: 60cb99df-5c9e-4114-9086-19fc999bd026
 
 	measure 'Parts per 100 Units' = DIVIDE ( SUM ( c_fact_service_parts[qty_used] ), [Units Sold] ) * 100
 		formatString: 0.0
-		lineageTag: d564d8a6-0030-46f1-898a-1543ef39ae96
+		lineageTag: c7836d5a-21f1-4c09-bd46-87fd156e1ea9
+
+	/// Net revenue that cannot be tied to a known product (UNMAPPED/UNRESOLVED governed quality members).
+	measure 'Unattributable Revenue' = CALCULATE ( [Revenue Net], c_dim_product[sku] IN { "UNMAPPED", "UNRESOLVED" } )
+		formatString: #,##0
+		lineageTag: c7d801ca-0096-4cda-b672-340a903f06f3
+
+	/// Share of net revenue that ties to a real product. The modeled star reports the gap honestly.
+	measure 'Attributable Revenue %' = DIVIDE ( [Revenue Net] - [Unattributable Revenue], [Revenue Net] )
+		formatString: 0.0%
+		lineageTag: 90c141be-df7c-4f41-b2a7-81300fb28836
+
+	/// Tickets in the Product complaint category (open or closed).
+	measure Complaints = CALCULATE ( [Tickets], c_fact_helpdesk[is_complaint] = TRUE )
+		formatString: #,##0
+		lineageTag: 867c5bb7-420e-4567-842c-a6a4599bcf56
+
+	measure 'Service Parts Used' = SUM ( c_fact_service_parts[qty_used] )
+		formatString: #,##0
+		lineageTag: 9ef71d3f-2f0c-4d88-b5cf-d1070ab33c63
+
+	/// Product complaints + service-part replacements per 1,000 units sold; roll up by category for reliability.
+	measure 'After-Sale Issues per 1K Units' = DIVIDE ( [Complaints] + [Service Parts Used], [Units Sold] ) * 1000
+		formatString: 0.0
+		lineageTag: 38f6f062-d84c-447c-ad95-2e1c225d5dd7
+
+	/// Mean sell-through of the products in the current product's category - the overstock benchmark.
+	measure 'Category Avg Sell-Through' = AVERAGEX ( FILTER ( ALL ( c_dim_product ), c_dim_product[category] = SELECTEDVALUE ( c_dim_product[category] ) && NOT ( c_dim_product[sku] IN { "UNMAPPED", "UNRESOLVED" } ) ), [Sell-Through Ratio] )
+		formatString: 0.00
+		lineageTag: 82a14e8f-664c-4bee-a9fa-992a3a603bf0
 
 	partition c_fact_sales_unified = entity
 		mode: directLake

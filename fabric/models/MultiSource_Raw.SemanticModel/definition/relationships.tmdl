@@ -1,15 +1,15 @@
-relationship 73577066-bace-424d-9c93-cb64007b8784
+relationship c871217e-f683-42a1-82fd-c159a2d97fe9
 	fromColumn: sales_order_lines.sku
 	toColumn: products.sku
 
-relationship afeaf715-3693-4cee-a9f4-4cb72eee35e7
+relationship dc7ab1e3-de87-448e-ba58-fa0fb6ca2f9c
 	fromColumn: inventory_daily.sku
 	toColumn: products.sku
 
-relationship fb8d1ec9-7d8d-441a-b0a4-2a249ccdb8c5
+relationship d4aec192-83d0-4986-a9cf-c4efbe33d74f
 	fromColumn: sales_order_lines.location_id
 	toColumn: locations.location_id
 
-relationship c3b20ac6-7df3-4164-a293-dcaf104b0e1f
+relationship a91922be-d231-4875-956a-1e6fb25963ed
 	fromColumn: inventory_daily.location_id
 	toColumn: locations.location_id

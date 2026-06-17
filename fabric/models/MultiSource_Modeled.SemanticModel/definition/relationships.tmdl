@@ -1,51 +1,51 @@
-relationship 37865923-ce35-4aed-8a44-712cd00f3dbd
+relationship 794c4fa3-c9e4-4c8f-9a62-83e769b6a9d0
 	fromColumn: c_fact_sales_unified.date_key
 	toColumn: c_dim_date.date_key
 
-relationship 46646da1-3e42-46ee-b19c-d600f6dd2325
+relationship 86aec415-565c-4c9a-8bfc-ba5340e7936a
 	fromColumn: c_fact_sales_unified.sku
 	toColumn: c_dim_product.sku
 
-relationship c6965dd0-17f9-4552-979f-f0efe1122787
+relationship 6a148321-7c3b-47cb-9501-71c7cd1df71d
 	fromColumn: c_fact_inventory.date_key
 	toColumn: c_dim_date.date_key
 
-relationship ff5dce20-5a57-405e-88dc-c65f91fbdce3
+relationship 74bdd567-7911-4cf7-982f-1bc8ff785eff
 	fromColumn: c_fact_inventory.sku
 	toColumn: c_dim_product.sku
 
-relationship 0c108b0e-b2a7-4f13-874e-8a21813a20ab
+relationship c0407d67-c632-4f39-a045-325f1ec6b141
 	fromColumn: c_fact_service.date_key
 	toColumn: c_dim_date.date_key
 
-relationship 3d54aeed-39ed-40ed-af12-8b3b86bec425
+relationship 21a2fbac-ed55-41dc-8dac-876fde91318f
 	fromColumn: c_fact_service.sku
 	toColumn: c_dim_product.sku
 
-relationship a3c35d81-065f-4152-9f23-8af683c643c0
+relationship 680e6bc0-95c8-428b-bcc3-d2df2c6b17fa
 	fromColumn: c_fact_service_parts.date_key
 	toColumn: c_dim_date.date_key
 
-relationship cf634279-26b5-492d-b414-f663b8613db4
+relationship 854c4935-096a-4845-bf74-d60c25afbf7e
 	fromColumn: c_fact_service_parts.sku
 	toColumn: c_dim_product.sku
 
-relationship 4b4b87a6-6311-43c1-b7c7-a331c1afe92e
+relationship 6038212c-99d1-430b-aa11-e553c2049660
 	fromColumn: c_fact_helpdesk.date_key
 	toColumn: c_dim_date.date_key
 
-relationship 08718160-9569-4de9-b127-306d0b8de806
+relationship db8fb717-860e-4a4f-89eb-a56612e38059
 	fromColumn: c_fact_helpdesk.sku
 	toColumn: c_dim_product.sku
 
-relationship b9d4f7cd-06e9-4ece-b67d-0c068eb9f585
+relationship 9f0a169e-40a3-4edb-a214-9147e6f07729
 	fromColumn: c_fact_sales_unified.location_id
 	toColumn: c_dim_location.location_id
 
-relationship 6b02be69-0fc5-4ae1-b8f5-cd34ac1d85e3
+relationship e92c437c-3149-4596-8bb9-988ef8f02374
 	fromColumn: c_fact_inventory.location_id
 	toColumn: c_dim_location.location_id
 
-relationship 5b5f40d2-2bf7-4cc7-94b7-c1814143dfd1
+relationship 5edf5933-4fd7-4ce3-8f0f-bf2c9aecba52
 	fromColumn: c_fact_sales_unified.channel
 	toColumn: c_dim_channel.channel

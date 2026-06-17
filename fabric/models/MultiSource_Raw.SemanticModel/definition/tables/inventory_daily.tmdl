@@ -1,65 +1,65 @@
 table inventory_daily
-	lineageTag: 4dceb21d-7f52-47c5-baca-f28840c960da
+	lineageTag: 5d18a310-7a6a-4160-b3b6-e4dab13aaa17
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: adfc057a-d201-433e-a550-02b1f15226cb
+		lineageTag: 68e96c2a-2d36-402f-8b96-f36d54d32677
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: f41d5fd4-2cbf-4aff-b800-4ebcea0884fa
+		lineageTag: 3b9d63ee-f03c-4841-aae5-ff51f44d39af
 
 	column location_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: location_id
-		lineageTag: 4fd075d1-0047-4d76-902f-84954615997f
+		lineageTag: 7cec2686-a0a0-4527-8efd-82c17d2ac8d9
 
 	column on_hand_qty
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: on_hand_qty
-		lineageTag: a76d5bef-7f9d-443d-b711-6e74a42167b1
+		lineageTag: 040785ce-28f0-4824-a2e8-3ce06900df68
 
 	column on_order_qty
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: on_order_qty
-		lineageTag: 76140952-475d-4f75-ac96-8dfc395981df
+		lineageTag: f88cd379-2191-47b8-97a0-ad705165237e
 
 	column in_transit_qty
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: in_transit_qty
-		lineageTag: 42ff1dad-395f-44fb-8959-8df2b23176a4
+		lineageTag: 64a94595-ca4e-47bd-a843-9b09e6f0532b
 
 	column reorder_point
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: reorder_point
-		lineageTag: f5f0935e-525c-4b80-ba75-bcb9205d1fe7
+		lineageTag: e9c98a12-9fe5-4419-82c4-df1209f30e9f
 
 	column safety_stock
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: safety_stock
-		lineageTag: a82868fe-f154-4bee-b52c-3e5aa523106d
+		lineageTag: 14cdc0cc-11f8-4f44-b57d-4542885baf23
 
 	column unit_cost
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: unit_cost
-		lineageTag: 7a4511e6-6730-4756-b36b-ca97848c9555
+		lineageTag: 98dde543-6239-4166-a724-3b72bcbd36a8
 
 	column is_stockout
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: is_stockout
-		lineageTag: e3f90a7b-2a1d-4807-bc1d-d8205b74a8ab
+		lineageTag: d0ff6e2c-4186-450a-87af-f7528c50a29b
 
 	partition inventory_daily = entity
 		mode: directLake

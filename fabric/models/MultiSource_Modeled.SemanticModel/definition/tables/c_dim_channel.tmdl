@@ -1,12 +1,12 @@
 /// Online / Retail / Wholesale / Marketplace / Lakeside.
 table c_dim_channel
-	lineageTag: 023ddbd7-b06b-42b2-8267-f60badb138a0
+	lineageTag: 4c94d888-34bd-4e73-8fe5-663954492b05
 
 	column channel
 		dataType: string
 		summarizeBy: none
 		sourceColumn: channel
-		lineageTag: cac6704a-d00d-4d6a-be4d-12dd68444f2c
+		lineageTag: 7c250048-9fe7-41bd-8fcf-60e9cedab8e9
 
 	partition c_dim_channel = entity
 		mode: directLake

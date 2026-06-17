@@ -198,6 +198,26 @@ modeled_measures = [
    "Open tickets in the Product complaint category."),
  measure_block("Tickets per 1K Units", "DIVIDE ( [Tickets], [Units Sold] ) * 1000", "0.0"),
  measure_block("Parts per 100 Units", "DIVIDE ( SUM ( c_fact_service_parts[qty_used] ), [Units Sold] ) * 100", "0.0"),
+ # Q10 — governed attribution / honest gap surfacing
+ measure_block("Unattributable Revenue",
+   'CALCULATE ( [Revenue Net], c_dim_product[sku] IN { "UNMAPPED", "UNRESOLVED" } )', "#,##0",
+   "Net revenue that cannot be tied to a known product (UNMAPPED/UNRESOLVED governed quality members)."),
+ measure_block("Attributable Revenue %",
+   "DIVIDE ( [Revenue Net] - [Unattributable Revenue], [Revenue Net] )", "0.0%",
+   "Share of net revenue that ties to a real product. The modeled star reports the gap honestly."),
+ # Q11 — after-sale reliability (combines free-text helpdesk + ITM service parts)
+ measure_block("Complaints",
+   "CALCULATE ( [Tickets], c_fact_helpdesk[is_complaint] = TRUE )", "#,##0",
+   "Tickets in the Product complaint category (open or closed)."),
+ measure_block("Service Parts Used", "SUM ( c_fact_service_parts[qty_used] )", "#,##0"),
+ measure_block("After-Sale Issues per 1K Units",
+   "DIVIDE ( [Complaints] + [Service Parts Used], [Units Sold] ) * 1000", "0.0",
+   "Product complaints + service-part replacements per 1,000 units sold; roll up by category for reliability."),
+ # Q12 — nested benchmark: each product's category-average sell-through
+ measure_block("Category Avg Sell-Through",
+   'AVERAGEX ( FILTER ( ALL ( c_dim_product ), c_dim_product[category] = SELECTEDVALUE ( c_dim_product[category] ) '
+   '&& NOT ( c_dim_product[sku] IN { "UNMAPPED", "UNRESOLVED" } ) ), [Sell-Through Ratio] )', "0.00",
+   "Mean sell-through of the products in the current product's category - the overstock benchmark."),
 ]
 
 modeled_tmdl = {}

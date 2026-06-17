@@ -1,41 +1,41 @@
 table LS_STORES
-	lineageTag: 9f89f12f-83f2-48d5-b468-a5d7a7ed0b28
+	lineageTag: ddbd2e7f-1ecc-4a35-a179-c51bf2223480
 
 	column STORE_CODE
 		dataType: string
 		summarizeBy: none
 		sourceColumn: STORE_CODE
-		lineageTag: 5e31205e-6630-40ff-809d-caccb3dd26c8
+		lineageTag: e5cdaa0b-6410-4370-a526-cc303c2fa094
 
 	column STORE_NAME
 		dataType: string
 		summarizeBy: none
 		sourceColumn: STORE_NAME
-		lineageTag: e7218a99-51a7-4f76-a461-dca56a0d15aa
+		lineageTag: 6cec05f6-631f-493e-a06c-fedad19d29c3
 
 	column CITY
 		dataType: string
 		summarizeBy: none
 		sourceColumn: CITY
-		lineageTag: 57512212-ad46-484b-ac81-b38bbbb4e350
+		lineageTag: 2364afa9-5fc2-4474-a26d-736a037ce311
 
 	column STATE
 		dataType: string
 		summarizeBy: none
 		sourceColumn: STATE
-		lineageTag: 581a2ac6-287e-42aa-87c4-89a7d5afb813
+		lineageTag: 6321a555-3d73-413c-a231-0098cd716e8d
 
 	column REGION
 		dataType: string
 		summarizeBy: none
 		sourceColumn: REGION
-		lineageTag: 3f6ea8ce-3927-44aa-86fc-a23854f9d6ed
+		lineageTag: 8400997f-369e-427b-945b-fc72a62cbaa4
 
 	column SQFT
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: SQFT
-		lineageTag: 926c60e3-735c-459e-b295-93370e44764e
+		lineageTag: 8fa14526-ccd3-49ef-9a3b-643624bdaf10
 
 	partition LS_STORES = entity
 		mode: directLake

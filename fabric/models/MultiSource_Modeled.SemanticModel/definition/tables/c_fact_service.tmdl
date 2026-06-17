@@ -1,42 +1,42 @@
 /// Service work orders; ITM- codes resolved to SKUs via the governed xref.
 table c_fact_service
-	lineageTag: 5acb6782-4f83-478d-9dfb-e0cccf0ed5dc
+	lineageTag: 1f51ab06-c6ae-4f39-b058-190507c109cf
 
 	column work_order_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: work_order_id
-		lineageTag: a8923958-31d6-44c5-a2ed-ff2fc1db5a01
+		lineageTag: 2b7ebf3f-5b45-4bf8-976e-d4cab0bf1029
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: 1e4e8e21-5f1b-4491-a226-8887c4dfd571
+		lineageTag: 057031c6-aacd-4b60-8187-9585a22f80d3
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: 54507ca3-ac9e-42f0-80e6-1ddc588cc33f
+		lineageTag: a1a33113-68e3-4294-8e7a-e98f1b1d13d3
 
 	column work_type
 		dataType: string
 		summarizeBy: none
 		sourceColumn: work_type
-		lineageTag: de2c1ea3-0096-4a47-a0ce-aa4d4db277e4
+		lineageTag: 4f2558dd-77ec-4a0f-a9ca-2d946a20117f
 
 	column status
 		dataType: string
 		summarizeBy: none
 		sourceColumn: status
-		lineageTag: 62e6e701-f13f-46dd-9faa-9fcd5beec61d
+		lineageTag: aef26962-3d7d-4278-8c0b-316e22e87897
 
 	column labor_hours
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: labor_hours
-		lineageTag: cfdb1c57-a88a-493c-a255-59aec381eb5a
+		lineageTag: af70ae0b-3d2a-49ec-ae5e-484142b57d5a
 
 	partition c_fact_service = entity
 		mode: directLake

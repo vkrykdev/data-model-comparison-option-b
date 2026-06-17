@@ -1,53 +1,53 @@
 table ServiceWorkOrders
-	lineageTag: 2ab90660-982d-4db8-a562-070aad676d97
+	lineageTag: 6eecc112-49c7-41fb-b26c-6a079c1a3c69
 
 	column WorkOrderID
 		dataType: string
 		summarizeBy: none
 		sourceColumn: WorkOrderID
-		lineageTag: 35c872b4-245a-4efa-84cf-f7e6d1bf9cf0
+		lineageTag: 721652ec-676a-4d88-8ae9-4fdafa6ee6a8
 
 	column OpenedDate
 		dataType: string
 		summarizeBy: none
 		sourceColumn: OpenedDate
-		lineageTag: c4ee83d7-bd1b-4969-b31f-3fa380e09aa0
+		lineageTag: bd065969-a7ee-4053-9b16-200f985c5f6c
 
 	column ClosedDate
 		dataType: string
 		summarizeBy: none
 		sourceColumn: ClosedDate
-		lineageTag: 0c103df1-4c88-4008-87cf-c1555d5c2dcc
+		lineageTag: 4d647930-b90e-4672-8376-50d38ef69fd8
 
 	column ItemCode
 		dataType: string
 		summarizeBy: none
 		sourceColumn: ItemCode
-		lineageTag: f4f47bc5-b155-4c9f-a247-3678079b7e6a
+		lineageTag: 48ae6bf5-0078-495b-8f08-3d300affa0cb
 
 	column TechnicianID
 		dataType: string
 		summarizeBy: none
 		sourceColumn: TechnicianID
-		lineageTag: c5e65061-3e44-49f1-8029-6f7031bd26e1
+		lineageTag: e3648f30-7904-45e2-9a1f-1cbf1804357d
 
 	column WorkType
 		dataType: string
 		summarizeBy: none
 		sourceColumn: WorkType
-		lineageTag: deec3609-245f-4495-a456-c911e7a2d318
+		lineageTag: 84b4f74f-b792-4108-8095-9b77e7e5203e
 
 	column Status
 		dataType: string
 		summarizeBy: none
 		sourceColumn: Status
-		lineageTag: c0650dcc-e686-49e0-8154-7b25c514fd11
+		lineageTag: 72f02151-9809-4d02-aa38-fbf038077cbf
 
 	column LaborHours
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: LaborHours
-		lineageTag: 1cd1411b-4ec9-4e18-b5d3-62653693da61
+		lineageTag: eb30af81-edaa-441c-82bd-a8b523ddeead
 
 	partition ServiceWorkOrders = entity
 		mode: directLake

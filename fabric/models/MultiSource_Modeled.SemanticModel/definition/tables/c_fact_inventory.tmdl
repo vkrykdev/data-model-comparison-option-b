@@ -1,56 +1,56 @@
 /// On-hand snapshots. ERP locations are DAILY; Lakeside stores are WEEKLY (grain column). Stockout metrics use grain='daily' only.
 table c_fact_inventory
-	lineageTag: 08849acd-a68c-43df-9312-a79dc80e7218
+	lineageTag: fe7ef250-e0f9-484f-95d1-aee925e23972
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: 29258c90-3550-49ef-b21b-053f048177f7
+		lineageTag: beeeedeb-2acd-4188-a2d9-ff5c072489e6
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: 4f93e2b2-4ddc-428f-aa31-04869dd2a01d
+		lineageTag: e289491c-41f0-4fcd-a556-653644591365
 
 	column location_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: location_id
-		lineageTag: 1b1cbbbb-eaad-4438-8625-8127a5c6a7ca
+		lineageTag: 8cd5d105-c34b-4bbf-9a72-c790aff095ef
 
 	column on_hand_qty
 		isHidden
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: on_hand_qty
-		lineageTag: 1994515d-aefe-4907-baeb-b94bd0737a53
+		lineageTag: 585e04a3-9853-4926-8ebc-76ac4f8b513f
 
 	column safety_stock
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: safety_stock
-		lineageTag: 5bdecd9c-e86f-4392-9ce7-a6d40188f5fb
+		lineageTag: 92470185-8bf2-41b3-b002-47a6ba383e7c
 
 	column is_stockout
 		isHidden
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: is_stockout
-		lineageTag: 934e2270-ac8a-4a87-90c3-f5c47cef5650
+		lineageTag: 586b8415-6afe-412e-9d64-fb3a9cce1035
 
 	column grain
 		dataType: string
 		summarizeBy: none
 		sourceColumn: grain
-		lineageTag: 76d22eb7-c2dc-4b41-8a85-c71af1c87486
+		lineageTag: 26a39be2-31c1-43b5-8ff8-4fdf0cc0dc22
 
 	column source
 		dataType: string
 		summarizeBy: none
 		sourceColumn: source
-		lineageTag: 3c2ba9ca-3e5c-4290-bb0d-f7125f79c749
+		lineageTag: e1b91557-0369-457a-a5b6-9718ddecdf8a
 
 	partition c_fact_inventory = entity
 		mode: directLake

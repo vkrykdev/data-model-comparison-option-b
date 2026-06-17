@@ -1,35 +1,35 @@
 table ServicePartsUsage
-	lineageTag: 9d68e1c9-68b6-4cf2-bc2e-5d6739c935cc
+	lineageTag: 5b081114-c42b-4b4b-aa53-8c461bb2d23f
 
 	column UsageID
 		dataType: string
 		summarizeBy: none
 		sourceColumn: UsageID
-		lineageTag: 90fc6f16-1096-42cc-94b0-41f9ff5609b1
+		lineageTag: 32a0ce6f-2ecd-44d0-8457-2fd8efa5dd0e
 
 	column WorkOrderID
 		dataType: string
 		summarizeBy: none
 		sourceColumn: WorkOrderID
-		lineageTag: bf82b94a-08e1-47e0-986f-d23b60e72672
+		lineageTag: de99dad2-fc38-48d3-b476-13a307057add
 
 	column ItemCode
 		dataType: string
 		summarizeBy: none
 		sourceColumn: ItemCode
-		lineageTag: 5fee67b3-3dd8-4c21-829f-203f7f82fd1a
+		lineageTag: 10f68bcc-a5ef-4c38-82a6-bfcdc133b7df
 
 	column QtyUsed
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: QtyUsed
-		lineageTag: fa83074f-8282-45ee-8eaf-ae9218f87abe
+		lineageTag: fd050d76-91c5-4857-839b-8ae3aab53483
 
 	column UsageDate
 		dataType: string
 		summarizeBy: none
 		sourceColumn: UsageDate
-		lineageTag: 2ad59997-b74c-478c-ace0-aae2e3625aee
+		lineageTag: 2e1e4ac4-e576-406c-ad13-b0c149c43c7a
 
 	partition ServicePartsUsage = entity
 		mode: directLake

@@ -1,65 +1,65 @@
 table products
-	lineageTag: cefc1659-2d23-46b2-a1ef-0a4fdb097804
+	lineageTag: 55a0f0e3-6bad-40f9-9569-4e6e3e15c1a8
 
 	column product_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: product_key
-		lineageTag: 4dac8340-6cbc-4df4-a0ef-51ca18b7c2d2
+		lineageTag: 9177f035-8cf6-43d7-a112-aa5d19fd12e1
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: 251205a1-9f07-4b8d-aa48-7373b96d7580
+		lineageTag: 72e954ad-ddbd-496d-9712-d4c988915ce8
 
 	column product_name
 		dataType: string
 		summarizeBy: none
 		sourceColumn: product_name
-		lineageTag: 449caf3f-5282-4b97-a127-e6f27bf1f712
+		lineageTag: e95001df-c4ab-47f1-a0f2-d82234616ac3
 
 	column category
 		dataType: string
 		summarizeBy: none
 		sourceColumn: category
-		lineageTag: 3c33a378-df7c-4e7f-8bc0-4ea18864f781
+		lineageTag: eda1db4d-ef32-4c7a-a41d-d94105026bff
 
 	column subcategory
 		dataType: string
 		summarizeBy: none
 		sourceColumn: subcategory
-		lineageTag: 31af109e-020b-4397-984e-836cf3889b09
+		lineageTag: c84d1efb-afb7-4446-b60e-b6e1ecedabe7
 
 	column brand
 		dataType: string
 		summarizeBy: none
 		sourceColumn: brand
-		lineageTag: 3da8ba9d-880c-4c38-b133-e8d06c7485ae
+		lineageTag: 3ffcd5b5-d8b8-4070-b925-7aea257bba95
 
 	column abc_class
 		dataType: string
 		summarizeBy: none
 		sourceColumn: abc_class
-		lineageTag: d9047edd-3774-4536-ace1-de9995ebc5f9
+		lineageTag: ff470fb5-0bb9-46c9-b18c-e64971736cf1
 
 	column standard_unit_cost
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: standard_unit_cost
-		lineageTag: 27b03b6d-ad83-4416-a6db-a23f9e983782
+		lineageTag: 4112b1f9-e841-46a6-9e67-236caea88443
 
 	column list_price
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: list_price
-		lineageTag: 9d7a896d-1896-4f3d-9c11-9f0b24bac405
+		lineageTag: 84ff0d23-1180-4177-a11e-b60f91980ae9
 
 	column supplier_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: supplier_key
-		lineageTag: 66cd1234-1d0c-4700-b537-6bbc4e63f6b9
+		lineageTag: b9d61758-0fcc-46d0-8a07-e8b455338ea4
 
 	partition products = entity
 		mode: directLake

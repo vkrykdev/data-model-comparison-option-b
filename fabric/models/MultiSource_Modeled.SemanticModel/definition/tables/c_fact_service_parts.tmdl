@@ -1,31 +1,31 @@
 /// Service parts consumption; ITM- codes resolved to SKUs.
 table c_fact_service_parts
-	lineageTag: 2bb1c6c9-2e19-42cf-bd30-b77c1955e6cf
+	lineageTag: 1de0f8ac-81aa-4ffe-948b-3f5fcab7ce50
 
 	column usage_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: usage_id
-		lineageTag: 87bed2af-bb3b-4449-ae32-d14d0f5631e7
+		lineageTag: 392fb133-ea97-4309-85dc-6f3082b5c9cd
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: 9d277c5a-d0cd-4dc5-ba25-4ab17b812ee4
+		lineageTag: 621240f1-2726-42a9-b4f0-a919a0428c86
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: 2b0e5b19-aaea-4e17-83ae-52f6724ee90a
+		lineageTag: 42a98f21-734e-4679-bda9-408e55905b44
 
 	column qty_used
 		isHidden
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: qty_used
-		lineageTag: d295971a-afb3-4b1b-911a-46fc247092c5
+		lineageTag: 3d73a4f6-2517-4791-915f-a15c53a14fc4
 
 	partition c_fact_service_parts = entity
 		mode: directLake

@@ -1,47 +1,47 @@
 table mm_settlements
-	lineageTag: 2304f9d9-10e7-4570-bbc9-029a6c07a560
+	lineageTag: 0179f03b-56ef-4f45-988a-d6addffabe84
 
 	column settlementId
 		dataType: string
 		summarizeBy: none
 		sourceColumn: settlementId
-		lineageTag: f7d30e8b-e6cf-4633-9384-182fd2f058ed
+		lineageTag: e6b65e9a-0caa-439d-a31a-74ef7c9e67ef
 
 	column mmOrderId
 		dataType: string
 		summarizeBy: none
 		sourceColumn: mmOrderId
-		lineageTag: ec340376-4245-4ad2-b693-5c7a844848d7
+		lineageTag: bcbd082b-2e7a-416a-812e-d6053c1b8428
 
 	column settlementDate
 		dataType: string
 		summarizeBy: none
 		sourceColumn: settlementDate
-		lineageTag: 86449783-43b0-41de-aaa8-aa67bf9950f3
+		lineageTag: 608ca78c-240f-4ac8-aa97-bb9afdfa7bc1
 
 	column grossAmount
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: grossAmount
-		lineageTag: 07e9124d-2176-4e91-88ed-76b62faaf6ff
+		lineageTag: 154858aa-7353-48fa-9c2b-786006ff3187
 
 	column commissionFee
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: commissionFee
-		lineageTag: 434f197a-6152-4f15-9727-9d2c438a1a12
+		lineageTag: e88b524f-dd22-4802-8d96-eeba44d2aaa0
 
 	column fulfillmentFee
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: fulfillmentFee
-		lineageTag: 8bebee60-fc7d-4b5f-8592-4e6591f3d48d
+		lineageTag: 6d9da7b1-1c75-4f4f-b91d-6b87b5684d79
 
 	column payoutAmount
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: payoutAmount
-		lineageTag: 8656ee65-8bc2-4c91-a616-30100b1a8a65
+		lineageTag: c8088511-c715-4482-9bf7-1cc66e88d662
 
 	partition mm_settlements = entity
 		mode: directLake

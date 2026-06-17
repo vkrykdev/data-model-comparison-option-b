@@ -1,53 +1,53 @@
 table hdTickets
-	lineageTag: 8d5e2167-dca9-499b-bb6d-0503af065434
+	lineageTag: 75b750a5-2c59-4b9b-ab6e-62ccc0733091
 
 	column ticketId
 		dataType: string
 		summarizeBy: none
 		sourceColumn: ticketId
-		lineageTag: ba2d5dac-16f4-49f9-840c-4b1dbea41d9c
+		lineageTag: f64a15c5-60ac-43f1-a10a-62c07ec2be88
 
 	column createdAt
 		dataType: string
 		summarizeBy: none
 		sourceColumn: createdAt
-		lineageTag: 09a00b81-9667-4028-bf3e-4592efee9858
+		lineageTag: c75be7e5-6767-4310-a327-5d3febae4e55
 
 	column closedAt
 		dataType: string
 		summarizeBy: none
 		sourceColumn: closedAt
-		lineageTag: dd80e5b4-58ca-4d98-9830-dea82a320e66
+		lineageTag: d6d0549c-d301-456f-a467-d08c01ea8dba
 
 	column productRef
 		dataType: string
 		summarizeBy: none
 		sourceColumn: productRef
-		lineageTag: 47c4dc03-f0d7-4c70-bf71-b5682ad04693
+		lineageTag: 362e1d61-57ef-425e-879c-4e6bdb00fcf2
 
 	column categoryId
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: categoryId
-		lineageTag: bacd20b2-194b-44df-9c48-a46749f02120
+		lineageTag: dccf7a34-ba1b-4bed-a8c3-f2f64ad72e67
 
 	column priority
 		dataType: string
 		summarizeBy: none
 		sourceColumn: priority
-		lineageTag: b85bae99-1575-4a28-adf5-1ef99aa98a18
+		lineageTag: c862e048-1049-4368-8e79-00b120a09188
 
 	column status
 		dataType: string
 		summarizeBy: none
 		sourceColumn: status
-		lineageTag: b4f0c813-35be-4e72-a1d4-77c6fdbb1140
+		lineageTag: d68b08eb-1d46-466b-806e-f00321696df1
 
 	column channel
 		dataType: string
 		summarizeBy: none
 		sourceColumn: channel
-		lineageTag: 99ca4c82-cacf-4626-8832-360d06d0251b
+		lineageTag: 75546568-523f-428e-98ae-589c3ccd5cd9
 
 	partition hdTickets = entity
 		mode: directLake

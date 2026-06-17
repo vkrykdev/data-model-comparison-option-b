@@ -1,41 +1,41 @@
 table sku_xref_master
-	lineageTag: b86deabb-21d3-492c-be17-f8dfcf12215d
+	lineageTag: 6b312144-f923-480d-8a6a-b528e66bf785
 
 	column sku
 		dataType: string
 		summarizeBy: none
 		sourceColumn: sku
-		lineageTag: cab790c8-3069-47b7-b787-4d4c801b8863
+		lineageTag: a1c1e517-7f91-4661-b47e-f3ec88849c32
 
 	column itm_code
 		dataType: string
 		summarizeBy: none
 		sourceColumn: itm_code
-		lineageTag: 0df27f5e-028a-46b0-92b1-305366296cc1
+		lineageTag: cd4c52e3-967f-4729-a432-3c99f80261fd
 
 	column lsp_code
 		dataType: string
 		summarizeBy: none
 		sourceColumn: lsp_code
-		lineageTag: 39a35241-8c9e-4727-ab8a-8c56f4b48bba
+		lineageTag: c4429373-c481-477b-885f-366d821d34d8
 
 	column mm_listing_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: mm_listing_id
-		lineageTag: 1163461d-98c8-4d64-8813-fa8152d518f8
+		lineageTag: a53f5c16-a1d5-4cd1-acab-4a70f8df20b1
 
 	column last_verified
 		dataType: string
 		summarizeBy: none
 		sourceColumn: last_verified
-		lineageTag: 5ccce240-f205-41d9-a2aa-372c8df43f4a
+		lineageTag: 3bcb2199-434a-4919-9417-e2ef7d626240
 
 	column notes
 		dataType: string
 		summarizeBy: none
 		sourceColumn: notes
-		lineageTag: 0fb92d40-6352-4e4b-9a47-54c7ad985ec6
+		lineageTag: 6e3300e2-11aa-4545-a940-fccb359a811c
 
 	partition sku_xref_master = entity
 		mode: directLake

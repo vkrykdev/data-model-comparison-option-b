@@ -1,47 +1,47 @@
 table suppliers
-	lineageTag: 7832869a-141c-470f-98b6-1442c6c8521e
+	lineageTag: f704d2e9-c56d-432c-9ede-8193e17b515c
 
 	column supplier_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: supplier_key
-		lineageTag: 5fa1f6d0-5512-4da6-ac0b-31cf28fac1c9
+		lineageTag: 9ee07072-6222-4f1a-b2fe-83f138550245
 
 	column supplier_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: supplier_id
-		lineageTag: 98053098-75c0-4432-8066-0b2e5f060696
+		lineageTag: 621c118c-acf9-46dd-a30d-022144651cba
 
 	column supplier_name
 		dataType: string
 		summarizeBy: none
 		sourceColumn: supplier_name
-		lineageTag: 090d3f62-769c-4074-b9c4-fec8a8cac3d6
+		lineageTag: 94fe9067-5439-4f0f-b8a3-76a64ac78c42
 
 	column supplier_country
 		dataType: string
 		summarizeBy: none
 		sourceColumn: supplier_country
-		lineageTag: 3158615b-2997-46bb-b23f-c015d93e89d2
+		lineageTag: bbcc7cf5-d8f9-44db-8e5c-42b6f08dc3ea
 
 	column lead_time_mean_days
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: lead_time_mean_days
-		lineageTag: d6e98a93-bdd4-4694-a61d-6bb5d8e2ca1e
+		lineageTag: f3d6497a-11df-4f73-b72c-560d6409987d
 
 	column lead_time_std_days
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: lead_time_std_days
-		lineageTag: 7e2271c5-4104-4aaf-a325-94a73965cac4
+		lineageTag: 4b968165-ae6b-4070-a5a8-8648b9f7ca35
 
 	column reliability_score
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: reliability_score
-		lineageTag: 42c6e515-71ce-451b-a5c1-1a27040285d3
+		lineageTag: 7fef8ee4-57d3-465a-9acc-e4c5b6c386f5
 
 	partition suppliers = entity
 		mode: directLake

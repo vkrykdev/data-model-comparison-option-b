@@ -1,84 +1,84 @@
 /// Marked date table. is_post_acquisition = on/after 2026-02-01 (Lakeside acquisition).
 table c_dim_date
-	lineageTag: df5a74d6-e8ef-425f-a366-d41b0554cd94
+	lineageTag: 4cfdb002-ad08-4fe6-82fd-5162f040baf2
 
 	column date_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: date_key
-		lineageTag: 1de9aaa9-3465-4615-8cf2-93f05197c7f3
+		lineageTag: 0c8ce600-62d1-4d9f-a409-6d2e4a72781f
 
 	column date
 		dataType: dateTime
 		summarizeBy: none
 		sourceColumn: date
-		lineageTag: bbf3005f-1db1-42fb-badf-433f82716640
+		lineageTag: f4d67ae6-b3a1-426d-8e4c-32556f8e17e2
 
 	column year
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: year
-		lineageTag: 805537cc-1b37-4e4a-a798-5ca2cdce4a59
+		lineageTag: 4c7700ea-d48f-408d-aa01-4531210f6cbf
 
 	column quarter
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: quarter
-		lineageTag: 3e816ca9-1d6a-4f51-8c14-b071b68df2b8
+		lineageTag: 6849aa19-92b8-408e-b23a-6ae6469fe4b5
 
 	column month
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: month
-		lineageTag: 88fbc1ae-45c9-449d-9679-467c2526151c
+		lineageTag: 55a40385-b663-4cf5-86e4-421e4a48ea30
 
 	column month_name
 		dataType: string
 		summarizeBy: none
 		sourceColumn: month_name
-		lineageTag: f9367ba2-94a4-454f-a9f1-e9ff2965da90
+		lineageTag: c8d95fe9-bbb8-4533-a11f-c1efed1bc335
 
 	column month_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: month_key
-		lineageTag: 554c0f9e-a1f2-4d75-b2e2-b5c3b85cad35
+		lineageTag: 56aab404-08b3-4ad9-8447-7e7fee697061
 
 	column day
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: day
-		lineageTag: 7971abce-c4bb-407a-a795-5017ee856f3c
+		lineageTag: fbc42ea6-c29f-4033-878c-95b716dabe31
 
 	column day_of_week
 		dataType: string
 		summarizeBy: none
 		sourceColumn: day_of_week
-		lineageTag: e2b3e6bc-43b0-4234-b0fe-8901996694dc
+		lineageTag: b9b8841d-ca86-44a0-a8be-ce2a04833abf
 
 	column is_weekend
 		dataType: boolean
 		summarizeBy: none
 		sourceColumn: is_weekend
-		lineageTag: 97aec238-2223-4b23-b721-af75540512bd
+		lineageTag: 9252d46e-bb8d-4076-b189-41d82a3373b8
 
 	column fiscal_year
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: fiscal_year
-		lineageTag: 4bfb2e47-78b2-47a2-b1fa-01c5fd60f09e
+		lineageTag: d16b292e-39d0-4e9d-9c66-34cd4d019294
 
 	column fiscal_quarter
 		dataType: string
 		summarizeBy: none
 		sourceColumn: fiscal_quarter
-		lineageTag: af69dbb0-d3c2-4332-a59a-05510c309856
+		lineageTag: 05f2766d-9fd2-4c59-973b-80c6d9c3d504
 
 	column is_post_acquisition
 		dataType: boolean
 		summarizeBy: none
 		sourceColumn: is_post_acquisition
-		lineageTag: 7cea86ae-912a-43c3-b272-edb28688d125
+		lineageTag: 378bc0c9-9f03-4341-a825-b4248efac5ea
 
 	partition c_dim_date = entity
 		mode: directLake

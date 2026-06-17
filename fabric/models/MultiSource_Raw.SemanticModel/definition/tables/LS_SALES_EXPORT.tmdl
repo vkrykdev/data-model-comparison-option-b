@@ -1,47 +1,47 @@
 table LS_SALES_EXPORT
-	lineageTag: aa25e00a-c9a3-40fd-9be5-8e8daea14309
+	lineageTag: 413543fb-7c0d-4681-8aef-d103817b0521
 
 	column SALE_ID
 		dataType: string
 		summarizeBy: none
 		sourceColumn: SALE_ID
-		lineageTag: d58f163b-7f0f-4c2e-9432-bd3b7f12c327
+		lineageTag: 7c73b9c0-4d8d-41e9-8980-5cd9fe5e0852
 
 	column SALE_DATE
 		dataType: string
 		summarizeBy: none
 		sourceColumn: SALE_DATE
-		lineageTag: 4e7ee743-a3e3-4785-88b9-5872d220b20f
+		lineageTag: 62fc215f-f739-499a-b72b-e17a89da9fa7
 
 	column STORE_CODE
 		dataType: string
 		summarizeBy: none
 		sourceColumn: STORE_CODE
-		lineageTag: 3c99d4f7-2ace-4742-8a10-715909add14b
+		lineageTag: 4ffcd7a8-4591-4b94-860b-419c26b08889
 
 	column PROD_DESC
 		dataType: string
 		summarizeBy: none
 		sourceColumn: PROD_DESC
-		lineageTag: 301a0dde-212e-4b37-b9a9-87942912cad4
+		lineageTag: 257c2dea-db91-48ae-9c56-63d6ff6c8819
 
 	column QTY
 		dataType: int64
 		summarizeBy: sum
 		sourceColumn: QTY
-		lineageTag: 895f2048-a363-4d60-8e0f-c3f028fea34e
+		lineageTag: aba00d9c-6abd-475b-83bc-b7021b96fb95
 
 	column UNIT_PRICE
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: UNIT_PRICE
-		lineageTag: cd71ba15-d0fd-4b87-a9a2-c8657b6d5c09
+		lineageTag: c5b9f0c8-596f-4764-8435-00f6e2297080
 
 	column TOTAL_AMT
 		dataType: double
 		summarizeBy: sum
 		sourceColumn: TOTAL_AMT
-		lineageTag: cbf257ae-3f73-4f13-ae66-71ccb0af9182
+		lineageTag: 380d818c-3738-48fd-8e0e-4cfb62e286b3
 
 	partition LS_SALES_EXPORT = entity
 		mode: directLake

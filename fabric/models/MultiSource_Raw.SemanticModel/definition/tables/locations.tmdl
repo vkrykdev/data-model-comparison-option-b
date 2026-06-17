@@ -1,47 +1,47 @@
 table locations
-	lineageTag: 3bf8758e-028b-4527-84b8-e10ca343c9f4
+	lineageTag: 9ae01f2a-c9f1-4212-9838-481f8ff1d4f2
 
 	column location_key
 		dataType: int64
 		summarizeBy: none
 		sourceColumn: location_key
-		lineageTag: 3d173793-2f28-4b26-85cd-b2f1132d7796
+		lineageTag: 8e283e9a-99c8-42e1-9f3d-d4d1ef8431a1
 
 	column location_id
 		dataType: string
 		summarizeBy: none
 		sourceColumn: location_id
-		lineageTag: b03f4d11-95a7-4cde-ba6c-657351f3a356
+		lineageTag: 51916f24-f96f-4cae-9256-a2fb6e067d68
 
 	column location_name
 		dataType: string
 		summarizeBy: none
 		sourceColumn: location_name
-		lineageTag: 82043d85-53dd-4972-8e99-7d653ba4afa8
+		lineageTag: 2a140bfe-4985-44e3-a349-28c6d7f02b68
 
 	column region
 		dataType: string
 		summarizeBy: none
 		sourceColumn: region
-		lineageTag: fd6b4465-2541-4ba3-b4ee-b5dc4d3bb72d
+		lineageTag: 1883baf7-6906-4f0c-a2a8-7af1444d7784
 
 	column location_type
 		dataType: string
 		summarizeBy: none
 		sourceColumn: location_type
-		lineageTag: 23e69b64-d1a8-49fa-80dd-2875bb2ce7ca
+		lineageTag: af05076e-5fe2-4855-bf88-a80c1bb50483
 
 	column country
 		dataType: string
 		summarizeBy: none
 		sourceColumn: country
-		lineageTag: 7fd6134b-6c5c-48c2-b853-664856165dbc
+		lineageTag: ac5a5dc0-45e8-46e5-97a0-1590263f572b
 
 	column is_consignment
 		dataType: string
 		summarizeBy: none
 		sourceColumn: is_consignment
-		lineageTag: b37e3775-1c25-4cc4-8c00-422d36dc511a
+		lineageTag: 5814b45b-5f58-452f-8b93-a8e18eb535c0
 
 	partition locations = entity
 		mode: directLake
