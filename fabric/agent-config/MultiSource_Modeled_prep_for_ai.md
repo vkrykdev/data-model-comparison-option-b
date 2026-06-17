@@ -37,9 +37,18 @@ Conventions for querying this model:
    from weekly counts. For each network, divide THAT network's units sold by the average of
    THAT network's own on-hand over the period - never divide one source's units sold by
    another source's on-hand. Compare ratios across networks, never raw snapshot counts.
+   To compare networks (e.g. "Lakeside stores vs DCs"), GROUP [Sell-Through Ratio] by
+   c_dim_location[location_type] - never report a single blended network figure when the
+   question asks to compare. The location_type values are: Lakeside stores = 'Retail Store';
+   distribution centers (DCs) = 'Distribution Center'. Exclude 'Marketplace' and 'Consignment'
+   from a store-vs-DC comparison. The measure already pairs each network's units with its own
+   on-hand, so grouping by location_type is sufficient. "Since the acquisition" applies the
+   post-acquisition filter from convention 1. Expected magnitudes are roughly 1x-3x.
    Sanity guard: a network sell-through that comes out at or near zero almost always means the
    on-hand base was pulled from the wrong source or grain (e.g. ERP on-hand under Lakeside
-   units). Recheck the source/grain pairing before reporting such a result.
+   units); a value in the tens or hundreds means the on-hand denominator collapsed (a single
+   snapshot used instead of the period average). Recheck the source/grain pairing - and that
+   on-hand is averaged across snapshot dates, not row-level - before reporting such a result.
 7. Category average sell-through = the mean of the individual product sell-through ratios
    within a category (average of per-product ratios, NOT total category units / total
    category on-hand). A product is overstocked when its own sell-through ratio is below its

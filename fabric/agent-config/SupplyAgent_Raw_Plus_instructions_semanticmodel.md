@@ -66,6 +66,22 @@ WHAT THIS MODEL CAN ANSWER (ERP-related scope)
 - ERP sell-through and category-average / overstock comparisons among ERP products.
 - Single-table totals on standalone sources: total marketplace gross/net, total Lakeside sales,
   Lakeside sales on a date or period. These are network totals, NOT joined to products.
+- Lakeside-stores-vs-DCs sell-through (a NETWORK-LEVEL comparison, not per product). Compute
+  each side as its own independent ratio and present both - do NOT report a single blended
+  figure and do NOT declare DCs "not computable":
+  * DCs (ERP, related tables): units = SUM(sales_order_lines[qty_sold]) since 2026-02-01;
+    on-hand = average across daily snapshot dates of SUM(inventory_daily[on_hand_qty]) since
+    2026-02-01. DCs are locations[location_type] = "Distribution Center".
+  * Lakeside stores (standalone LS tables, aggregated alone - no join to products needed):
+    units = SUM(LS_SALES_EXPORT[QTY]) where the parsed DD/MM/YYYY date >= 2026-02-01;
+    on-hand = average across weekly count dates of SUM(LS_STOCK_COUNT[QTY_ON_HAND]) over the
+    same window. Use PATTERN D (sum on-hand WITHIN each snapshot date, THEN average those
+    per-date totals - never average row-level on-hand, which collapses the denominator and
+    produces an absurd ratio in the hundreds/thousands).
+  Window: "since the acquisition" = 2026-02-01 onward (NOT 2023). State the DD/MM date basis.
+  Gold magnitudes: Lakeside ~2.85x vs DCs ~1.70x - both land in the 1x-3x range; a result in
+  the tens/hundreds (or a "not computable") means the on-hand denominator was mis-aggregated -
+  recompute before answering.
 
 WHAT THIS MODEL CANNOT ANSWER (decline honestly - no relationship exists)
 - Tickets per 1,000 units, parts attach rate, after-sale issues by category (helpdesk/service

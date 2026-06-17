@@ -43,7 +43,10 @@
       "Read(//c/Windows/System32//**)",
       "Bash(sqlcmd '-?')",
       "Bash(sqlcmd -S xj5gsmud64gedpw3hfuc4xoevy-4sd5jwt5eaqu5azjrwzsmlcvse.datawarehouse.fabric.microsoft.com -d lh_supply_demo --authentication-method ActiveDirectoryAzCli -Q 'SELECT TOP 1 '\\\\''ok'\\\\'' AS c')",
-      "Bash(fab -c \"auth status\")"
+      "Bash(fab -c \"auth status\")",
+      "Bash(ls modeled/report_modeled.pbix.Report/definition/pages/)",
+      "Bash(ls raw_plus/report_raw_plus.Report/definition/pages/)",
+      "Bash(az rest *)"
     ]
   }
 }
