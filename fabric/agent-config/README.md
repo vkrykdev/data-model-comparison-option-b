@@ -6,10 +6,16 @@ portal work; these files are the exact inputs.
 
 - `MultiSource_Modeled_prep_for_ai.md` — model-level Prep-for-AI for MultiSource_Modeled
 - `SupplyAgent_Modeled_agent_instructions.md` — agent-level style instructions
-- `SupplyAgent_Raw_Plus_instructions.md` — **experiment:** raw data + heavy agent-side
-  instructions (table docs, conformance recipe, conventions, example SQL). Tests whether
-  instructions alone — no model optimization — can rescue raw-data answers. Best run against
-  the `lh_supply_demo` SQL endpoint (T-SQL), not the relationship-less Raw semantic model.
+- `SupplyAgent_Raw_Plus_instructions.md` — **experiment (Path A, preferred):** raw data + heavy
+  agent-side instructions (table docs, conformance recipe, conventions, example SQL) over the
+  `lh_supply_demo` SQL endpoint (T-SQL). Tests whether instructions alone — no model
+  optimization — can rescue raw-data answers. The SQL endpoint supports example queries and
+  data-source instructions, so the full recipe applies.
+- `SupplyAgent_Raw_Plus_instructions_semanticmodel.md` — **Path B (semantic-model / DAX variant):**
+  use only if the agent is wired to the `MultiSource_Raw` semantic model instead of the SQL
+  endpoint. Deliberately weaker: the Raw model has just four ERP-internal relationships, so
+  cross-source questions can't be joined and must be declined, and a semantic-model source
+  exposes no example-queries field. Path A is preferred; this variant is the honest fallback.
 
 Scope ends when both agents exist with the above applied. No report, no verified answers,
 no Teams, no answering the 12 eval questions — those are the live demo / later.
