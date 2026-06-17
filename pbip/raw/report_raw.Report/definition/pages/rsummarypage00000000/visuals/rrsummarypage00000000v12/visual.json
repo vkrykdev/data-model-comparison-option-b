@@ -1,0 +1,81 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "rrsummarypage00000000v12",
+  "position": {
+    "x": 1448,
+    "y": 816,
+    "z": 24000,
+    "height": 224,
+    "width": 464,
+    "tabOrder": 24000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_orders"
+                    }
+                  },
+                  "Property": "mmOrderId"
+                }
+              },
+              "queryRef": "mm_orders.mmOrderId",
+              "nativeQueryRef": "mmOrderId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_orders"
+                    }
+                  },
+                  "Property": "listingId"
+                }
+              },
+              "queryRef": "mm_orders.listingId",
+              "nativeQueryRef": "listingId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mm_orders"
+                    }
+                  },
+                  "Property": "grossAmount"
+                }
+              },
+              "queryRef": "mm_orders.grossAmount",
+              "nativeQueryRef": "grossAmount"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

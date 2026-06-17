@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "rrsummarypage00000000v02",
+  "position": {
+    "x": 488.00000000000006,
+    "y": 168,
+    "z": 14000,
+    "height": 232,
+    "width": 464,
+    "tabOrder": 14000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "sku"
+                }
+              },
+              "queryRef": "sales_order_lines.sku",
+              "nativeQueryRef": "sku"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "products"
+                    }
+                  },
+                  "Property": "product_name"
+                }
+              },
+              "queryRef": "products.product_name",
+              "nativeQueryRef": "product_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "qty_sold"
+                }
+              },
+              "queryRef": "sales_order_lines.qty_sold",
+              "nativeQueryRef": "qty_sold"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "qty_sold"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

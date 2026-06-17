@@ -1,0 +1,123 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "xxsummarypage00000000v06",
+  "position": {
+    "x": 488.00000000000006,
+    "y": 495.99999999999994,
+    "z": 18000,
+    "height": 224,
+    "width": 464,
+    "tabOrder": 18000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "products"
+                    }
+                  },
+                  "Property": "sku"
+                }
+              },
+              "queryRef": "products.sku",
+              "nativeQueryRef": "sku"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "products"
+                    }
+                  },
+                  "Property": "product_name"
+                }
+              },
+              "queryRef": "products.product_name",
+              "nativeQueryRef": "product_name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Schema": "extension",
+                      "Entity": "sales_order_lines"
+                    }
+                  },
+                  "Property": "RP Tickets per 1K"
+                }
+              },
+              "queryRef": "sales_order_lines.RP Tickets per 1K",
+              "nativeQueryRef": "RP Tickets per 1K"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Schema": "extension",
+                    "Entity": "sales_order_lines"
+                  }
+                },
+                "Property": "RP Tickets per 1K"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "256.38418079096044D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "products.product_name"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,18 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
   "pageOrder": [
-    "xp01page000000000000",
-    "xp02page000000000000",
-    "xp03page000000000000",
-    "xp04page000000000000",
-    "xp05page000000000000",
-    "xp06page000000000000",
-    "xp07page000000000000",
-    "xp08page000000000000",
-    "xp09page000000000000",
-    "xp10page000000000000",
-    "xp11page000000000000",
-    "xp12page000000000000"
+    "xsummarypage00000000"
   ],
-  "activePageName": "xp01page000000000000"
+  "activePageName": "xsummarypage00000000"
 }

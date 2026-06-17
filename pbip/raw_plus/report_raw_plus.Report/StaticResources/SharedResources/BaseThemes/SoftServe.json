@@ -1,0 +1,217 @@
+{
+  "name": "SoftServe",
+  "dataColors": [
+    "#4C5155",
+    "#808080",
+    "#AAAAAA",
+    "#D9D9D9",
+    "#FAE2D5",
+    "#0563C1",
+    "#000000",
+    "#F4F4F4",
+    "#F2F2F2",
+    "#FFFFFF"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#808080",
+  "tableAccent": "#D9D9D9",
+  "textClasses": {
+    "title": {
+      "fontFace": "Azurio",
+      "color": "#000000",
+      "fontSize": 14
+    },
+    "header": {
+      "fontFace": "Azurio",
+      "color": "#000000",
+      "fontSize": 12
+    },
+    "label": {
+      "fontFace": "Replica LL TT",
+      "color": "#808080",
+      "fontSize": 10
+    },
+    "callout": {
+      "fontFace": "Azurio",
+      "color": "#000000",
+      "fontSize": 24
+    },
+    "smallLabel": {
+      "fontFace": "Replica LL TT",
+      "color": "#808080",
+      "fontSize": 9
+    },
+    "largeTitle": {
+      "fontFace": "Azurio",
+      "color": "#000000",
+      "fontSize": 18
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#AAAAAA"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "header": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#000000"
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": "#D9D9D9"
+              }
+            },
+            "fontFamily": "Azurio",
+            "fontSize": 11,
+            "bold": true
+          }
+        ],
+        "rows": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#4C5155"
+              }
+            },
+            "fontFamily": "Replica LL TT",
+            "fontSize": 10,
+            "backColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "altBackColor": {
+              "solid": {
+                "color": "#F2F2F2"
+              }
+            }
+          }
+        ],
+        "total": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#000000"
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": "#D9D9D9"
+              }
+            },
+            "bold": true
+          }
+        ]
+      }
+    },
+    "matrix": {
+      "*": {
+        "header": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#000000"
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": "#D9D9D9"
+              }
+            },
+            "fontFamily": "Azurio",
+            "fontSize": 11,
+            "bold": true
+          }
+        ],
+        "rows": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#4C5155"
+              }
+            },
+            "fontFamily": "Replica LL TT",
+            "fontSize": 10
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "calloutValue": [
+          {
+            "fontSize": 24,
+            "fontColor": {
+              "solid": {
+                "color": "#000000"
+              }
+            },
+            "fontFamily": "Azurio"
+          }
+        ],
+        "label": [
+          {
+            "fontSize": 10,
+            "fontColor": {
+              "solid": {
+                "color": "#808080"
+              }
+            },
+            "fontFamily": "Replica LL TT"
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#000000"
+              }
+            },
+            "textSize": 11,
+            "fontFamily": "Azurio"
+          }
+        ],
+        "items": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#4C5155"
+              }
+            },
+            "textSize": 10,
+            "fontFamily": "Replica LL TT"
+          }
+        ]
+      }
+    }
+  }
+}

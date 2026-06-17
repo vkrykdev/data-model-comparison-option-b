@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
   "themeCollection": {
     "baseTheme": {
-      "name": "CY26SU05",
+      "name": "SoftServe",
       "reportVersionAtImport": {
         "visual": "2.9.0",
         "report": "3.3.0",
@@ -24,6 +24,19 @@
           }
         }
       }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
     ]
   },
   "resourcePackages": [
@@ -32,9 +45,20 @@
       "type": "SharedResources",
       "items": [
         {
-          "name": "CY26SU05",
-          "path": "BaseThemes/CY26SU05.json",
+          "name": "SoftServe",
+          "path": "BaseThemes/SoftServe.json",
           "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "img685585309211417.png",
+          "path": "img685585309211417.png",
+          "type": "Image"
         }
       ]
     }
