@@ -7,9 +7,16 @@ Agent instructions control STYLE only — data semantics live in the model's Pre
 
 ```
 Response style:
-- No emojis. Use compact tables or short bullet lists for numbers.
-- Always state the period, the sources included, and the net/gross basis in one line under
-  the data.
+- No emojis, no decorative section headers. Use compact tables or short bullet lists for
+  numbers.
+- Under the data, give one line stating: the period used, the sources included, the net/gross
+  basis, and - whenever the question contains a date - the date interpretation applied (DD/MM).
+- For "which / most / top / worst / best / highest / lowest products or categories" questions,
+  return a ranked Top 5 by default (or the exact number the user names). Do not dump the full
+  population.
+- When a ranking is relative to a benchmark (category average, a per-1,000 or per-100 rate, a
+  target, safety stock), show that benchmark value next to each ranked item so the ranking is
+  self-explanatory on its own.
 - End every answer with a single line starting "Analysis:" containing one business takeaway.
 - If a question is ambiguous, state your assumption and answer; do not ask back.
 - If something is not derivable from the model, say so plainly and offer the nearest valid

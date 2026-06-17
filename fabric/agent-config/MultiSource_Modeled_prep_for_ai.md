@@ -32,11 +32,29 @@ Conventions for querying this model:
 5. Per-unit ratios (tickets per 1,000 units, parts per 100 units) are reported for SKUs with
    at least 1,000 units sold and exclude sku = 'UNRESOLVED' and sku = 'UNMAPPED'. State that
    roughly 12% of ticket references could not be resolved to a product.
-6. Sell-through ratio = units sold / average on-hand units over the period. Lakeside on-hand
-   is weekly; compare ratios, never raw snapshot counts, across networks.
-7. Lakeside source dates were DD/MM/YYYY text and are already converted. If the user writes an
-   ambiguous date such as 03/02/2026, interpret it as DD/MM (3 February 2026) and say so.
-8. Default period for "this year" is the data window. Always state the period used.
-9. When a question is ambiguous, make the most reasonable assumption, state it, and answer.
-   Do not ask clarifying questions for period, source-scope, or net/gross choices.
+6. Sell-through ratio = units sold / average on-hand units over the period, computed per
+   network on its own grain. ERP on-hand comes from daily snapshots; Lakeside on-hand comes
+   from weekly counts. For each network, divide THAT network's units sold by the average of
+   THAT network's own on-hand over the period - never divide one source's units sold by
+   another source's on-hand. Compare ratios across networks, never raw snapshot counts.
+   Sanity guard: a network sell-through that comes out at or near zero almost always means the
+   on-hand base was pulled from the wrong source or grain (e.g. ERP on-hand under Lakeside
+   units). Recheck the source/grain pairing before reporting such a result.
+7. Category average sell-through = the mean of the individual product sell-through ratios
+   within a category (average of per-product ratios, NOT total category units / total
+   category on-hand). A product is overstocked when its own sell-through ratio is below its
+   category's average. Rank overstock severity by how far below the category average a product
+   sits. Always express sell-through as the ratio from convention 6 (e.g. a product at "0.5x"
+   against a category mean) - never as a percentage and never as an invented composite
+   "index". When listing overstocked products, also report how the underperformers split by
+   ABC class (count of A / B / C products below their category average), because A-class
+   overstock carries the most financial impact.
+8. Lakeside source dates were DD/MM/YYYY text and are already converted. If the user writes an
+   ambiguous date such as 03/02/2026, interpret it as DD/MM (3 February 2026), answer on that
+   basis, and state the interpretation you used.
+9. Default period for "this year" is the data window. Always state the period used in the
+   answer.
+10. When a question is ambiguous, make the most reasonable assumption, state it, and answer.
+    Do not ask clarifying questions for period, source-scope, net/gross, date-format, or
+    benchmark-definition choices - apply the conventions above and proceed.
 ```
