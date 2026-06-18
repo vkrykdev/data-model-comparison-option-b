@@ -148,7 +148,11 @@ RETURN DIVIDE(_units, _avgOH)
 
 -- PATTERN E - per-entity ratio vs its group average, then "below average" (benchmark questions
 -- such as overstock vs category). ERP-scope entities only. Mean of per-entity ratios, NOT a
--- pooled total. Rank by the gap; never express as a percentage or a made-up "index".
+-- pooled total. Rank by the entity's OWN ratio ASCENDING (slowest movers first) among
+-- below-average entities - NOT by the gap (group avg - ratio). Ranking by the gap biases toward
+-- whichever group has the highest average and can flag a fast-moving entity (high absolute
+-- ratio) as "overstocked" just because its group average is higher still. Show each entity's
+-- ratio next to its group average; never express as a percentage or a made-up "index"/"gap".
 DEFINE
     VAR _ent = ADDCOLUMNS(
         SUMMARIZE(<fact>, <entity cols incl. the group key, e.g. products[category]>),
@@ -157,8 +161,8 @@ DEFINE
         "<grp avg>", VAR _g = [<group key>]
                      RETURN AVERAGEX(FILTER(_ent, [<group key>] = _g), [<ratio>]) )
 EVALUATE
-TOPN(<N>, FILTER(_withGrpAvg, [<ratio>] < [<grp avg>]), [<grp avg>] - [<ratio>], DESC)
-ORDER BY [<grp avg>] - [<ratio>] DESC
+TOPN(<N>, FILTER(_withGrpAvg, [<ratio>] < [<grp avg>]), [<ratio>], ASC)
+ORDER BY [<ratio>] ASC
 
 -- PATTERN F - Lakeside TEXT dates (DD/MM/YYYY) helpers (reuse inside any FILTER above)
 --   year   = RIGHT(<date col>,4)

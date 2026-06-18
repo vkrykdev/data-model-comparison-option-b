@@ -51,13 +51,20 @@ Conventions for querying this model:
    on-hand is averaged across snapshot dates, not row-level - before reporting such a result.
 7. Category average sell-through = the mean of the individual product sell-through ratios
    within a category (average of per-product ratios, NOT total category units / total
-   category on-hand). A product is overstocked when its own sell-through ratio is below its
-   category's average. Rank overstock severity by how far below the category average a product
-   sits. Always express sell-through as the ratio from convention 6 (e.g. a product at "0.5x"
-   against a category mean) - never as a percentage and never as an invented composite
-   "index". When listing overstocked products, also report how the underperformers split by
+   category on-hand), excluding sku = 'UNMAPPED' and sku = 'UNRESOLVED'. A product is
+   overstocked when its own sell-through ratio is below its category's average. Rank "most
+   overstocked" by the product's OWN sell-through ratio ASCENDING - the slowest-moving products
+   first - and list only products that are actually below their category average. Do NOT sort
+   by the absolute gap (category average minus product ratio): that just surfaces whichever
+   category has the highest average and can flag a genuinely fast-moving product (e.g. one
+   turning at 6x) as "overstocked" merely because its category average is higher still. For
+   each listed product show its own ratio next to the category average (e.g. "0.47x vs 6.24x
+   category avg") so the shortfall is visible without being the sort key. Always express
+   sell-through as the ratio from convention 6 - never as a percentage and never as an invented
+   composite "index" or "overstock gap" column. Also report how the underperformers split by
    ABC class (count of A / B / C products below their category average), because A-class
-   overstock carries the most financial impact.
+   overstock carries the most financial impact (in this data, no A-class product sells below
+   its category average - the underperformers are B- and C-class).
 8. Lakeside source dates were DD/MM/YYYY text and are already converted. If the user writes an
    ambiguous date such as 03/02/2026, interpret it as DD/MM (3 February 2026), answer on that
    basis, and state the interpretation you used.
