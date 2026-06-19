@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Phase 2-3 — upload the 17 raw CSVs to the lakehouse, then load each into a Delta table.
+# Phase 2-3 — upload the 17 legacy CSVs to the lakehouse, then load each into a Delta table.
 # Source the same CONFIG as bootstrap.sh (or copy the vars). One step per PLAN.md gate.
 set -euo pipefail
 

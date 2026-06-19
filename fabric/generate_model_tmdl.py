@@ -1,9 +1,9 @@
 """
 Generates importable PBIP/TMDL definitions for the two Direct Lake semantic models:
-  fabric/models/MultiSource_Raw.SemanticModel/        (17 raw tables, ~no modeling)
+  fabric/models/MultiSource_Legacy.SemanticModel/        (17 legacy tables, ~no modeling)
   fabric/models/MultiSource_Modeled.SemanticModel/     (9 c_ tables, measures+desc+relationships)
 
-Raw column lists are derived from data/*.csv dtypes; Modeled from the c_ schemas the
+Legacy column lists are derived from data/*.csv dtypes; Modeled from the c_ schemas the
 notebook produces — so dataType/sourceColumn match the lakehouse tables by construction.
 
 The Direct Lake connection in expressions.tmdl uses placeholders __SQL_ENDPOINT__ and
@@ -110,21 +110,21 @@ def write_model(name, tables_tmdl, refs, relationships_tmdl=""):
         (d / "definition" / "tables" / f"{tname}.tmdl").write_text(content + "\n")
     print(f"  wrote {name}.SemanticModel  ({len(tables_tmdl)} tables)")
 
-# ============================================================ RAW model (17 tables)
-RAW_TABLES = ["products","suppliers","locations","sales_order_lines","inventory_daily",
+# ============================================================ LEGACY model (17 tables)
+LEGACY_TABLES = ["products","suppliers","locations","sales_order_lines","inventory_daily",
               "ServiceWorkOrders","ServicePartsUsage","hdTickets","hdCategories",
               "mm_orders","mm_listings","mm_settlements",
               "LS_SALES_EXPORT","LS_PRODUCT_LIST","LS_STORES","LS_STOCK_COUNT",
               "sku_xref_master"]
-raw_tmdl = {}
-for t in RAW_TABLES:
+legacy_tmdl = {}
+for t in LEGACY_TABLES:
     df = pd.read_csv(DATA / f"{t}.csv", nrows=200)
     cols = [col_block(c, df[c].dtype) for c in df.columns]
-    raw_tmdl[t] = table_file(t, cols)
+    legacy_tmdl[t] = table_file(t, cols)
 
 # the 2-4 within-ERP same-name relationships auto-detect would plausibly create
 # (cross-source joins via xref / LS codes / ITM / listings are DELIBERATELY absent)
-raw_rels = "\n\n".join(
+legacy_rels = "\n\n".join(
     f"relationship {gid()}\n\tfromColumn: {f}.{col}\n\ttoColumn: {tb}.{col}"
     for (f, tb, col) in [
         ("sales_order_lines","products","sku"),
@@ -132,7 +132,7 @@ raw_rels = "\n\n".join(
         ("sales_order_lines","locations","location_id"),
         ("inventory_daily","locations","location_id"),
     ]) + "\n"
-write_model("MultiSource_Raw", raw_tmdl, RAW_TABLES, raw_rels)
+write_model("MultiSource_Legacy", legacy_tmdl, LEGACY_TABLES, legacy_rels)
 
 # ============================================================ MODELED model (9 c_ tables)
 # exact schemas the notebook produces (col -> pandas-style dtype)

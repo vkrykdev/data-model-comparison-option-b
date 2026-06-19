@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Multi Source Raw + instructions - all 12 forced via report-level DAX",
+                    "value": "Multi Source Legacy + instructions - all 12 forced via report-level DAX",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Same raw model; cross-source joins, parsed text dates and xref lookups re-derived in the report layer",
+                    "value": "Same legacy model; cross-source joins, parsed text dates and xref lookups re-derived in the report layer",
                     "textStyle": {
                       "fontSize": "11pt"
                     }

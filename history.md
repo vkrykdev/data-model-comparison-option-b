@@ -33,7 +33,7 @@ data is months away. They can't wait.
 
 That's the whole point of the demo. The *same* messy, multi-source reality gets handed to AI
 agents, and we watch what happens. Pile heavy instructions onto an agent pointed straight at the
-raw tables and it gets further — but it still stumbles: it slips between gross and net, struggles
+legacy tables and it gets further — but it still stumbles: it slips between gross and net, struggles
 to join free-text product names, misreads "03/02/2026" as March 2nd instead of February 3rd, and
 approximates where sources won't cleanly connect. A properly modeled, AI-described version of that
 *same data* answers cleanly and honestly. The company's mess isn't a bug in the story — **it's the

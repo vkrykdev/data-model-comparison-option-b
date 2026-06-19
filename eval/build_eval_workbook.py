@@ -16,7 +16,7 @@ OUT = os.path.join(HERE, "MultiSourceAgent_Eval.xlsx")
 # (#, Tier, Question, What it tests, Gold answer)
 ROWS = [
     ("Q1", 1, "What was our revenue in Q1 2026 by channel?",
-     "Both answer; baseline for token comparison",
+     "Both answer; baseline for cross-source comparison",
      "Online $7.030M / Retail $7.156M / Wholesale $6.911M; total $21.097M (ERP, Jan-Mar 2026)"),
     ("Q2", 1, "What was our stockout rate in May 2026?",
      "Definition drift (share of SKUs vs share of rows)",
@@ -47,7 +47,7 @@ ROWS = [
     ("Q10", 3, "How much of our total revenue can we actually tie to a known product?",
      "Governance / honest gap surfacing",
      "99.5% attributable; $0.553M (0.48% of $115.86M net) is unattributable - ALL of it stale MegaMart "
-     "'UNMAPPED' listings (7.5% of marketplace net). Modeled reports the gap; raw assumes 100%"),
+     "'UNMAPPED' listings (7.5% of marketplace net). Modeled reports the gap; legacy assumes 100%"),
     ("Q11", 3, "Which product category has the worst after-sale reliability?",
      "Dual conformance (free-text + ITM) + category rollup + confidence note",
      "Hydraulics, 88.5 after-sale issues per 1K units (1,420 complaints + 16,156 service parts / 198,582 units); "
@@ -65,7 +65,7 @@ CONVENTIONS = [
     ("Acquisition date (Lakeside)", "2026-02-01"),
     ("'Total / company sales'", "ERP + marketplace NET + Lakeside"),
     ("Marketplace revenue", "NET of fees (payoutAmount) unless 'gross' is asked"),
-    ("Lakeside dates", "TEXT DD/MM/YYYY in raw exports"),
+    ("Lakeside dates", "TEXT DD/MM/YYYY in legacy exports"),
     ("Stockout rate", "share of SKU-location-day snapshots with is_stockout = 1 (grain = daily)"),
     ("Stockout risk", "on-hand <= safety stock at latest snapshot (ERP) or near-zero latest weekly count (Lakeside)"),
     ("Complaint", "helpdesk category = 'Product complaint' (is_complaint = TRUE)"),
@@ -77,7 +77,7 @@ CONVENTIONS = [
     ("Attributable revenue", "net revenue whose sku is a real product (not 'UNMAPPED' / 'UNRESOLVED'); ~99.5% attributable, gap = stale MegaMart UNMAPPED listings"),
     ("After-sale issues per 1K", "(product complaints + service parts used) / units sold x 1000, by category"),
     ("Category avg sell-through", "mean of per-product sell-through within a category; overstock = product < category avg"),
-    ("Token/CU measurement", "Capacity Metrics app (capacity admin on fabricassesmentcoe) or Foundry/SDK"),
+    ("Scoring", "2 = correct, 1 = partial, 0 = wrong, -1 = hallucinated (confident + false); max 24 across 12 questions"),
 ]
 
 # ---- styling ----
@@ -105,7 +105,7 @@ wb = Workbook()
 ws = wb.active
 ws.title = "Eval"
 hdr = ["#", "Tier", "Question", "What it tests", "Gold answer",
-       "Raw_Plus", None, "Modeled", None]
+       "Legacy", None, "Modeled", None]
 for c, val in enumerate(hdr, 1):
     cell = ws.cell(row=1, column=c, value=val)
     style_header(cell)
@@ -141,7 +141,7 @@ ws.merge_cells(start_row=note_row, start_column=1, end_row=note_row, end_column=
 ws.cell(row=note_row, column=1).fill = NOTE_FILL
 agents_row = note_row + 1
 ws.cell(row=agents_row, column=1,
-        value="Agents: Raw_Plus = SupplyAgent_Raw_Plus (lh_supply_demo SQL endpoint + heavy agent instructions) | "
+        value="Agents: Legacy = SupplyAgent_Legacy (lh_supply_demo SQL endpoint + heavy agent instructions) | "
               "Modeled = SupplyAgent_Modeled (MultiSource_Modeled star + Prep-for-AI)").font = BOLD
 ws.merge_cells(start_row=agents_row, start_column=1, end_row=agents_row, end_column=9)
 ws.cell(row=agents_row, column=1).fill = NOTE_FILL
@@ -164,12 +164,12 @@ for c, val in enumerate(shdr, 1):
     cell.font = WHITE_BOLD
     cell.alignment = CENTER
     cell.border = BORDER
-# Score columns on the Eval sheet: Raw_Plus = G, Modeled = I; questions in rows 3..(2+len(ROWS))
+# Score columns on the Eval sheet: Legacy = G, Modeled = I; questions in rows 3..(2+len(ROWS))
 FIRST_Q_ROW = 3
 LAST_Q_ROW = 2 + len(ROWS)
 # (Agent, Data source, Eval score column letter)
 srows = [
-    ("SupplyAgent_Raw_Plus", "lh_supply_demo SQL endpoint + heavy agent instructions", "G"),
+    ("SupplyAgent_Legacy", "lh_supply_demo SQL endpoint + heavy agent instructions", "G"),
     ("SupplyAgent_Modeled", "MultiSource_Modeled star + Prep-for-AI", "I"),
 ]
 for i, (agent, source, col) in enumerate(srows, 2):

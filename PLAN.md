@@ -25,7 +25,7 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
   via API but datasource attachment requires a portal Save/Publish), and Prep-for-AI "Add AI
   instructions" (portal-only — no REST or TMDL API path exists for this preview field).
   You hand the user the exact text from `fabric/agent-config/`.
-- **Phases 1–6 end at the two agents** (Raw_Plus instructed, Modeled); **Phase 7**
+- **Phases 1–6 end at the two agents** (Legacy instructed, Modeled); **Phase 7**
   adds the two Power BI reports (`pbip/`). No verified answers, no Teams, no answering the 12
   eval questions (that's the live demo).
 
@@ -34,8 +34,8 @@ fallback **once**, and if it still fails, STOP and ask — do not improvise arou
 - Workspace **Microsoft Fabric Demo Stand** → folder **data-model-comparison** → subfolder
   **Option B**. Everything lives in *Option B*. Capacity **fabricassesmentcoe** (workspace is
   already on it — no capacity assignment).
-- Lakehouse **lh_supply_demo** · models **MultiSource_Raw**, **MultiSource_Modeled** ·
-  notebook **build_modeled_layer** · agents **SupplyAgent_Raw_Plus**, **SupplyAgent_Modeled**.
+- Lakehouse **lh_supply_demo** · models **MultiSource_Legacy**, **MultiSource_Modeled** ·
+  notebook **build_modeled_layer** · agents **SupplyAgent_Legacy**, **SupplyAgent_Modeled**.
 
 ---
 
@@ -53,15 +53,15 @@ The scripts (`bootstrap.sh`, `upload_and_load.sh`, `deploy_models.py`, `render_n
 *Done-when:* `.env` exists with real values; `bash -c 'source fabric/bootstrap.sh' ` defines `$WS`/`$LH`.
 ⛔ STOP.
 
-**0.2** Confirm the raw tables. `data/` ships **sample** CSVs (large fact tables truncated to
+**0.2** Confirm the legacy tables. `data/` ships **sample** CSVs (large fact tables truncated to
 header + 10 rows — see `data/README.md`) for structure reference. For the actual build you supply
-the **full** raw tables to upload in Phase 2; the gold answers in `eval/MultiSourceAgent_Eval.xlsx`
+the **full** legacy tables to upload in Phase 2; the gold answers in `eval/MultiSourceAgent_Eval.xlsx`
 assume the complete dataset.
-*Done-when:* you have the full raw CSVs ready (sample headers in `data/` match your columns).
+*Done-when:* you have the full legacy CSVs ready (sample headers in `data/` match your columns).
 ⛔ STOP.
 
 **0.3** Generate the model TMDL: `python fabric/generate_model_tmdl.py`.
-*Done-when:* `fabric/models/MultiSource_Raw.SemanticModel/` and `…_Modeled.SemanticModel/` exist.
+*Done-when:* `fabric/models/MultiSource_Legacy.SemanticModel/` and `…_Modeled.SemanticModel/` exist.
 ⛔ STOP.
 
 **0.4** Authenticate to Fabric. `source fabric/bootstrap.sh && auth` (set `FAB_CLIENT_ID/SECRET/TENANT_ID`
@@ -83,7 +83,7 @@ for a service principal, or run `fab auth login` interactively).
 *Done-when:* `fab ls ".../Option B"` shows **lh_supply_demo.Lakehouse**.
 ⛔ STOP.
 
-## Phase 2 — Upload raw CSVs
+## Phase 2 — Upload legacy CSVs
 
 **2.1** Upload the 17 CSVs to `Files/raw/` using the **OneLake DFS API** (ADLS Gen2).
 `fab cp` does **not** work for local→Fabric uploads. Use PowerShell `Invoke-RestMethod` against
@@ -136,13 +136,13 @@ or note it — the notebook re-parses defensively.)
 portal (Lakehouse → Settings → SQL analytics endpoint → Connection string) and note them.
 ⛔ STOP.
 
-**5.2** Deploy **MultiSource_Raw**: `python fabric/deploy_models.py --model Raw`.
+**5.2** Deploy **MultiSource_Legacy**: `python fabric/deploy_models.py --model Legacy`.
 `deploy_models.py` imports to workspace root then moves via REST API (nested paths unsupported).
 TMDL constraints enforced automatically by the script: UTF-8 no-BOM, no `ref table` lines,
 no inline column `///` descriptions inside column blocks.
 *Done-when:* model appears in Option B and opens without a connection error.
-**If import fails twice → Phase 5b fallback (Raw):** portal → New semantic model over
-`lh_supply_demo` → select the **17 raw tables** → save. Add nothing else.
+**If import fails twice → Phase 5b fallback (Legacy):** portal → New semantic model over
+`lh_supply_demo` → select the **17 legacy tables** → save. Add nothing else.
 ⛔ STOP.
 
 **5.3** Deploy **MultiSource_Modeled**: `python fabric/deploy_models.py --model Modeled`.
@@ -154,7 +154,7 @@ descriptions from `docs/GUIDE_MULTISOURCE_DEMO.md` §"Modeled model".
 ⛔ STOP.
 
 **5.4** Sanity-check parity (optional but recommended): in each model's web view, sum
-`gross_amount` (Raw) vs the `Revenue Gross` measure (Modeled) for the full window — same
+`gross_amount` (Legacy) vs the `Revenue Gross` measure (Modeled) for the full window — same
 underlying data, so totals must agree.
 ⛔ STOP.
 
@@ -176,17 +176,17 @@ the portal, add the data source, paste instructions, and Save.
 *Done-when:* the agent exists, points at MultiSource_Modeled, has the style instructions.
 ⛔ STOP.
 
-**6.3** Create **SupplyAgent_Raw_Plus** in Option B → add data source **lh_supply_demo (SQL
-analytics endpoint)** (the raw tables, T-SQL) → paste the single instruction block from
-`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md` (≤15,000 chars; split at the
+**6.3** Create **SupplyAgent_Legacy** in Option B → add data source **lh_supply_demo (SQL
+analytics endpoint)** (the legacy tables, T-SQL) → paste the single instruction block from
+`fabric/agent-config/SupplyAgent_Legacy_instructions.md` (≤15,000 chars; split at the
 `==== DATA SOURCE ====` divider if the portal offers separate agent vs data-source fields).
-Same portal publish step as 6.2. This is the **instructions-only** experiment: raw data, no model
-optimization. Do **not** point it at the MultiSource_Raw semantic model — agent instructions
+Same portal publish step as 6.2. This is the **instructions-only** experiment: legacy data, no model
+optimization. Do **not** point it at the MultiSource_Legacy semantic model — agent instructions
 can't steer DAX there, so the example SQL won't apply.
 *Done-when:* the agent exists, points at the lakehouse SQL endpoint, has the full instructions.
 ⛔ STOP.
 
-**✅ Phases 1–6 DONE.** Both agents exist (Raw_Plus instructed, Modeled). The
+**✅ Phases 1–6 DONE.** Both agents exist (Legacy instructed, Modeled). The
 12-question walkthrough (`eval/MultiSourceAgent_Eval.xlsx`) scores both for the live demo, not
 this build.
 
@@ -197,9 +197,9 @@ published models. `pbip/build_reports.py` regenerates every page/visual determin
 verifies each bound field against the model — re-run it after any model schema/measure change.
 
 **7.1** `report_modeled` → **MultiSource_Modeled** — the governed measures answer all 12 cleanly.
-**7.2** `report_raw_plus` → **MultiSource_Raw** + ~18 report-level DAX measures in
+**7.2** `report_legacy` → **MultiSource_Legacy** + ~18 report-level DAX measures in
 `reportExtensions.json` — forces an answer on every page (cross-source sums, text-date parsing,
-xref lookups); like the Raw_Plus agent, some answers stay approximate.
+xref lookups); like the Legacy agent, some answers stay approximate.
 - Visuals binding a report-level measure must use `SourceRef: {"Schema": "extension", …}` —
   omitting it makes Power BI look in the model and raise `Missing_References`. `build_reports.py`
   handles this (`extension=True`).

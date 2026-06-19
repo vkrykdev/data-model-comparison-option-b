@@ -36,7 +36,7 @@ Conventions for querying this model:
    network on its own grain. ERP on-hand comes from daily snapshots; Lakeside on-hand comes
    from weekly counts. For each network, divide THAT network's units sold by the average of
    THAT network's own on-hand over the period - never divide one source's units sold by
-   another source's on-hand. Compare ratios across networks, never raw snapshot counts.
+   another source's on-hand. Compare ratios across networks, never legacy snapshot counts.
    To compare networks (e.g. "Lakeside stores vs DCs"), GROUP [Sell-Through Ratio] by
    c_dim_location[location_type] - never report a single blended network figure when the
    question asks to compare. The location_type values are: Lakeside stores = 'Retail Store';

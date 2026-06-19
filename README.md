@@ -1,20 +1,20 @@
-# Fabric Data Agent demo — Raw vs Well-Modeled (Option B)
+# Fabric Data Agent demo — Legacy vs Well-Modeled (Option B)
 
 Two Fabric **Data Agents** over the *same* lakehouse data show that modeling + an AI layer beats
-raw tables. **MultiSource_Raw** = 17 raw source tables as-landed; **MultiSource_Modeled** = the
+legacy tables. **MultiSource_Legacy** = 17 legacy source tables as-landed; **MultiSource_Modeled** = the
 same data conformed by one notebook into a governed star with measures, descriptions, and
-Prep-for-AI. The wins are accuracy, fewer hallucinations, fewer clarification round-trips, and
-lower tokens per correct answer — not raw speed.
+Prep-for-AI. The wins are accuracy, fewer hallucinations, and fewer clarification round-trips —
+query speed is identical (same lakehouse) and is not the pitch.
 
 The agents:
-- **SupplyAgent_Raw_Plus** — raw data + heavy agent-side instructions (table docs, conformance
+- **SupplyAgent_Legacy** — legacy data + heavy agent-side instructions (table docs, conformance
   recipe, example SQL); the *instructions-only, no model optimization* experiment.
 - **SupplyAgent_Modeled** — the governed star + Prep-for-AI.
 
 Built **from an empty Fabric workspace**, mostly via `fabric-cli`, with the two data agents
 created in the portal at the end.
 
-The repo also ships two matching **Power BI reports** (`pbip/`) — `report_raw_plus` and
+The repo also ships two matching **Power BI reports** (`pbip/`) — `report_legacy` and
 `report_modeled` — that answer the same 12 questions over the same models, for a
 visual side-by-side of the contrast. `pbip/build_reports.py` regenerates every page and visual.
 
@@ -31,9 +31,9 @@ pip install -r requirements.txt
 python fabric/generate_model_tmdl.py     # emits the two .SemanticModel TMDL folders
 ```
 
-> `data/` ships **sample** raw tables (large fact tables truncated to header + 10 rows) for
+> `data/` ships **sample** legacy tables (large fact tables truncated to header + 10 rows) for
 > structure illustration — see [`data/README.md`](data/README.md). The full synthetic dataset
-> is not committed; supply complete raw tables to the lakehouse for the actual build (PLAN.md
+> is not committed; supply complete legacy tables to the lakehouse for the actual build (PLAN.md
 > Phase 2–3).
 
 ## Configuration (required before any Fabric step)
@@ -74,10 +74,10 @@ Tracked files (TMDL, the notebook artifact) carry placeholders like `__SQL_ENDPO
 |---|---|
 | `PLAN.md` | the ordered, confirm-after-each build plan |
 | `CLAUDE.md` | full context + rules for the build agent |
-| `data/` | the 17 raw multi-source tables — **sample** (see `data/README.md`) |
+| `data/` | the 17 legacy multi-source tables — **sample** (see `data/README.md`) |
 | `scripts/` | `build_modeled_layer.py` — the conformance notebook as cell-delimited `.py` |
 | `fabric/` | bootstrap + upload/load + TMDL generator + deploy/render scripts + model/notebook/agent definitions |
-| `pbip/` | two Power BI reports (raw_plus / modeled) + `build_reports.py` generator |
+| `pbip/` | two Power BI reports (legacy / modeled) + `build_reports.py` generator |
 | `eval/MultiSourceAgent_Eval.xlsx` | 12-question workbook — **blank live-demo template** (filled copy is git-ignored) |
 | `build_data_layer.md`, `history.md`, `history.uk.md` | plain-English data-layer + demo narrative (EN/UK) |
 | `docs/GUIDE_MULTISOURCE_DEMO.md` | reference: schema, relationships, measures, AI-layer rationale, Phase 5b fallback |

@@ -9,7 +9,7 @@ STOP and use the portal fallback in docs/GUIDE_MULTISOURCE_DEMO.md §Phase 5b.
 
 Usage:
     python fabric/deploy_models.py --resolve        # just print the endpoint/id it found
-    python fabric/deploy_models.py --model Raw       # inject + import MultiSource_Raw
+    python fabric/deploy_models.py --model Legacy       # inject + import MultiSource_Legacy
     python fabric/deploy_models.py --model Modeled    # inject + import MultiSource_Modeled
 """
 import argparse, json, os, re, subprocess, sys, shutil, urllib.request
@@ -142,7 +142,7 @@ def deploy(model_short: str):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--resolve", action="store_true")
-    ap.add_argument("--model", choices=["Raw", "Modeled"])
+    ap.add_argument("--model", choices=["Legacy", "Modeled"])
     a = ap.parse_args()
     if a.resolve: resolve()
     elif a.model: deploy(a.model)

@@ -1,20 +1,20 @@
-# SupplyAgent_Raw_Plus — instruction-loaded raw agent (experiment)
+# SupplyAgent_Legacy — instruction-loaded legacy agent (experiment)
 
-**Goal:** same raw, un-modeled data as `SupplyAgent_Raw`, but with the richest possible
-**agent-side** instructions — table docs, the cross-source conformance recipe, business
-conventions, and example SQL. It tests how far instructions alone close the gap, **without
-touching the model** (no relationships, measures, descriptions, or Prep-for-AI).
+**Goal:** the legacy, un-modeled data with the richest possible **agent-side** instructions —
+table docs, the cross-source conformance recipe, business conventions, and example SQL. It tests
+how far instructions alone close the gap, **without touching the model** (no relationships,
+measures, descriptions, or Prep-for-AI).
 
-Three-way contrast: **Raw** (no instructions) · **Raw_Plus** (this file) · **Modeled**
+Two-way contrast: **Legacy** (this agent — instructions only, no modeling) · **Modeled**
 (governed star + Prep-for-AI).
 
 ## How to wire it in the portal
 
-1. Create a Data Agent **SupplyAgent_Raw_Plus** in the Option B folder.
+1. Create a Data Agent **SupplyAgent_Legacy** in the Option B folder.
 2. **Data source:** attach the **Lakehouse `lh_supply_demo` (SQL analytics endpoint)**, *not* the
-   `MultiSource_Raw` semantic model. A semantic-model source makes the agent generate **DAX**,
+   `MultiSource_Legacy` semantic model. A semantic-model source makes the agent generate **DAX**,
    whose generator reads only the model's Prep-for-AI — agent instructions don't steer it, and the
-   raw model has no relationships to join on. The SQL endpoint exposes the **same 17 raw tables,
+   legacy model has no relationships to join on. The SQL endpoint exposes the **same 17 legacy tables,
    un-modeled**, and generates **T-SQL** that the instructions + example queries below actually
    drive. (If you must use the semantic model, the conventions still help phrasing but the joins /
    example SQL won't apply — note that in results; it's a useful data point.)
@@ -26,7 +26,7 @@ Three-way contrast: **Raw** (no instructions) · **Raw_Plus** (this file) · **M
 > agent; it should still compute from the data.
 
 ```
-You are a supply-chain analyst answering over RAW, un-conformed tables from five source systems
+You are a supply-chain analyst answering over LEGACY, un-conformed tables from five source systems
 (ERP/WMS, a service dept, a helpdesk SaaS, the MegaMart marketplace, and the acquired Lakeside
 Supply Co.). Tables have inconsistent naming, no relationships, no measures. Conform the data
 yourself in every query using the rules below.
@@ -56,12 +56,12 @@ BUSINESS CONVENTIONS (use exactly these)
 6. Per-unit ratios (tickets/1,000 units, parts/100 units) cover only SKUs with >= 1,000 units sold
    and exclude unmapped rows. ~12% of helpdesk product refs don't resolve — state that caveat.
 7. Sell-through = units sold / average on-hand over the period. Lakeside on-hand is weekly, ERP
-   daily — compare RATIOS, never raw counts, across networks.
+   daily — compare RATIOS, never legacy counts, across networks.
 8. Default period for "this year" = full data window. Always state the period used.
 
 ==== DATA SOURCE ====  (source map, tables, conformance recipe, example queries)
 
-FIVE SOURCE SYSTEMS, 17 RAW TABLES
+FIVE SOURCE SYSTEMS, 17 LEGACY TABLES
 A. ERP/WMS (snake_case, the backbone):
    products(product_key, sku, product_name, category, subcategory, brand, abc_class,
             standard_unit_cost, list_price, supplier_key)  -- SKU master; abc_class A/B/C
@@ -207,11 +207,11 @@ FROM mm_orders o LEFT JOIN xref x ON o.listingId=x.mm_listing_id WHERE x.mm_list
 
 ## Notes on the comparison
 
-- Keep questions, scoring, and conventions identical across all three agents
+- Keep questions, scoring, and conventions identical across both agents
   (`eval/MultiSourceAgent_Eval.xlsx`); the only variable here is the instruction load.
-- Expected story: `Raw_Plus` sharply beats bare `Raw` on conformance/trap questions (Q4–Q8, Q10,
-  Q12) because the recipe and example SQL are handed to it — but at higher token cost per answer,
-  brittle when a question deviates from the examples, and without the governance the modeled
-  Prep-for-AI provides. That contrast is the point.
+- Expected story: `Legacy` (this agent) gets the conformance/trap questions (Q4–Q8, Q10, Q12)
+  closer because the recipe and example SQL are handed to it — but it's brittle when a question
+  deviates from the examples, and it lacks the governance the modeled Prep-for-AI provides.
+  That contrast is the point.
 - The gold values in comments are documented full-dataset answers; the repo ships only sample
   CSVs, so treat them as orientation, not reproducible from `data/` here.

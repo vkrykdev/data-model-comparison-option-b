@@ -1,12 +1,12 @@
-# Reference — Multi-Source "Raw vs Well-Modeled" demo
+# Reference — Multi-Source "Legacy vs Well-Modeled" demo
 
 This is the **reference** for the build. The executable, confirm-after-each steps are in
 **`PLAN.md`** — follow that to build. Use this doc when you need detail: the source tables, the
 conformed schema, the relationships and measures (for the Phase 5b portal fallback), and the
 rationale behind the AI-layer text.
 
-Names: lakehouse **lh_supply_demo** · models **MultiSource_Raw** / **MultiSource_Modeled** ·
-notebook **build_modeled_layer** · agents **SupplyAgent_Raw_Plus** / **SupplyAgent_Modeled**.
+Names: lakehouse **lh_supply_demo** · models **MultiSource_Legacy** / **MultiSource_Modeled** ·
+notebook **build_modeled_layer** · agents **SupplyAgent_Legacy** / **SupplyAgent_Modeled**.
 Location:
 workspace *Microsoft Fabric Demo Stand* → folder *data-model-comparison* → subfolder *Option B*.
 
@@ -47,15 +47,15 @@ Conformed tables (Direct Lake), all keyed for a clean star:
 
 Cell 9 verifies counts: `c_dim_product`=115, `c_fact_sales_unified`=193,500, `c_fact_inventory`=195,220.
 
-## 3. MultiSource_Raw model (v1)
+## 3. MultiSource_Legacy model (v1)
 
-The point of v1 is what you *don't* add. Tables: the **17 raw tables**, Direct Lake. Relationships:
+The point of v1 is what you *don't* add. Tables: the **17 legacy tables**, Direct Lake. Relationships:
 only the within-ERP same-name joins auto-detect would plausibly find —
 `sales_order_lines[sku]→products[sku]`, `inventory_daily[sku]→products[sku]`, and the two
 `location_id` equivalents. **No** cross-source joins (xref, LS codes, ITM, listings are absent),
 no date dimension, no measures, no descriptions, no Prep-for-AI. Not a strawman — every eval
 question is technically answerable from these tables by a clever analyst; that's what makes the
-wrong answers damning. The TMDL in `fabric/models/MultiSource_Raw.SemanticModel/` encodes exactly
+wrong answers damning. The TMDL in `fabric/models/MultiSource_Legacy.SemanticModel/` encodes exactly
 this.
 
 ## 4. MultiSource_Modeled model (v2)
@@ -117,11 +117,10 @@ The exact paste-text is in `fabric/agent-config/`. Why it's split the way it is:
 
 ## 6. Scope boundary
 
-The build stops when both agents exist: **SupplyAgent_Raw_Plus** (raw data on the lh_supply_demo
+The build stops when both agents exist: **SupplyAgent_Legacy** (legacy data on the lh_supply_demo
 SQL endpoint + heavy agent instructions — the instructions-only experiment) and
 **SupplyAgent_Modeled** (on MultiSource_Modeled, with Prep-for-AI + style instructions). Out of
 scope: any
 report, verified answers, Teams/Copilot Studio, and **answering the 12 questions** — that walk-
 through is the live demo, scored against `eval/MultiSourceAgent_Eval.xlsx` (gold answers,
-2/1/0/−1 with a hallucination penalty, and token-per-correct-answer). Token/CU capture uses the
-Capacity Metrics app (capacity admin on the F4) or Foundry/SDK.
+2/1/0/−1 with a hallucination penalty).

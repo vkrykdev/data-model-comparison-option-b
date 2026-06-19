@@ -1,12 +1,12 @@
-# SupplyAgent_Raw_Plus — instruction-loaded raw agent (SEMANTIC-MODEL / DAX variant)
+# SupplyAgent_Legacy — instruction-loaded legacy agent (SEMANTIC-MODEL / DAX variant)
 
-**Use this variant when the agent's data source is the `MultiSource_Raw` semantic model**
+**Use this variant when the agent's data source is the `MultiSource_Legacy` semantic model**
 (generates **DAX**), not the `lh_supply_demo` SQL endpoint. For the SQL-endpoint wiring use
-`SupplyAgent_Raw_Plus_instructions.md` instead — its T-SQL recipe does not apply here.
+`SupplyAgent_Legacy_instructions.md` instead — its T-SQL recipe does not apply here.
 
 ## Why this variant is deliberately limited (read before pasting)
 
-`MultiSource_Raw` has only **four relationships, all inside ERP**:
+`MultiSource_Legacy` has only **four relationships, all inside ERP**:
 - `sales_order_lines[sku] -> products[sku]`
 - `inventory_daily[sku] -> products[sku]`
 - `sales_order_lines[location_id] -> locations[location_id]`
@@ -24,12 +24,12 @@ relationships, so **cross-source conformance is impossible on this model**. Two 
    for lakehouse / warehouse / KQL / graph sources). The ONLY paste surface you get is the
    agent-level **Data agent instructions** field. The few-shot DAX examples below therefore have
    nowhere to live in the agent config; the only injection point for example DAX on a semantic
-   model is **Prep for AI -> Verified Answers** on the `MultiSource_Raw` model itself (Power BI
-   side) — which means turning on Prep for AI for the raw model. That defeats the "raw" control
+   model is **Prep for AI -> Verified Answers** on the `MultiSource_Legacy` model itself (Power BI
+   side) — which means turning on Prep for AI for the legacy model. That defeats the "legacy" control
    and may be license-limited, so treat PART 2 as OPTIONAL and experiment-compromising. The clean
    way to use example queries is the SQL-endpoint wiring (Path A), which supports them directly.
 
-This is a weaker agent by construction. That is itself a fair demo point: raw data with no
+This is a weaker agent by construction. That is itself a fair demo point: legacy data with no
 conformance layer can answer the easy ERP questions and must decline the cross-source ones.
 
 ---
@@ -37,7 +37,7 @@ conformance layer can answer the easy ERP questions and must decline the cross-s
 ## PART 1 — paste into the agent's "Data agent instructions" field (the only available paste surface)
 
 ```
-You answer over MultiSource_Raw, a semantic model of RAW, un-conformed tables from five source
+You answer over MultiSource_Legacy, a semantic model of LEGACY, un-conformed tables from five source
 systems. Only the ERP tables (sales_order_lines, inventory_daily, products, locations) are
 related to each other. The service, helpdesk, marketplace, and Lakeside tables stand alone with
 NO relationship to the product master.
@@ -101,7 +101,7 @@ WHAT THIS MODEL CANNOT ANSWER (decline honestly - no relationship exists)
 > instructions field**, so these patterns cannot be pasted into the agent config. Fold the few
 > that help into PART 1 (agent instructions) as prose, OR put them in **Prep for AI -> AI
 > Instructions / Verified Answers** on the model (which turns on a model-side AI layer and
-> compromises the "raw" control). Otherwise they are reference for whoever maintains the agent.
+> compromises the "legacy" control). Otherwise they are reference for whoever maintains the agent.
 > Never hardcode a result; always compute from the data.
 
 ```
@@ -138,7 +138,7 @@ ROW("<rate label>",
 -- PATTERN D - sell-through / any (flow / average-stock) ratio for a NETWORK total.
 -- Denominator = AVERAGE over the period of the network's TOTAL on-hand: sum on-hand WITHIN each
 -- snapshot date, THEN average those per-date totals. Never average row-level on-hand. Each
--- network on its own grain/source; compare ratios, never raw counts. Expect ~0.5x-5x; a value in
+-- network on its own grain/source; compare ratios, never legacy counts. Expect ~0.5x-5x; a value in
 -- the tens/hundreds means a collapsed denominator - recompute.
 VAR _units = CALCULATE(SUM(<units column>), <period filter>)
 VAR _avgOH = AVERAGEX(
@@ -177,11 +177,11 @@ ORDER BY [<ratio>] ASC
 
 ## Notes on the comparison
 
-- This variant intentionally answers a smaller set than the SQL-endpoint Raw_Plus. The honest
-  contrast: with no conformance layer, raw data over a relationship-poor model handles ERP-only
+- This variant intentionally answers a smaller set than the SQL-endpoint Legacy. The honest
+  contrast: with no conformance layer, legacy data over a relationship-poor model handles ERP-only
   questions and must decline the five cross-source ones (tickets/1K, attach rate, complaint+risk,
   attributable revenue, after-sale by category) - which is exactly the gap the Modeled agent
   closes.
 - Keep questions, scoring, and conventions identical across agents (`eval/MultiSourceAgent_Eval.xlsx`).
-- Do NOT add relationships, measures, or Prep-for-AI to `MultiSource_Raw` to "rescue" it - that
+- Do NOT add relationships, measures, or Prep-for-AI to `MultiSource_Legacy` to "rescue" it - that
   would turn it into a modeled agent and destroy the experiment's control.

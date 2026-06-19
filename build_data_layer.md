@@ -1,6 +1,6 @@
 # How the data is grouped (the modeled layer, in plain English)
 
-When the messy raw tables get modeled, everything gets reorganized into two simple kinds of
+When the messy legacy tables get modeled, everything gets reorganized into two simple kinds of
 tables: **things you describe by** (dimensions) and **things you measure** (facts). All the facts
 point back to the same shared dimensions, so numbers from five different systems finally line up.
 That shape is called a **star**.

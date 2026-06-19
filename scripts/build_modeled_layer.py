@@ -1,6 +1,6 @@
 # Fabric notebook: build_modeled_layer  (MultiSource_Modeled conformance transform)
 # Attach lakehouse lh_supply_demo as DEFAULT, then Run all (or `fab job run`).
-# Reads the 17 raw tables as-landed; writes conformed c_* Delta tables in lh_supply_demo.
+# Reads the 17 legacy tables as-landed; writes conformed c_* Delta tables in lh_supply_demo.
 # Same data in, governed star out — nothing is invented, only conformed.
 
 # ============================================================ CELL 1 — setup

@@ -1,7 +1,7 @@
-# `data/` — sample raw multi-source tables
+# `data/` — sample legacy multi-source tables
 
-These are the 17 raw tables, exactly as the five source systems export them (mixed naming, text
-dates, own product codes, free-text fields). They feed **MultiSource_Raw** and are conformed by the
+These are the 17 legacy tables, exactly as the five source systems export them (mixed naming, text
+dates, own product codes, free-text fields). They feed **MultiSource_Legacy** and are conformed by the
 `build_modeled_layer` notebook into the governed `c_*` star for **MultiSource_Modeled**.
 
 > **These files are illustrative samples, not the full dataset.** The large fact tables have been
@@ -34,4 +34,4 @@ dates, own product codes, free-text fields). They feed **MultiSource_Raw** and a
 ## Regenerating the full dataset
 
 The full synthetic dataset is **not committed**. These samples are for explanation only — to run the
-actual Fabric build you supply the complete raw tables to the lakehouse (see `PLAN.md` Phase 2–3).
+actual Fabric build you supply the complete legacy tables to the lakehouse (see `PLAN.md` Phase 2–3).

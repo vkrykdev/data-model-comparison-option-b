@@ -3,18 +3,18 @@
 ## What this is
 
 A **Microsoft Fabric demo** proving that a properly modeled, AI-described semantic model beats
-raw, undermodeled tables — judged by the answers two Fabric **Data Agents** (instructed-raw and
+legacy, undermodeled tables — judged by the answers two Fabric **Data Agents** (instructed-legacy and
 modeled) give over the *same data*. Two semantic models, one lakehouse:
 
-- **MultiSource_Raw** — 17 raw tables exactly as five source systems exported them (mixed
+- **MultiSource_Legacy** — 17 legacy tables exactly as five source systems exported them (mixed
   naming, almost no relationships, no measures, no descriptions).
 - **MultiSource_Modeled** — the same data, conformed by one notebook into a governed star with
   relationships, measures, descriptions, and Prep-for-AI instructions.
 
-This is the **MultiSource Raw-vs-Modeled** demo.
-Honest positioning: raw query speed is identical and is *not* the pitch — the wins are
-accuracy, fewer hallucinations, fewer clarification round-trips, lower tokens per correct
-answer, and that v2 is produced from the customer's own raw tables by one notebook.
+This is the **MultiSource Legacy-vs-Modeled** demo.
+Honest positioning: legacy query speed is identical and is *not* the pitch — the wins are
+accuracy, fewer hallucinations, fewer clarification round-trips, and that v2 is produced from
+the customer's own legacy tables by one notebook.
 
 **Narrative:** an industrial-supplies distributor just acquired **Lakeside Supply Co.** (legacy
 Access/Excel, weekly stock counts, DD/MM/YYYY text dates, own product codes). It also runs a
@@ -50,8 +50,8 @@ that last phase is portal work where you prepare the exact inputs and the user c
 - **Portal (you prepare, user clicks):** Phase 6.
   - Data Agent item creation works via `POST /v1/workspaces/{ws}/dataAgents` but datasource attachment requires portal Save/Publish (no public API). Create via API, open in portal, add datasource, Save.
   - **"Add AI instructions (preview)"** on a semantic model (Prep for AI): portal-only. No REST API endpoint or TMDL annotation works for this field.
-  - SupplyAgent_Raw_Plus is raw data with **heavy agent-side instructions** (`fabric/agent-config/SupplyAgent_Raw_Plus_instructions.md`) — the instructions-only experiment. Point it at the **lakehouse `lh_supply_demo` SQL endpoint** (T-SQL), not the Raw model, or the instructions can't steer query generation.
-- **Phases 1–6 scope = the two agents:** SupplyAgent_Raw_Plus (instructed raw) and
+  - SupplyAgent_Legacy is legacy data with **heavy agent-side instructions** (`fabric/agent-config/SupplyAgent_Legacy_instructions.md`) — the instructions-only experiment. Point it at the **lakehouse `lh_supply_demo` SQL endpoint** (T-SQL), not the Legacy model, or the instructions can't steer query generation.
+- **Phases 1–6 scope = the two agents:** SupplyAgent_Legacy (instructed legacy) and
   SupplyAgent_Modeled (modeled). **Phase 7 (added after the original scope)** =
   two matching Power BI reports in `pbip/` (one per agent, same 12 questions, for a visual
   side-by-side). Still **out of scope:** verified answers, **Teams/Copilot Studio**, and
@@ -62,9 +62,9 @@ that last phase is portal work where you prepare the exact inputs and the user c
 - Workspace **Microsoft Fabric Demo Stand** → folder **data-model-comparison** → subfolder
   **Option B**. *Every* object lives in **Option B**.
 - Capacity **fabricassesmentcoe** — the workspace is already on it; do **not** assign capacity.
-- Names: lakehouse **lh_supply_demo** · models **MultiSource_Raw** / **MultiSource_Modeled** ·
-  notebook **build_modeled_layer** · agents **SupplyAgent_Raw_Plus** / **SupplyAgent_Modeled** ·
-  conformed tables **c_*** · raw tables keep their source names.
+- Names: lakehouse **lh_supply_demo** · models **MultiSource_Legacy** / **MultiSource_Modeled** ·
+  notebook **build_modeled_layer** · agents **SupplyAgent_Legacy** / **SupplyAgent_Modeled** ·
+  conformed tables **c_*** · legacy tables keep their source names.
 - Data window **2025-06-01 → 2026-05-31**; Lakeside acquisition **2026-02-01**.
 
 ## Repo map
@@ -76,7 +76,7 @@ that last phase is portal work where you prepare the exact inputs and the user c
 ├── README.md                       ← human overview
 ├── requirements.txt                ← numpy, pandas, openpyxl (local only)
 ├── .env.example                    ← config template → copy to .env (git-ignored) and fill in
-├── data/                           ← the 17 raw multi-source CSVs — SAMPLE only (see data/README.md)
+├── data/                           ← the 17 legacy multi-source CSVs — SAMPLE only (see data/README.md)
 ├── scripts/
 │   └── build_modeled_layer.py      ← the conformance notebook as cell-delimited .py (portal paste)
 ├── fabric/                         ← everything deployed to Fabric
@@ -85,12 +85,12 @@ that last phase is portal work where you prepare the exact inputs and the user c
 │   ├── generate_model_tmdl.py      ← emits the two .SemanticModel TMDL folders
 │   ├── deploy_models.py            ← Phase 5: inject lakehouse SQL endpoint (from .env) + fab import
 │   ├── render_notebook.py          ← Phase 4: inject lakehouse/workspace IDs (from .env) into a deploy copy
-│   ├── models/                     ← MultiSource_Raw / MultiSource_Modeled .SemanticModel (TMDL)
+│   ├── models/                     ← MultiSource_Legacy / MultiSource_Modeled .SemanticModel (TMDL)
 │   ├── notebooks/build_modeled_layer.Notebook/  ← importable notebook source (placeholders)
 │   └── agent-config/               ← Phase 6 paste-text (Prep-for-AI, agent instructions)
 ├── pbip/                           ← Phase 7: two Power BI reports (PBIR) over the deployed models
 │   ├── build_reports.py            ← generator: emits every page/visual for both reports
-│   ├── raw_plus/                   ← report_raw_plus → MultiSource_Raw + report-level DAX (forces all 12)
+│   ├── legacy/                   ← report_legacy → MultiSource_Legacy + report-level DAX (forces all 12)
 │   └── modeled/                    ← report_modeled → MultiSource_Modeled (governed measures)
 ├── eval/MultiSourceAgent_Eval.xlsx ← 12-question workbook — BLANK template (.filled.xlsx is git-ignored)
 ├── build_data_layer.md             ← plain-English explanation of the star-schema grouping
@@ -156,7 +156,7 @@ TMDL annotations do not map to this preview field.
 
 **Phase 7 — PBIR reports (`pbip/`):** Reports use `byConnection` (live connect) to the published
 models; `build_reports.py` regenerates every page/visual deterministically. Two sharp edges:
-1. **Report-level (extension) measures** (raw_plus's `reportExtensions.json`) must be referenced
+1. **Report-level (extension) measures** (legacy's `reportExtensions.json`) must be referenced
    in every `visual.json` with `SourceRef: {"Schema": "extension", "Entity": <home table>}`.
    Omit `Schema: "extension"` and Power BI resolves the measure against the *model*, fails, and
    raises **`Missing_References`**. `build_reports.py` emits it automatically (its `extension=True`

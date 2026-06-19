@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate PBIR pages + visuals for the RAW_PLUS and MODELED eval reports.
+"""Generate PBIR pages + visuals for the LEGACY and MODELED eval reports.
 
 The MODELED report answers each question with the governed measures. The
-RAW_PLUS report ("instructed raw") live-connects to the MultiSource_Raw model
+LEGACY report ("instructed legacy") live-connects to the MultiSource_Legacy model
 and forces an answer on every tile via report-level DAX (cross-source sums,
-text-date parsing, xref lookups) — like the Raw_Plus agent, some answers stay
-approximate because the raw schema fights back.
+text-date parsing, xref lookups) — like the Legacy agent, some answers stay
+approximate because the legacy schema fights back.
 
 Author-only: no Power BI Desktop validation. Grammar verified against the
 microsoft/json-schemas PBIR schemas (visualContainer 2.9.0, visualConfiguration
@@ -191,7 +191,7 @@ SU = "c_fact_sales_unified"   # all measures live here
 
 # ----------------------------------------------------------------------------
 # Shared branding for the Summary pages (theme + registered background image).
-# The modeled report holds the canonical theme + image; raw_plus gets a
+# The modeled report holds the canonical theme + image; legacy gets a
 # copy so both Summary pages render identically. Encoding it here keeps it
 # drift-safe — regeneration re-applies the look instead of wiping it.
 # ----------------------------------------------------------------------------
@@ -517,14 +517,14 @@ def build_modeled():
 
 
 # ============================================================================
-# RAW_PLUS report — instructed raw: force an answer on every page using heavy
-# report-level DAX (the report analog of the Raw_Plus agent's instructions).
-# Connects to the SAME raw model; re-derives cross-source joins, parses text
-# dates, and looks up the xref entirely in the report layer. Like the Raw_Plus
-# agent (~9/24), several answers are approximate/wrong because the raw schema
+# LEGACY report — instructed legacy: force an answer on every page using heavy
+# report-level DAX (the report analog of the Legacy agent's instructions).
+# Connects to the SAME legacy model; re-derives cross-source joins, parses text
+# dates, and looks up the xref entirely in the report layer. Like the Legacy
+# agent (~9/24), several answers are approximate/wrong because the legacy schema
 # fights back (free-text helpdesk refs, mixed-grain inventory) — that is the point.
 # ============================================================================
-RAWPLUS = os.path.join(HERE, "raw_plus", "report_raw_plus.Report")
+LEGACY = os.path.join(HERE, "legacy", "report_legacy.Report")
 RP_LOGICAL_ID = "f7e6d5c4-b3a2-4190-8e7f-0a1b2c3d4e5f"
 RP_HOME = "sales_order_lines"  # home table for all RP report-level measures
 
@@ -625,10 +625,10 @@ RP_MEASURES = [
 ]
 
 
-# raw_plus live-connects to the SAME MultiSource_Raw model the agent's raw data
+# legacy live-connects to the SAME MultiSource_Legacy model the agent's legacy data
 # lives in; the report layer re-derives every answer via report-level DAX.
 RP_CONN = ('Data Source="powerbi://api.powerbi.com/v1.0/myorg/Microsoft Fabric Demo Stand";'
-           'initial catalog=MultiSource_Raw;access mode=readonly;'
+           'initial catalog=MultiSource_Legacy;access mode=readonly;'
            'integrated security=ClaimsToken;semanticmodelid=85a29e39-bf6e-44ef-8982-561e9b3eba7e')
 
 
@@ -641,35 +641,35 @@ def _write_if_missing(path, obj):
 
 
 def rp_scaffold():
-    """Bootstrap the raw_plus PBIP shell, bound to the MultiSource_Raw model.
-    Self-contained (no dependency on the removed bare-raw report); the committed
+    """Bootstrap the legacy PBIP shell, bound to the MultiSource_Legacy model.
+    Self-contained (no dependency on the removed bare-legacy report); the committed
     scaffolding is the source of truth, so each file is written only when absent."""
-    _write_if_missing(os.path.join(RAWPLUS, "definition.pbir"), {
+    _write_if_missing(os.path.join(LEGACY, "definition.pbir"), {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
         "version": "4.0",
         "datasetReference": {"byConnection": {"connectionString": RP_CONN}}})
-    _write_if_missing(os.path.join(RAWPLUS, "definition", "version.json"), {
+    _write_if_missing(os.path.join(LEGACY, "definition", "version.json"), {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/versionMetadata/1.0.0/schema.json",
         "version": "2.0.0"})
-    _write_if_missing(os.path.join(RAWPLUS, ".platform"), {
+    _write_if_missing(os.path.join(LEGACY, ".platform"), {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
-        "metadata": {"type": "Report", "displayName": "report_raw_plus"},
+        "metadata": {"type": "Report", "displayName": "report_legacy"},
         "config": {"version": "2.0", "logicalId": RP_LOGICAL_ID}})
-    _write_if_missing(os.path.join(HERE, "raw_plus", "report_raw_plus.pbip"), {
+    _write_if_missing(os.path.join(HERE, "legacy", "report_legacy.pbip"), {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
-        "version": "1.0", "artifacts": [{"report": {"path": "report_raw_plus.Report"}}],
+        "version": "1.0", "artifacts": [{"report": {"path": "report_legacy.Report"}}],
         "settings": {"enableAutoRecovery": True}})
 
 
 def rp_extensions():
-    os.makedirs(os.path.join(RAWPLUS, "definition"), exist_ok=True)
+    os.makedirs(os.path.join(LEGACY, "definition"), exist_ok=True)
     # Match exactly what Power BI Desktop writes for a report-level measure:
     # name, dataType, expression, formatString — and NO "references"/"hidden".
     # Including a hand-authored references block makes Desktop reject the measure
     # with Missing_References (confirmed by diffing a Desktop-created measure).
     measures = [{"name": n, "dataType": "Double", "expression": e, "formatString": f}
                 for n, e, f in RP_MEASURES]
-    with open(os.path.join(RAWPLUS, "definition", "reportExtensions.json"), "w",
+    with open(os.path.join(LEGACY, "definition", "reportExtensions.json"), "w",
               encoding="utf-8", newline="\n") as fh:
         json.dump({"$schema": EXT, "name": "extension",
                    "entities": [{"name": RP_HOME, "measures": measures}]}, fh, indent=2)
@@ -682,14 +682,14 @@ def m(name):
 RP_SUMMARY = "xsummarypage00000000"  # "Summary" page (1920x1080) — all 12, forced via DAX
 
 
-def build_raw_plus_summary():
+def build_legacy_summary():
     """Summary page mirroring the modeled one, but every tile is forced via the
-    report-level RP measures (same raw model). Some answers are approximate or
-    wrong because the raw schema fights back — that is the instructed-raw point."""
+    report-level RP measures (same legacy model). Some answers are approximate or
+    wrong because the legacy schema fights back — that is the instructed-legacy point."""
     SUM = RP_SUMMARY
     visuals = [textbox(f"x{SUM}title", 16, 16, 1888, 60,
-                       ["MultiSource Raw + instructions — all 12 forced via report-level DAX",
-                        "Same raw model; cross-source joins, parsed text dates and xref lookups re-derived in the report layer"])]
+                       ["MultiSource Legacy + instructions — all 12 forced via report-level DAX",
+                        "Same legacy model; cross-source joins, parsed text dates and xref lookups re-derived in the report layer"])]
 
     cols = [16, 492, 968, 1444]
     rows = [100, 421, 742]
@@ -761,7 +761,7 @@ def build_raw_plus_summary():
     visuals.append(hdr(9, x, y, "Lakeside revenue since acquisition", "SUM(TOTAL_AMT) where parsed date >= 2026-02-01"))
     visuals.append(card(f"x{SUM}v09", x, y + CY, CW, CH, m("RP Lakeside Since Acq")))
 
-    # Q10 — revenue tied to a known product (raw is blind to UNMAPPED; best-effort anti-join)
+    # Q10 — revenue tied to a known product (legacy is blind to UNMAPPED; best-effort anti-join)
     x, y = cell(9)
     visuals.append(hdr(10, x, y, "Revenue not tied to a product", "Anti-join on missing xref listingId only; misses the real gap"))
     visuals.append(card(f"x{SUM}v10", x, y + CY, CW, CH, m("RP Unmatched MM Gross")))
@@ -784,7 +784,7 @@ def build_raw_plus_summary():
     return (SUM, "Summary", visuals)
 
 
-def build_raw_plus():
+def build_legacy():
     rp_scaffold()
     rp_extensions()
     pages = []
@@ -794,11 +794,11 @@ def build_raw_plus():
 
     def title(pid, n, q, note):
         return textbox(f"x{pid}t", 16, 16, 1248, 72,
-                       [f"Q{n} — {q}  [INSTRUCTED RAW / forced]", f"Forced via report-level DAX: {note}"])
+                       [f"Q{n} — {q}  [INSTRUCTED LEGACY / forced]", f"Forced via report-level DAX: {note}"])
 
     # Q1
     p = P(1)
-    pages.append((p, "Q1 — Revenue by channel (RAW+)", [
+    pages.append((p, "Q1 — Revenue by channel (LEGACY)", [
         title(p, 1, "Revenue in Q1 2026 by channel",
               "RP Revenue = SUMX(qty x price) by channel, date_key 20260101-20260331. Correct for ERP channels (gold)."),
         column_chart(f"x{p}v", 16, 100, 1248, 540,
@@ -809,7 +809,7 @@ def build_raw_plus():
 
     # Q2
     p = P(2)
-    pages.append((p, "Q2 — Top 5 products by revenue (RAW+)", [
+    pages.append((p, "Q2 — Top 5 products by revenue (LEGACY)", [
         title(p, 2, "Top 5 products by revenue",
               "RP Revenue by SKU, sorted desc. ERP-only (no marketplace/Lakeside) so ranking can differ from gold."),
         table(f"x{p}v", 16, 100, 900, 540,
@@ -819,7 +819,7 @@ def build_raw_plus():
 
     # Q3
     p = P(3)
-    pages.append((p, "Q3 — Stockout rate May 2026 (RAW+)", [
+    pages.append((p, "Q3 — Stockout rate May 2026 (LEGACY)", [
         title(p, 3, "Stockout rate in May 2026",
               "RP Stockout Rate = stockout rows / total rows, visual-filtered to May date_key. Close to gold 1.52%."),
         card(f"x{p}v", 16, 100, 360, 200, m("RP Stockout Rate"),
@@ -828,7 +828,7 @@ def build_raw_plus():
 
     # Q4
     p = P(4)
-    pages.append((p, "Q4 — Total company sales May 2026 (RAW+)", [
+    pages.append((p, "Q4 — Total company sales May 2026 (LEGACY)", [
         title(p, 4, "Total company sales May 2026 incl. Lakeside + marketplace",
               "Cross-source sum re-derived in DAX: ERP (date_key) + marketplace NET (parsed settlementDate) + Lakeside (parsed DD/MM/YYYY). Targets gold $10.054M."),
         card(f"x{p}a", 16, 100, 300, 200, m("RP ERP May")),
@@ -839,7 +839,7 @@ def build_raw_plus():
 
     # Q5
     p = P(5)
-    pages.append((p, "Q5 — Net marketplace revenue (RAW+)", [
+    pages.append((p, "Q5 — Net marketplace revenue (LEGACY)", [
         title(p, 5, "Net marketplace revenue after fees, by month",
               "RP Marketplace Net = SUM(payoutAmount). No date dimension to bucket by month, so a single window total is forced (gold net $7.335M)."),
         card(f"x{p}v", 16, 100, 360, 200, m("RP Marketplace Net")),
@@ -847,7 +847,7 @@ def build_raw_plus():
 
     # Q6
     p = P(6)
-    pages.append((p, "Q6 — Tickets per 1K units (RAW+)", [
+    pages.append((p, "Q6 — Tickets per 1K units (LEGACY)", [
         title(p, 6, "Products with most helpdesk tickets per 1,000 units sold",
               "EXACT product-name match of free-text productRef to products[product_name]. Misspelled/spaced refs miss, so counts under-report vs gold (SKU-0045/0014)."),
         table(f"x{p}v", 16, 100, 1100, 540,
@@ -858,7 +858,7 @@ def build_raw_plus():
 
     # Q7
     p = P(7)
-    pages.append((p, "Q7 — Parts attach rate Hydraulics (RAW+)", [
+    pages.append((p, "Q7 — Parts attach rate Hydraulics (LEGACY)", [
         title(p, 7, "Service parts attach rate for Hydraulics products",
               "ITM- codes mapped to SKU via sku_xref_master LOOKUPVALUE, restricted to category Hydraulics; parts / units * 100. Targets gold 8.1."),
         card(f"x{p}v", 16, 100, 360, 200, m("RP Parts per 100 Hydraulics")),
@@ -866,7 +866,7 @@ def build_raw_plus():
 
     # Q8
     p = P(8)
-    pages.append((p, "Q8 — A-class open complaints + stockout (RAW+)", [
+    pages.append((p, "Q8 — A-class open complaints + stockout (LEGACY)", [
         title(p, 8, "A-class products with open complaints AND stockout risk",
               "A-class products with exact-match open complaints + latest-snapshot on-hand <= safety stock. Exact-name match may miss the gold SKUs (0014/0045)."),
         table(f"x{p}v", 16, 100, 1100, 540,
@@ -878,7 +878,7 @@ def build_raw_plus():
 
     # Q9
     p = P(9)
-    pages.append((p, "Q9 — Lakeside vs DC sell-through (RAW+)", [
+    pages.append((p, "Q9 — Lakeside vs DC sell-through (LEGACY)", [
         title(p, 9, "Lakeside store sell-through vs DCs since acquisition",
               "Both ratios re-derived since 2026-02-01 (Lakeside via parsed DD/MM/YYYY + weekly counts; DC via date_key + daily). Mixed grain makes both approximate (gold 2.85x vs 1.70x)."),
         card(f"x{p}a", 16, 100, 360, 200, m("RP Lakeside Sell-Through")),
@@ -887,7 +887,7 @@ def build_raw_plus():
 
     # Q10
     p = P(10)
-    pages.append((p, "Q10 — Lakeside sales 03/02/2026 (RAW+)", [
+    pages.append((p, "Q10 — Lakeside sales 03/02/2026 (LEGACY)", [
         title(p, 10, "Lakeside sales on 03/02/2026",
               "Text-equality on '03/02/2026' read as DD/MM/YYYY = 3 Feb. Forced CORRECTLY because the author knows the format (gold $36,836)."),
         card(f"x{p}v", 16, 100, 360, 200, m("RP Lakeside Sales 03Feb")),
@@ -895,7 +895,7 @@ def build_raw_plus():
 
     # Q11
     p = P(11)
-    pages.append((p, "Q11 — Lakeside revenue since acquisition (RAW+)", [
+    pages.append((p, "Q11 — Lakeside revenue since acquisition (LEGACY)", [
         title(p, 11, "Lakeside revenue since the acquisition (from 2026-02-01)",
               "SUM(TOTAL_AMT) where parsed DD/MM/YYYY >= 2026-02-01. Targets gold $4.324M."),
         card(f"x{p}v", 16, 100, 360, 200, m("RP Lakeside Since Acq")),
@@ -903,27 +903,27 @@ def build_raw_plus():
 
     # Q12
     p = P(12)
-    pages.append((p, "Q12 — Marketplace revenue not tied to a product (RAW+)", [
+    pages.append((p, "Q12 — Marketplace revenue not tied to a product (LEGACY)", [
         title(p, 12, "Marketplace revenue not tied to one of our products",
               "Anti-join: SUM(mm_orders gross) where listingId has NO sku_xref_master[mm_listing_id] match. Targets gold ~$94K gross."),
         card(f"x{p}v", 16, 100, 360, 200, m("RP Unmatched MM Gross")),
     ]))
 
-    pages = [build_raw_plus_summary()]  # Summary page only; question pages dropped
+    pages = [build_legacy_summary()]  # Summary page only; question pages dropped
     order = [pid for pid, _, _ in pages]
-    clean_old_pages(RAWPLUS, set(order))
+    clean_old_pages(LEGACY, set(order))
     for pid, disp, vis in pages:
         if pid == RP_SUMMARY:
-            write_page(RAWPLUS, pid, disp, vis, width=1920, height=1080, objects=summary_bg(_bg_image(RAWPLUS)))
+            write_page(LEGACY, pid, disp, vis, width=1920, height=1080, objects=summary_bg(_bg_image(LEGACY)))
         else:
-            write_page(RAWPLUS, pid, disp, vis)
-    write_pages_json(RAWPLUS, order, order[0])
-    brand_report(RAWPLUS)
+            write_page(LEGACY, pid, disp, vis)
+    write_pages_json(LEGACY, order, order[0])
+    brand_report(LEGACY)
     return order
 
 
 if __name__ == "__main__":
     mo = build_modeled()
-    rp = build_raw_plus()
+    rp = build_legacy()
     print("MODELED pages:", len(mo))
-    print("RAW_PLUS pages:", len(rp), "| measures:", len(RP_MEASURES))
+    print("LEGACY pages:", len(rp), "| measures:", len(RP_MEASURES))
