@@ -18,6 +18,11 @@ The repo also ships two matching **Power BI reports** (`pbip/`) — `report_lega
 `report_modeled` — that answer the same 12 questions over the same models, for a
 visual side-by-side of the contrast. `pbip/build_reports.py` regenerates every page and visual.
 
+## Deploy this yourself (another team)
+
+See **[`DEPLOY.md`](DEPLOY.md)** — the one-page "what to run, in what order" enrollment checklist
+(prereqs → `.env` → the ordered script/portal steps), each linked to its `PLAN.md` phase for detail.
+
 ## For the build agent (Claude Code)
 
 1. Read **`CLAUDE.md`** — context, the CLI-vs-portal capability split, and the hard rules.
@@ -75,11 +80,11 @@ Tracked files (TMDL, the notebook artifact) carry placeholders like `__SQL_ENDPO
 | `PLAN.md` | the ordered, confirm-after-each build plan |
 | `CLAUDE.md` | full context + rules for the build agent |
 | `data/` | the 17 legacy multi-source tables — **sample** (see `data/README.md`) |
-| `scripts/` | `build_modeled_layer.py` — the conformance notebook as cell-delimited `.py` |
+| `scripts/` | `build_modeled_layer.py` — the conformance notebook **source of truth** (cell-delimited `.py`; `render_notebook.py` generates the deployable `.ipynb` from it) |
 | `fabric/` | bootstrap + upload/load + TMDL generator + deploy/render scripts + model/notebook/agent definitions |
 | `pbip/` | two Power BI reports (legacy / modeled) + `build_reports.py` generator |
 | `eval/MultiSourceAgent_Eval.xlsx` | 12-question workbook — **blank live-demo template** (filled copy is git-ignored) |
-| `build_data_layer.md`, `history.md`, `history.uk.md` | plain-English data-layer + demo narrative (EN/UK) |
+| `build_data_layer.md`, `history.md` | plain-English data-layer + demo narrative |
 | `docs/GUIDE_MULTISOURCE_DEMO.md` | reference: schema, relationships, measures, AI-layer rationale, Phase 5b fallback |
 
 ## Environment

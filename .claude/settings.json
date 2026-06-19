@@ -44,12 +44,13 @@
       "Bash(sqlcmd '-?')",
       "Bash(sqlcmd -S xj5gsmud64gedpw3hfuc4xoevy-4sd5jwt5eaqu5azjrwzsmlcvse.datawarehouse.fabric.microsoft.com -d lh_supply_demo --authentication-method ActiveDirectoryAzCli -Q 'SELECT TOP 1 '\\\\''ok'\\\\'' AS c')",
       "Bash(fab -c \"auth status\")",
-      "Bash(ls modeled/report_modeled.pbix.Report/definition/pages/)",
+      "Bash(ls modeled/report_modeled.Report/definition/pages/)",
       "Bash(ls legacy/report_legacy.Report/definition/pages/)",
       "Bash(az rest *)",
       "Bash(set -e)",
       "Bash(git mv *)",
-      "Bash(curl -s -H 'Authorization: Bearer __TRACKED_VAR__' https://api.fabric.microsoft.com/v1/workspaces/__TRACKED_VAR__/items)"
+      "Bash(curl -s -H 'Authorization: Bearer __TRACKED_VAR__' https://api.fabric.microsoft.com/v1/workspaces/__TRACKED_VAR__/items)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }

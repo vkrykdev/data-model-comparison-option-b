@@ -73,18 +73,19 @@ that last phase is portal work where you prepare the exact inputs and the user c
 .
 ├── CLAUDE.md                       ← you are here (context + rules)
 ├── PLAN.md                         ← the ordered, confirm-after-each build plan — follow this
+├── DEPLOY.md                        ← one-page enrollment checklist for another team (links to PLAN.md phases)
 ├── README.md                       ← human overview
 ├── requirements.txt                ← numpy, pandas, openpyxl (local only)
 ├── .env.example                    ← config template → copy to .env (git-ignored) and fill in
 ├── data/                           ← the 17 legacy multi-source CSVs — SAMPLE only (see data/README.md)
 ├── scripts/
-│   └── build_modeled_layer.py      ← the conformance notebook as cell-delimited .py (portal paste)
+│   └── build_modeled_layer.py      ← conformance notebook SOURCE OF TRUTH (cell-delimited .py; portal paste + the .ipynb is generated from it)
 ├── fabric/                         ← everything deployed to Fabric
 │   ├── bootstrap.sh                ← Phase 0–1: auth, folders, lakehouse (fab, with api fallback)
 │   ├── upload_and_load.sh          ← Phase 2–3: upload CSVs (OneLake DFS) + fab table load
 │   ├── generate_model_tmdl.py      ← emits the two .SemanticModel TMDL folders
 │   ├── deploy_models.py            ← Phase 5: inject lakehouse SQL endpoint (from .env) + fab import
-│   ├── render_notebook.py          ← Phase 4: inject lakehouse/workspace IDs (from .env) into a deploy copy
+│   ├── render_notebook.py          ← Phase 4: regenerate artifact.content.ipynb from scripts/build_modeled_layer.py, then inject lakehouse/workspace IDs (from .env) into a deploy copy
 │   ├── models/                     ← MultiSource_Legacy / MultiSource_Modeled .SemanticModel (TMDL)
 │   ├── notebooks/build_modeled_layer.Notebook/  ← importable notebook source (placeholders)
 │   └── agent-config/               ← Phase 6 paste-text (Prep-for-AI, agent instructions)
@@ -94,7 +95,7 @@ that last phase is portal work where you prepare the exact inputs and the user c
 │   └── modeled/                    ← report_modeled → MultiSource_Modeled (governed measures)
 ├── eval/MultiSourceAgent_Eval.xlsx ← 12-question workbook — BLANK template (.filled.xlsx is git-ignored)
 ├── build_data_layer.md             ← plain-English explanation of the star-schema grouping
-├── history.md / history.uk.md      ← demo narrative (EN / UK) for presenting
+├── history.md                      ← demo narrative for presenting
 └── docs/GUIDE_MULTISOURCE_DEMO.md  ← reference: schema, relationships, measures, instruction rationale
 ```
 
@@ -186,8 +187,19 @@ with 3 TODO gaps + 1 retired-SKU + 2 conflict rows. The notebook materializes **
 
 ## Drift rule
 
-Change the `c_` schema in the notebook → re-run `fabric/generate_model_tmdl.py` so the Modeled
-TMDL still matches. Change the `c_` schema or measures → resync the numbers in
+Edit the conformance logic **only** in `scripts/build_modeled_layer.py` (the single source of
+truth), then run `fabric/render_notebook.py` to regenerate `artifact.content.ipynb` from it —
+never hand-edit the `.ipynb`. Change the `c_` schema in the notebook → re-run
+`fabric/generate_model_tmdl.py` so the Modeled TMDL still matches. Change the `c_` schema or measures → resync the numbers in
 `eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`. Change a table/column/
 measure either model exposes → re-run `pbip/build_reports.py` so the reports' field bindings stay
 valid (it verifies every bound field against the deployed model's columns).
+
+⚠️ **The PBIR reports (`pbip/`) and the eval workbook (`eval/MultiSourceAgent_Eval.xlsx`) are the
+source of truth, NOT their generators.** The committed reports are hand-polished in Power BI
+Desktop (extra styling, schema bumps) and the eval workbook is hand-adjusted — both go beyond what
+`pbip/build_reports.py` / `eval/build_eval_workbook.py` emit. Re-running those generators
+**overwrites and degrades** the committed artifacts (loses ~1281 lines of report styling per file;
+wipes the workbook's manual tweaks). Run `build_reports.py` only to *catch broken field bindings*
+after a model change, then re-apply styling in Desktop — never blindly commit its output. Both
+reports are **summary-page-only** by design (1 page each).

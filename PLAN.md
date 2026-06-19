@@ -214,4 +214,13 @@ xref lookups); like the Legacy agent, some answers stay approximate.
 If you change the `c_` schema or measures, resync the numbers in
 `eval/MultiSourceAgent_Eval.xlsx` and `docs/GUIDE_MULTISOURCE_DEMO.md`. If you
 change the `c_` schema in the notebook, re-run `fabric/generate_model_tmdl.py` so the Modeled
-TMDL still matches.
+TMDL still matches. Edit conformance logic only in `scripts/build_modeled_layer.py`, then run
+`fabric/render_notebook.py` to regenerate `artifact.content.ipynb` from it (never hand-edit the
+`.ipynb`).
+
+⚠️ **Do not blindly re-run the report/eval generators.** The committed PBIR reports (`pbip/`) and
+`eval/MultiSourceAgent_Eval.xlsx` are the source of truth — they are hand-polished/adjusted beyond
+what `pbip/build_reports.py` and `eval/build_eval_workbook.py` emit. Re-running those generators
+overwrites and degrades the committed files. Run `build_reports.py` only to validate field bindings
+after a model change, then re-apply any Desktop styling — never commit its raw output over a polished
+report.

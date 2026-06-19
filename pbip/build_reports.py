@@ -183,7 +183,7 @@ def clean_old_pages(report_dir, keep):
 # ============================================================================
 # MODELED report
 # ============================================================================
-MODELED = os.path.join(HERE, "modeled", "report_modeled.pbix.Report")
+MODELED = os.path.join(HERE, "modeled", "report_modeled.Report")
 MQ1 = "9395695480646891e085"  # existing page folder, reuse for Q1
 MSUMMARY = "0496682b32921312e05e"  # the "Summary" page (1920x1080) — all 12 answers
 
@@ -501,8 +501,7 @@ def build_modeled():
               sort=sort_asc(SU, "Sell-Through Ratio", measure=True)),
     ]))
 
-    # Summary page first, then the 12 per-question pages
-    pages.insert(0, build_modeled_summary())
+    pages = [build_modeled_summary()]  # Summary page only; question pages dropped
 
     order = [pid for pid, _, _ in pages]
     clean_old_pages(MODELED, set(order))
