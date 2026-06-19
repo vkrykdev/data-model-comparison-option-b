@@ -20,3 +20,6 @@ eval/MultiSourceAgent_Eval.filled.xlsx
 
 # Power BI per-user local report settings (Microsoft recommends ignoring)
 **/.pbi/localSettings.json
+
+# Generated export package (sales/PM deliverable — not source)
+.export/
