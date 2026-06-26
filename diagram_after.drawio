@@ -1,0 +1,21 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="d1" name="After - governed star">
+    <mxGraphModel dx="900" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1120" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n4" value="FACTS&#10;sales · inventory&#10;service · parts · helpdesk" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#1485C3;strokeColor=#1485C3;fontColor=#FFFFFF;fontSize=15;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="410" y="250" width="300" height="120" as="geometry"/></mxCell>
+        <mxCell id="n5" value="c_dim_date&#10;incl. is_post_acquisition" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="40" y="80" width="260" height="96" as="geometry"/></mxCell>
+        <mxCell id="n6" value="c_dim_product&#10;115 rows · ABC class" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="820" y="80" width="260" height="96" as="geometry"/></mxCell>
+        <mxCell id="n7" value="c_dim_location&#10;DCs · stores · marketplace" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="40" y="440" width="260" height="96" as="geometry"/></mxCell>
+        <mxCell id="n8" value="c_dim_channel&#10;5 channels" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="820" y="440" width="260" height="96" as="geometry"/></mxCell>
+        <mxCell id="n3" value="After — one notebook builds a governed star" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#26282B;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="0" y="16" width="1120" height="40" as="geometry"/></mxCell>
+        <mxCell id="n9" value="13 relationships · 14 reusable measures · descriptions on every field · Prep-for-AI instructions" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#808080;fontSize=14;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="0" y="520" width="1120" height="50" as="geometry"/></mxCell>
+        <mxCell id="e1001" style="endArrow=classic;html=1;dashed=0;strokeColor=#1485C3;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n5" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1002" style="endArrow=classic;html=1;dashed=0;strokeColor=#1485C3;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n6" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1003" style="endArrow=classic;html=1;dashed=0;strokeColor=#1485C3;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n7" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1004" style="endArrow=classic;html=1;dashed=0;strokeColor=#1485C3;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n8" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

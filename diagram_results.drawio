@@ -1,0 +1,18 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="d1" name="Result - scorecard">
+    <mxGraphModel dx="900" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1120" pageHeight="360" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n4" value="" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#26282B;strokeColor=#26282B;fontColor=#FFFFFF;fontSize=14;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="110" y="80" width="400" height="210" as="geometry"/></mxCell>
+        <mxCell id="n7" value="" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#1485C3;strokeColor=#1485C3;fontColor=#FFFFFF;fontSize=14;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="610" y="80" width="400" height="210" as="geometry"/></mxCell>
+        <mxCell id="n3" value="Result — same 12 questions, same data" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#26282B;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="0" y="16" width="1120" height="40" as="geometry"/></mxCell>
+        <mxCell id="n5" value="21%" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#FFFFFF;fontSize=64;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="110" y="108" width="400" height="70" as="geometry"/></mxCell>
+        <mxCell id="n6" value="Legacy tables + heavy instructions&#10;5 / 24 points · 8 of 12 answered&#10;3 confident wrong answers" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#FFFFFF;fontSize=15;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="110" y="196" width="400" height="84" as="geometry"/></mxCell>
+        <mxCell id="n8" value="96%" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#FFFFFF;fontSize=64;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="610" y="108" width="400" height="70" as="geometry"/></mxCell>
+        <mxCell id="n9" value="Modeled star + Prep-for-AI&#10;23 / 24 points · 12 of 12 answered&#10;0 hallucinations" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#FFFFFF;fontSize=15;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="610" y="196" width="400" height="84" as="geometry"/></mxCell>
+        <mxCell id="n10" value="Identical query speed — the win is accuracy and trust, not performance." style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#808080;fontSize=14;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="0" y="306" width="1120" height="30" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

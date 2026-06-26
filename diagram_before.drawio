@@ -1,0 +1,23 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="d1" name="Before - five systems">
+    <mxGraphModel dx="900" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1120" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n4" value="A · ERP / WMS&#10;snake_case · SKUs&#10;5 tables, daily" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="20" y="90" width="200" height="108" as="geometry"/></mxCell>
+        <mxCell id="n5" value="B · Service&#10;PascalCase · ITM- codes&#10;2 tables" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="240" y="90" width="200" height="108" as="geometry"/></mxCell>
+        <mxCell id="n6" value="C · Helpdesk&#10;camelCase · free text&#10;2 tables" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="460" y="90" width="200" height="108" as="geometry"/></mxCell>
+        <mxCell id="n7" value="D · MegaMart&#10;mm_ · gross vs net&#10;3 tables" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="680" y="90" width="200" height="108" as="geometry"/></mxCell>
+        <mxCell id="n8" value="E · Lakeside&#10;UPPERCASE · LSP- · text dates&#10;4 tables, weekly" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#EDF0F2;strokeColor=#1485C3;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="900" y="90" width="200" height="108" as="geometry"/></mxCell>
+        <mxCell id="n9" value="sku_xref_master — the analyst&#x27;s Excel crosswalk&#10;~95% complete · 3 gaps · 1 retired SKU · 2 conflicts" style="rounded=1;whiteSpace=wrap;html=1;dashed=0;fillColor=#FFFFFF;strokeColor=#F36949;fontColor=#26282B;fontSize=13;fontStyle=1;verticalAlign=middle;align=center;arcSize=12;" vertex="1" parent="1"><mxGeometry x="300" y="380" width="520" height="96" as="geometry"/></mxCell>
+        <mxCell id="n3" value="Before — five systems, no shared keys" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#26282B;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="0" y="16" width="1120" height="40" as="geometry"/></mxCell>
+        <mxCell id="n10" value="the only bridge between the islands" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#808080;fontSize=13;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="300" y="486" width="520" height="26" as="geometry"/></mxCell>
+        <mxCell id="e1001" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n4" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1002" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n5" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1003" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n6" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1004" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n7" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1005" style="endArrow=none;html=1;dashed=1;strokeColor=#AAAAAA;strokeWidth=2;rounded=0;" edge="1" parent="1" source="n8" target="n9"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
